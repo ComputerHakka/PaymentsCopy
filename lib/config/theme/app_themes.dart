@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+const Color accentColor = Color(0xFF0549F6);
+const Color textFieldPassiveColor = Color(0xFFE2E8F0);
+
 ThemeData appTheme(BuildContext context) {
   return ThemeData(
     scaffoldBackgroundColor: Colors.white,
@@ -15,7 +18,7 @@ ThemeData appTheme(BuildContext context) {
         color: Colors.black,
       ),
     ),
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    colorScheme: ColorScheme.fromSeed(seedColor: accentColor),
     useMaterial3: true,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: getButtonStyle(context),
@@ -32,13 +35,22 @@ AppBarTheme getAppBarTheme(BuildContext context) {
   return AppBarTheme(
     color: Colors.transparent,
     titleTextStyle: Theme.of(context).textTheme.titleMedium,
+    scrolledUnderElevation: 0,
+    centerTitle: true,
   );
 }
 
 InputDecorationTheme getInputDecorationTheme() {
   return InputDecorationTheme(
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: const BorderSide(color: textFieldPassiveColor),
+    ),
     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+    hintStyle: const TextStyle(color: textFieldPassiveColor),
   );
 }
 

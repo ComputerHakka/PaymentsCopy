@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:personal_payment_app/core/constants/constants.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -23,13 +25,18 @@ class StartScreen extends StatelessWidget {
               ),
               const SizedBox(height: 60),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  GoRouter.of(context)
+                      .pushNamed(RouteNames.authorizationScreen);
+                },
                 child: const Text(
                   'Войти в аккаунт',
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  GoRouter.of(context).pushNamed(RouteNames.registrationScreen);
+                },
                 child: const Text('Создать аккаунт'),
               )
             ],

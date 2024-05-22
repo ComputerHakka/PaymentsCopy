@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:personal_payment_app/core/constants/constants.dart';
 
 class AuthorizationScreen extends StatelessWidget {
   const AuthorizationScreen({super.key});
@@ -39,7 +41,9 @@ class AuthorizationScreen extends StatelessWidget {
                 height: 16,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  GoRouter.of(context).pushNamed(RouteNames.homeScreen);
+                },
                 child: const Text('Войти'),
               ),
             ],
