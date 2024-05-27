@@ -42,7 +42,7 @@ class AuthorizationScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  GoRouter.of(context).pushNamed(RouteNames.homeScreen);
+                  GoRouter.of(context).goNamed(RouteNames.homeScreen);
                 },
                 child: const Text('Войти'),
               ),

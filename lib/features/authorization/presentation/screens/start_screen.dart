@@ -35,7 +35,7 @@ class StartScreen extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  GoRouter.of(context).pushNamed(RouteNames.registrationScreen);
+                  GoRouter.of(context).goNamed(RouteNames.registrationScreen);
                 },
                 child: const Text('Создать аккаунт'),
               )

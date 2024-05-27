@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 const Color accentColor = Color(0xFF0549F6);
 const Color textFieldPassiveColor = Color(0xFFE2E8F0);
+const Color containersColor = Color(0xFFE2E8F0);
+const Color unselectedItemColor = Color(0xFFADBECE);
+const Color borderColor = Color(0xFFF1F5F9);
 
 ThemeData appTheme(BuildContext context) {
   return ThemeData(
@@ -28,6 +31,14 @@ ThemeData appTheme(BuildContext context) {
     ),
     inputDecorationTheme: getInputDecorationTheme(),
     appBarTheme: getAppBarTheme(context),
+    bottomNavigationBarTheme: getBottomNavBarThemeData(),
+  );
+}
+
+BottomNavigationBarThemeData getBottomNavBarThemeData() {
+  return const BottomNavigationBarThemeData(
+    selectedItemColor: accentColor,
+    unselectedItemColor: unselectedItemColor,
   );
 }
 
@@ -51,6 +62,26 @@ InputDecorationTheme getInputDecorationTheme() {
     ),
     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
     hintStyle: const TextStyle(color: textFieldPassiveColor),
+  );
+}
+
+InputDecoration getChangeInputDecoration() {
+  return const InputDecoration(
+    filled: true,
+    border: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: borderColor,
+      ),
+    ),
+    fillColor: textFieldPassiveColor,
+    constraints: BoxConstraints(
+      maxHeight: 40,
+    ),
+    contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+    suffixIcon: Icon(
+      Icons.close_rounded,
+      size: 17,
+    ),
   );
 }
 
