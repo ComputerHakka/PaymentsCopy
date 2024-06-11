@@ -12,5 +12,14 @@ class RouteNames {
   static const addressesScreen = 'addresses_screen';
   static const documentsScreen = 'documents_screen';
   static const transactionsScreen = 'transactions_screen';
-  static const servicesScreen = 'services_screen';
+  static const userServicesScreen = 'user_services_screen';
+  static const servicesListScreen = 'services_list_screen';
+  static const serviceDetailsScreen = 'service_details_screen';
+}
+
+class ApiConstants {
+  static const paymentAPIBasePort = '25564';
+  static const paymentAPIBaseIP = '192.168.0.216';
+  static const paymentAPIBaseURL =
+      'http://$paymentAPIBaseIP:$paymentAPIBasePort';
 }

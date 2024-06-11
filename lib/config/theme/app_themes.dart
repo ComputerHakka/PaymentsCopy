@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 const Color accentColor = Color(0xFF0549F6);
 const Color textFieldPassiveColor = Color(0xFFE2E8F0);
-const Color containersColor = Color(0xFFE2E8F0);
+const Color containersColor = Color(0xFFF1F5F9);
 const Color unselectedItemColor = Color(0xFFADBECE);
-const Color borderColor = Color(0xFFF1F5F9);
+const Color borderColor = Color(0xFFE2E8F0);
 
 ThemeData appTheme(BuildContext context) {
   return ThemeData(
@@ -14,6 +14,16 @@ ThemeData appTheme(BuildContext context) {
         fontSize: 35,
         fontWeight: FontWeight.w500,
         height: 1.1,
+      ),
+      displaySmall: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: Colors.black,
+      ),
+      headlineMedium: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
       ),
       titleMedium: TextStyle(
         fontSize: 16,
@@ -32,11 +42,21 @@ ThemeData appTheme(BuildContext context) {
     inputDecorationTheme: getInputDecorationTheme(),
     appBarTheme: getAppBarTheme(context),
     bottomNavigationBarTheme: getBottomNavBarThemeData(),
+    chipTheme: getChipThemeData(),
+  );
+}
+
+ChipThemeData getChipThemeData() {
+  return const ChipThemeData(
+    side: BorderSide(color: Colors.transparent),
+    shape: StadiumBorder(),
+    color: MaterialStatePropertyAll(containersColor),
   );
 }
 
 BottomNavigationBarThemeData getBottomNavBarThemeData() {
   return const BottomNavigationBarThemeData(
+    type: BottomNavigationBarType.fixed,
     selectedItemColor: accentColor,
     unselectedItemColor: unselectedItemColor,
   );

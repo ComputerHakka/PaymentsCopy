@@ -1,5 +1,7 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
+import 'package:personal_payment_app/features/authorization/presentation/bloc/auth/remote/remote_auth_bloc.dart';
 import 'package:personal_payment_app/features/authorization/presentation/screens/authorization_screen.dart';
 import 'package:personal_payment_app/features/authorization/presentation/screens/start_screen.dart';
 import 'package:personal_payment_app/features/history/presentation/screens/history_screen.dart';
@@ -12,11 +14,15 @@ import 'package:personal_payment_app/features/profile/screens/documents/document
 import 'package:personal_payment_app/features/profile/screens/profile/user_profile_screen.dart';
 import 'package:personal_payment_app/features/registration/presentation/screens/registration_screen.dart';
 import 'package:personal_payment_app/features/root/presentation/screens/root_screen.dart';
+import 'package:personal_payment_app/features/services/presentation/screens/services_list/services_list_screen.dart';
+import 'package:personal_payment_app/features/services/presentation/screens/user_services/user_services_screen.dart';
 import 'package:personal_payment_app/features/support/presentation/screens/support_chat_screen.dart';
+import 'package:personal_payment_app/features/transactions/presentation/screens/transactions_list/transactions_list_screen.dart';
+import 'package:personal_payment_app/injection_container.dart';
 
 class AppRoutes {
   static final GoRouter router = GoRouter(
-    initialLocation: '/home',
+    initialLocation: '/start',
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
@@ -55,6 +61,23 @@ class AppRoutes {
                         name: RouteNames.documentsScreen,
                         builder: (context, state) =>
                             const UserDocumentsScreen(),
+                      ),
+                    ],
+                  ),
+                  GoRoute(
+                    path: 'operations',
+                    name: RouteNames.transactionsScreen,
+                    builder: (context, state) => const TransactionsListScreen(),
+                  ),
+                  GoRoute(
+                    path: 'user_services',
+                    name: RouteNames.userServicesScreen,
+                    builder: (context, state) => const UserServicesScreen(),
+                    routes: [
+                      GoRoute(
+                        path: 'services_list',
+                        name: RouteNames.servicesListScreen,
+                        builder: (context, state) => const ServicesListScreen(),
                       ),
                     ],
                   ),
@@ -99,7 +122,10 @@ class AppRoutes {
           GoRoute(
             path: 'auth',
             name: RouteNames.authorizationScreen,
-            builder: (context, state) => const AuthorizationScreen(),
+            builder: (context, state) => BlocProvider<RemoteAuthBloc>(
+              create: (context) => container(),
+              child: const AuthorizationScreen(),
+            ),
           ),
           GoRoute(
             path: 'registration',

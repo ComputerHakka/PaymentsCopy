@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 
 class ChangePhoneScreen extends StatelessWidget {
@@ -21,6 +22,14 @@ class ChangePhoneScreen extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             TextField(
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                MaskTextInputFormatter(
+                  mask: '+7 (###) ###-##-##',
+                  filter: {"#": RegExp(r'[0-9]')},
+                  type: MaskAutoCompletionType.lazy,
+                ),
+              ],
               style: const TextStyle(fontSize: 16),
               decoration: getChangeInputDecoration(),
             ),

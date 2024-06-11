@@ -186,12 +186,26 @@ class TransactionsInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(15),
+      child: Ink(
         height: 133,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: containersColor,
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(15),
+          onTap: () {
+            GoRouter.of(context).goNamed(RouteNames.transactionsScreen);
+          },
+          child: const Padding(
+            padding: EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Все операции'),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -204,14 +218,27 @@ class ServicesInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(15),
+      child: Ink(
         height: 133,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: containersColor,
         ),
-        child: const Text('data'),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(15),
+          onTap: () {
+            GoRouter.of(context).goNamed(RouteNames.userServicesScreen);
+          },
+          child: const Padding(
+            padding: EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Ваши услуги'),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
