@@ -12,6 +12,7 @@ class RouteNames {
   static const addressesScreen = 'addresses_screen';
   static const documentsScreen = 'documents_screen';
   static const transactionsScreen = 'transactions_screen';
+  static const transactionDetailsScreen = 'transactions_details_screen';
   static const userServicesScreen = 'user_services_screen';
   static const servicesListScreen = 'services_list_screen';
   static const serviceDetailsScreen = 'service_details_screen';

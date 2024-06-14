@@ -14,9 +14,11 @@ import 'package:personal_payment_app/features/profile/screens/documents/document
 import 'package:personal_payment_app/features/profile/screens/profile/user_profile_screen.dart';
 import 'package:personal_payment_app/features/registration/presentation/screens/registration_screen.dart';
 import 'package:personal_payment_app/features/root/presentation/screens/root_screen.dart';
+import 'package:personal_payment_app/features/services/presentation/screens/service_details/service_details_screen.dart';
 import 'package:personal_payment_app/features/services/presentation/screens/services_list/services_list_screen.dart';
 import 'package:personal_payment_app/features/services/presentation/screens/user_services/user_services_screen.dart';
 import 'package:personal_payment_app/features/support/presentation/screens/support_chat_screen.dart';
+import 'package:personal_payment_app/features/transactions/presentation/screens/transaction_details/transaction_details_screen.dart';
 import 'package:personal_payment_app/features/transactions/presentation/screens/transactions_list/transactions_list_screen.dart';
 import 'package:personal_payment_app/injection_container.dart';
 
@@ -65,10 +67,18 @@ class AppRoutes {
                     ],
                   ),
                   GoRoute(
-                    path: 'operations',
-                    name: RouteNames.transactionsScreen,
-                    builder: (context, state) => const TransactionsListScreen(),
-                  ),
+                      path: 'transactions',
+                      name: RouteNames.transactionsScreen,
+                      builder: (context, state) =>
+                          const TransactionsListScreen(),
+                      routes: [
+                        GoRoute(
+                          path: 'transaction_details',
+                          name: RouteNames.transactionDetailsScreen,
+                          builder: (context, state) =>
+                              const TransactionDetailsScreen(),
+                        )
+                      ]),
                   GoRoute(
                     path: 'user_services',
                     name: RouteNames.userServicesScreen,
@@ -78,6 +88,14 @@ class AppRoutes {
                         path: 'services_list',
                         name: RouteNames.servicesListScreen,
                         builder: (context, state) => const ServicesListScreen(),
+                        routes: [
+                          GoRoute(
+                            path: 'service_details',
+                            name: RouteNames.serviceDetailsScreen,
+                            builder: (context, state) =>
+                                const ServiceDetailsScreen(),
+                          )
+                        ],
                       ),
                     ],
                   ),

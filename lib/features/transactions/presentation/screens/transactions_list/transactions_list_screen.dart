@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:personal_payment_app/core/constants/constants.dart';
 
 class TransactionsListScreen extends StatelessWidget {
   const TransactionsListScreen({super.key});
@@ -110,24 +112,31 @@ class TransationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ListTile(
-      leading: CircleAvatar(
-        backgroundColor: Colors.cyan,
-      ),
-      title: Text(
-        'Коммунальные услуги для вашего дома',
-        overflow: TextOverflow.fade,
-        softWrap: false,
-        maxLines: 1,
-      ),
-      subtitle: Text('Банковские платежи'),
-      trailing: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text('+14500,2'),
-          Text('Платежынй счет'),
-        ],
+    return Ink(
+      child: InkWell(
+        onTap: () {
+          GoRouter.of(context).pushNamed(RouteNames.transactionDetailsScreen);
+        },
+        child: const ListTile(
+          leading: CircleAvatar(
+            backgroundColor: Colors.cyan,
+          ),
+          title: Text(
+            'Коммунальные услуги для вашего дома',
+            overflow: TextOverflow.fade,
+            softWrap: false,
+            maxLines: 1,
+          ),
+          subtitle: Text('Банковские платежи'),
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text('+14500,2'),
+              Text('Платежынй счет'),
+            ],
+          ),
+        ),
       ),
     );
   }

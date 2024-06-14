@@ -84,11 +84,14 @@ class CmerasControlWidget extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 120,
-          child: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+          height: 133,
+          child: ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 10),
             scrollDirection: Axis.horizontal,
-            children: [],
+            itemCount: 6,
+            itemBuilder: (BuildContext context, int index) {
+              return const CameraCellwidget();
+            },
           ),
         ),
       ],
@@ -101,7 +104,26 @@ class CameraCellwidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: AspectRatio(
+        aspectRatio: 1.8,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 14),
+          decoration: BoxDecoration(
+            color: containersColor,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text('Камера 1'),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

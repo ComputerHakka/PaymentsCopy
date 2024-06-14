@@ -8,7 +8,13 @@ class HistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: AppBarTextField(),
+        title: const AppBarTextField(),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications),
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,7 +146,7 @@ class TransationWidget extends StatelessWidget {
       ),
       subtitle: Text('Банковские платежи'),
       trailing: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text('+14500,2'),
@@ -162,11 +168,12 @@ class AppBarTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
         ),
         hintText: 'Поиск',
-        hintStyle: const TextStyle(color: Colors.black),
+        hintStyle: const TextStyle(color: unselectedItemColor),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide.none),
         filled: true,
+        fillColor: containersColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
     );

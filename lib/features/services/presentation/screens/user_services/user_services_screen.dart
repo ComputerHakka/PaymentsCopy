@@ -68,24 +68,29 @@ class ServiceBoxWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 107,
-      width: 161,
-      padding: const EdgeInsets.all(14),
-      margin: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: isBoxInContainer ? Colors.white : containersColor,
-        border: Border.all(color: borderColor, width: 0.5),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const CircleAvatar(radius: 17.5),
-          const SizedBox(height: 6),
-          Text(company, style: const TextStyle(fontSize: 10)),
-          Text(service, style: const TextStyle(fontSize: 12)),
-        ],
+    return GestureDetector(
+      onTap: () {
+        GoRouter.of(context).goNamed(RouteNames.serviceDetailsScreen);
+      },
+      child: Container(
+        height: 107,
+        width: 161,
+        padding: const EdgeInsets.all(14),
+        margin: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: isBoxInContainer ? Colors.white : containersColor,
+          border: Border.all(color: borderColor, width: 0.5),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const CircleAvatar(radius: 17.5),
+            const SizedBox(height: 6),
+            Text(company, style: const TextStyle(fontSize: 10)),
+            Text(service, style: const TextStyle(fontSize: 12)),
+          ],
+        ),
       ),
     );
   }

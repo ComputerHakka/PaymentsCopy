@@ -8,26 +8,31 @@ const Color borderColor = Color(0xFFE2E8F0);
 
 ThemeData appTheme(BuildContext context) {
   return ThemeData(
+    fontFamily: 'Ubuntu',
     scaffoldBackgroundColor: Colors.white,
     textTheme: const TextTheme(
       displayLarge: TextStyle(
+        fontFamily: 'Ubuntu',
         fontSize: 35,
         fontWeight: FontWeight.w500,
         height: 1.1,
       ),
       displaySmall: TextStyle(
+        fontFamily: 'Ubuntu',
         fontSize: 14,
         fontWeight: FontWeight.w400,
         color: Colors.black,
       ),
       headlineMedium: TextStyle(
+        fontFamily: 'Ubuntu',
         fontSize: 18,
         fontWeight: FontWeight.bold,
         color: Colors.black,
       ),
       titleMedium: TextStyle(
+        fontFamily: 'Ubuntu',
         fontSize: 16,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w700,
         color: Colors.black,
       ),
     ),
