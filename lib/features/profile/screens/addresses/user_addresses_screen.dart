@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:personal_payment_app/config/theme/app_themes.dart';
 
 class UserAddressesScreen extends StatelessWidget {
   const UserAddressesScreen({super.key});
@@ -15,9 +15,9 @@ class UserAddressesScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Адреса',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 15),
             const Text(
@@ -25,7 +25,7 @@ class UserAddressesScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                color: Color(0xFFADBECE),
+                color: unselectedItemColor,
               ),
             ),
             const SizedBox(height: 15),
@@ -69,7 +69,7 @@ class _AddressCellWidgetState extends State<AddressCellWidget> {
       margin: const EdgeInsets.symmetric(vertical: 7.5),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFE2E8F0),
+        color: containersColor,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
@@ -78,10 +78,26 @@ class _AddressCellWidgetState extends State<AddressCellWidget> {
           const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text('Адрес проживания'),
-                Text('Краснодарский Край'),
-                Text('Изменить'),
+                Text(
+                  'Адрес проживания',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      color: unselectedItemColor),
+                ),
+                Text(
+                  'Краснодарский Край, г. Краснодар, Ул. Рашпилевская, д. 315, кв 1',
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
+                ),
+                Text(
+                  'Изменить',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      color: accentColor),
+                ),
               ],
             ),
           ),

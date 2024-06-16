@@ -16,9 +16,9 @@ class ChangePhoneScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Укажите новый номер',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 30),
             TextField(
@@ -31,7 +31,14 @@ class ChangePhoneScreen extends StatelessWidget {
                 ),
               ],
               style: const TextStyle(fontSize: 16),
-              decoration: getChangeInputDecoration(),
+              decoration: getChangeInputDecoration().copyWith(
+                hintText: '+7',
+                hintStyle: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                ),
+              ),
             ),
           ],
         ),

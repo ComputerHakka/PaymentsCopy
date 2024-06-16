@@ -15,9 +15,9 @@ class ChangeEmailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Изменить e-mail',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 15),
             const Text(
@@ -25,13 +25,19 @@ class ChangeEmailScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                color: Color(0xFFADBECE),
+                color: unselectedItemColor,
               ),
             ),
             const SizedBox(height: 15),
             TextField(
               style: const TextStyle(fontSize: 16),
-              decoration: getChangeInputDecoration(),
+              decoration: getChangeInputDecoration().copyWith(
+                  hintText: 'Введите ваш e-mail',
+                  hintStyle: const TextStyle(
+                    color: unselectedItemColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                  )),
             ),
           ],
         ),

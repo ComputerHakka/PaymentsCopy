@@ -7,16 +7,35 @@ class HomeControlScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: const SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CmerasControlWidget(),
-            ElectronicsControlWidget(),
-          ],
+      appBar: AppBar(
+        title: const AppBarTextField(),
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 6),
+            decoration: BoxDecoration(
+              color: containersColor,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.notifications),
+            ),
+          ),
+        ],
+      ),
+      body: const Padding(
+        padding: EdgeInsets.only(top: 16),
+        child: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CmerasControlWidget(),
+              ElectronicsControlWidget(),
+            ],
+          ),
         ),
       ),
     );
@@ -33,9 +52,12 @@ class ElectronicsControlWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Text('Электроника'),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            'Электроника',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
         ),
         SizedBox(
           height: 133,
@@ -67,19 +89,22 @@ class CmerasControlWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Видеонаблюдение'),
+              Text(
+                'Видеонаблюдение',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
               SizedBox(
                 width: 70,
                 height: 30,
                 child: ElevatedButton(
                     style: const ButtonStyle(
-                      padding: MaterialStatePropertyAll(
+                      padding: WidgetStatePropertyAll(
                         EdgeInsets.symmetric(vertical: 0),
                       ),
                     ),
                     onPressed: () {},
                     child: const Icon(Icons.play_arrow_rounded)),
-              )
+              ),
             ],
           ),
         ),
@@ -152,6 +177,31 @@ class ElectronicCellwidget extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class AppBarTextField extends StatelessWidget {
+  const AppBarTextField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      decoration: InputDecoration(
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        hintText: 'Поиск',
+        hintStyle: const TextStyle(color: unselectedItemColor),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
+        ),
+        prefixIcon: const Icon(Icons.search),
+        filled: true,
+        fillColor: containersColor,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
     );
   }

@@ -10,18 +10,27 @@ class HistoryScreen extends StatelessWidget {
       appBar: AppBar(
         title: const AppBarTextField(),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications),
+          Container(
+            margin: const EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 6),
+            decoration: BoxDecoration(
+              color: containersColor,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.notifications),
+            ),
           ),
         ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Text('Май'),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 15, 16, 10),
+            child:
+                Text('Май', style: Theme.of(context).textTheme.headlineMedium),
           ),
           SizedBox(
             height: 50,
@@ -109,11 +118,14 @@ class DayTransationsWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             '19 Мая',
-            style: TextStyle(fontWeight: FontWeight.w500),
+            style: Theme.of(context)
+                .textTheme
+                .headlineMedium!
+                .copyWith(fontWeight: FontWeight.w500),
           ),
         ),
         ListView.builder(
@@ -170,8 +182,10 @@ class AppBarTextField extends StatelessWidget {
         hintText: 'Поиск',
         hintStyle: const TextStyle(color: unselectedItemColor),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide.none),
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
+        ),
+        prefixIcon: const Icon(Icons.search),
         filled: true,
         fillColor: containersColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),

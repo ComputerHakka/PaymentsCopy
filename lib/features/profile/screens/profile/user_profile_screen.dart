@@ -15,11 +15,16 @@ class UserProfileScreen extends StatelessWidget {
         ),
         body: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: const Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              UserMainWidget(),
-              ParametersListWidget(),
+              const UserMainWidget(),
+              const ParametersListWidget(),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: ElevatedButton(
+                    onPressed: () {}, child: const Text('Выйти из приложения')),
+              )
             ],
           ),
         ),
@@ -109,7 +114,9 @@ class UserParameterWidget extends StatelessWidget {
             children: [
               icon,
               const SizedBox(width: 15),
-              Expanded(child: Text(title)),
+              Expanded(
+                  child: Text(title,
+                      style: Theme.of(context).textTheme.displaySmall)),
               const Icon(Icons.arrow_forward_ios_rounded),
             ],
           ),

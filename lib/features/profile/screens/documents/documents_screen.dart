@@ -14,12 +14,17 @@ class UserDocumentsScreen extends StatelessWidget {
       body: const SizedBox(
         width: double.infinity,
         height: double.infinity,
-        child: Column(
-          children: [
-            ContratsListWidget(title: 'Договоры'),
-            SizedBox(height: 17),
-            ContratsListWidget(title: 'Удостоверения личности'),
-          ],
+        child: Padding(
+          padding: EdgeInsets.only(top: 15),
+          child: Column(
+            children: [
+              ContratsListWidget(title: 'Договоры'),
+              SizedBox(height: 17),
+              ContratsListWidget(
+                title: 'Удостоверения личности',
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -38,7 +43,10 @@ class ContratsListWidget extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(title),
+          child: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+          ),
         ),
         SizedBox(
           height: 137,
@@ -73,15 +81,18 @@ class DocumentCellWidget extends StatelessWidget {
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(radius: 17.5),
+          CircleAvatar(
+            radius: 17.5,
+            backgroundColor: unselectedItemColor,
+          ),
           SizedBox(height: 11),
           Text(
             'Алексей Иванов',
-            style: TextStyle(fontSize: 10),
+            style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
           ),
           Text(
             'Купли-продажа',
-            style: TextStyle(fontSize: 12),
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_payment_app/config/theme/app_themes.dart';
 
 class ServiceDetailsScreen extends StatelessWidget {
   const ServiceDetailsScreen({super.key});
@@ -61,7 +62,14 @@ class _ServiceCostWidget extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Стоимость'),
+        Text(
+          'Стоимость',
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 12,
+            color: unselectedItemColor,
+          ),
+        ),
         SizedBox(height: 15),
         Text('15 000р'),
       ],
@@ -79,7 +87,14 @@ class _ConnectionPeriodWidget extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Срок подключения'),
+        Text(
+          'Срок подключения',
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 12,
+            color: unselectedItemColor,
+          ),
+        ),
         SizedBox(height: 15),
         Text('5 часов в любой для вас день'),
       ],
@@ -97,7 +112,14 @@ class _PaymentMethodWidget extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Как оплачивать'),
+        Text(
+          'Как оплачивать',
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 12,
+            color: unselectedItemColor,
+          ),
+        ),
         SizedBox(height: 15),
         Text('Онлайн или на кассе любой картой'),
       ],
@@ -115,7 +137,14 @@ class _TechnologyInfoWidget extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Технология'),
+        Text(
+          'Технология',
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 12,
+            color: unselectedItemColor,
+          ),
+        ),
         SizedBox(height: 15),
         Text(
             'Очищаем воду от механических примесей, убираем железо и соли жесткости, получаем воду для технических нужд, Получаем чистую воду'),
@@ -131,12 +160,13 @@ class _TitleInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Питьевые системы'),
-        SizedBox(height: 15),
-        Text(
+        Text('Питьевые системы',
+            style: Theme.of(context).textTheme.headlineMedium),
+        const SizedBox(height: 15),
+        const Text(
             'Установка наших питьевых систем в домах делает воду доступной для всех жильцов. Они могут получать чистую воду прямо у себя дома или в обществе...'),
       ],
     );

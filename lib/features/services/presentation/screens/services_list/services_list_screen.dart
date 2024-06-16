@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/features/services/presentation/screens/user_services/user_services_screen.dart';
 
 class ServicesListScreen extends StatelessWidget {
@@ -10,6 +11,19 @@ class ServicesListScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Новые услуги'),
         centerTitle: false,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: IconButton(
+              style: const ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(containersColor),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              onPressed: () {},
+              icon: const Icon(Icons.search),
+            ),
+          )
+        ],
       ),
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

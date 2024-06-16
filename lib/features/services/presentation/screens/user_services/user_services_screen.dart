@@ -17,7 +17,7 @@ class UserServicesScreen extends StatelessWidget {
             padding: const EdgeInsets.only(right: 16),
             child: IconButton(
               style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(containersColor),
+                backgroundColor: WidgetStatePropertyAll(containersColor),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               onPressed: () {},

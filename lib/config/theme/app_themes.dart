@@ -26,7 +26,7 @@ ThemeData appTheme(BuildContext context) {
       headlineMedium: TextStyle(
         fontFamily: 'Ubuntu',
         fontSize: 18,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w700,
         color: Colors.black,
       ),
       titleMedium: TextStyle(
@@ -34,6 +34,11 @@ ThemeData appTheme(BuildContext context) {
         fontSize: 16,
         fontWeight: FontWeight.w700,
         color: Colors.black,
+      ),
+      titleLarge: TextStyle(
+        fontFamily: 'Ubuntu',
+        fontSize: 24,
+        fontWeight: FontWeight.w500,
       ),
     ),
     colorScheme: ColorScheme.fromSeed(seedColor: accentColor),
@@ -55,7 +60,7 @@ ChipThemeData getChipThemeData() {
   return const ChipThemeData(
     side: BorderSide(color: Colors.transparent),
     shape: StadiumBorder(),
-    color: MaterialStatePropertyAll(containersColor),
+    color: WidgetStatePropertyAll(containersColor),
   );
 }
 
@@ -85,6 +90,10 @@ InputDecorationTheme getInputDecorationTheme() {
       borderRadius: BorderRadius.circular(8),
       borderSide: const BorderSide(color: textFieldPassiveColor),
     ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: const BorderSide(color: accentColor, width: 2),
+    ),
     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
     hintStyle: const TextStyle(color: textFieldPassiveColor),
   );
@@ -92,13 +101,14 @@ InputDecorationTheme getInputDecorationTheme() {
 
 InputDecoration getChangeInputDecoration() {
   return const InputDecoration(
+    hintText: '',
     filled: true,
     border: OutlineInputBorder(
       borderSide: BorderSide(
         color: borderColor,
       ),
     ),
-    fillColor: textFieldPassiveColor,
+    fillColor: containersColor,
     constraints: BoxConstraints(
       maxHeight: 40,
     ),
@@ -106,22 +116,23 @@ InputDecoration getChangeInputDecoration() {
     suffixIcon: Icon(
       Icons.close_rounded,
       size: 17,
+      color: unselectedItemColor,
     ),
   );
 }
 
 ButtonStyle getButtonStyle(BuildContext context) {
   return ButtonStyle(
-    padding: const MaterialStatePropertyAll(
+    padding: const WidgetStatePropertyAll(
       EdgeInsets.symmetric(
         vertical: 12,
         horizontal: 15,
       ),
     ),
-    minimumSize: MaterialStatePropertyAll(
+    minimumSize: WidgetStatePropertyAll(
       Size(MediaQuery.of(context).size.width, 48),
     ),
-    textStyle: MaterialStateProperty.all<TextStyle>(
+    textStyle: WidgetStateProperty.all<TextStyle>(
         Theme.of(context).textTheme.titleMedium!),
   );
 }
