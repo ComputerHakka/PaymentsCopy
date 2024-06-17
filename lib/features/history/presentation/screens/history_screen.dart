@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
@@ -128,6 +129,7 @@ class TransationsListWidget extends StatelessWidget {
         .toSet();
     List<DateTime> uniqueDaysList = uniqueDays.toList()
       ..sort((a, b) => a.compareTo(b));
+
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 15),
       itemCount: uniqueDaysList.length,
@@ -145,13 +147,18 @@ class DayTransationsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting(); //TODO Тоже хуйня переделываем
+    var transactionsByPeriod = TransactionEntity.arrayOfTransactions
+        .where((element) =>
+            element.date.day == date.day && date.month == element.date.month)
+        .toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            DateFormat.MONTH_DAY,
+            DateFormat.MMMMd('ru').format(date),
             style: Theme.of(context)
                 .textTheme
                 .headlineMedium!
@@ -161,9 +168,11 @@ class DayTransationsWidget extends StatelessWidget {
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: 5,
+          itemCount: transactionsByPeriod.length,
           itemBuilder: (BuildContext context, int index) {
-            return const TransationWidget();
+            return TransationWidget(
+              transaction: transactionsByPeriod[index],
+            );
           },
         ),
       ],
@@ -172,27 +181,37 @@ class DayTransationsWidget extends StatelessWidget {
 }
 
 class TransationWidget extends StatelessWidget {
-  const TransationWidget({super.key});
+  const TransationWidget({super.key, required this.transaction});
+
+  final TransactionEntity transaction;
 
   @override
   Widget build(BuildContext context) {
-    return const ListTile(
-      leading: CircleAvatar(
+    final Color textColor =
+        transaction.type == TransactionType.refil ? Colors.green : Colors.black;
+    final String prefix = transaction.type == TransactionType.refil
+        ? '+'
+        : '-'; //TODO Тоже хуйня переделываем
+    return ListTile(
+      leading: const CircleAvatar(
         backgroundColor: unselectedItemColor,
       ),
       title: Text(
-        'Коммунальные услуги для вашего дома',
+        transaction.name,
         overflow: TextOverflow.fade,
         softWrap: false,
         maxLines: 1,
       ),
-      subtitle: Text('Банковские платежи'),
+      subtitle: const Text('Банковские платежи'),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text('+14500,2'),
-          Text('Платежынй счет'),
+          Text(
+            '$prefix${transaction.sum.toString()}',
+            style: TextStyle(color: textColor),
+          ),
+          const Text('Платежынй счет'),
         ],
       ),
     );
