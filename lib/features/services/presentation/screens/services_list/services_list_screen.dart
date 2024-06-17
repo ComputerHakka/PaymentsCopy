@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
+import 'package:personal_payment_app/features/services/domain/entities/service.dart';
 import 'package:personal_payment_app/features/services/presentation/screens/user_services/user_services_screen.dart';
 
 class ServicesListScreen extends StatelessWidget {
@@ -30,13 +31,12 @@ class ServicesListScreen extends StatelessWidget {
           crossAxisCount: 2,
           childAspectRatio: 1.4,
         ),
-        itemCount: 14,
+        itemCount: ServiceMock.anotherServices.length,
         itemBuilder: (_, int index) {
-          return const Padding(
-            padding: EdgeInsets.all(8.0),
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
             child: ServiceBoxWidget(
-              company: 'ООО Название коомпании',
-              service: 'Подача чистой воды',
+              service: ServiceMock.anotherServices[index],
             ),
           );
         },

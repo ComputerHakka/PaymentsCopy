@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
+import 'package:personal_payment_app/features/transactions/domain/entities/transaction.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
@@ -27,10 +30,22 @@ class HistoryScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 15, 16, 10),
-            child:
-                Text('Май', style: Theme.of(context).textTheme.headlineMedium),
+          //TODO Пиздец сомнительная тема
+          GestureDetector(
+            onTap: () async {
+              final DateTimeRange? dateTimeRange = await showDateRangePicker(
+                context: context,
+                firstDate: DateTime(2000),
+                lastDate: DateTime(3000),
+                initialEntryMode: DatePickerEntryMode.calendarOnly,
+              );
+              if (dateTimeRange != null) {}
+            },
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 15, 16, 10),
+              child: Text('Май',
+                  style: Theme.of(context).textTheme.headlineMedium),
+            ),
           ),
           SizedBox(
             height: 50,
@@ -80,8 +95,13 @@ class _CategoryChipState extends State<CategoryChip> {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: ChoiceChip(
-        //showCheckmark: false,
-        label: Text(widget.label),
+        showCheckmark: false,
+        label: Text(
+          widget.label,
+          style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                color: !isChecked ? Colors.black : Colors.white,
+              ),
+        ),
         selected: isChecked,
         onSelected: (value) {
           setState(() {
@@ -100,18 +120,28 @@ class TransationsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO этот кринж тоже фиксануть
+    //final transactions = TransactionEntity.arrayOfTransactions;
+    Set<DateTime> uniqueDays = TransactionEntity.arrayOfTransactions
+        .map((transaction) => DateTime(transaction.date.year,
+            transaction.date.month, transaction.date.day))
+        .toSet();
+    List<DateTime> uniqueDaysList = uniqueDays.toList()
+      ..sort((a, b) => a.compareTo(b));
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 15),
-      itemCount: 5,
+      itemCount: uniqueDaysList.length,
       itemBuilder: (BuildContext context, int index) {
-        return const DayTransationsWidget();
+        return DayTransationsWidget(date: uniqueDaysList[index]);
       },
     );
   }
 }
 
 class DayTransationsWidget extends StatelessWidget {
-  const DayTransationsWidget({super.key});
+  const DayTransationsWidget({super.key, required this.date});
+
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +151,7 @@ class DayTransationsWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            '19 Мая',
+            DateFormat.MONTH_DAY,
             style: Theme.of(context)
                 .textTheme
                 .headlineMedium!
@@ -148,7 +178,7 @@ class TransationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ListTile(
       leading: CircleAvatar(
-        backgroundColor: Colors.cyan,
+        backgroundColor: unselectedItemColor,
       ),
       title: Text(
         'Коммунальные услуги для вашего дома',
@@ -193,3 +223,28 @@ class AppBarTextField extends StatelessWidget {
     );
   }
 }
+
+
+// class DatePickerRangeWidget extends StatelessWidget {
+//   const DatePickerRangeWidget({
+//     super.key,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(
+//       child: ElevatedButton(
+//         onPressed: () async {
+//           final DateTimeRange? dateTimeRange = await showDateRangePicker(
+//             context: context,
+//             firstDate: DateTime(2000),
+//             lastDate: DateTime(3000),
+//             initialEntryMode: DatePickerEntryMode.calendarOnly,
+//           );
+//           if (dateTimeRange != null) {}
+//         },
+//         child: const Text('Показать ад'),
+//       ),
+//     );
+//   }
+// }

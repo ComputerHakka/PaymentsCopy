@@ -1,6 +1,5 @@
 import 'package:personal_payment_app/core/constants/constants.dart';
 import 'package:personal_payment_app/features/authorization/data/models/user.dart';
-import 'package:retrofit/http.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 

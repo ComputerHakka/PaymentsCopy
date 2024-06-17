@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
+import 'package:personal_payment_app/features/services/domain/entities/service.dart';
 
 class ServiceDetailsScreen extends StatelessWidget {
-  const ServiceDetailsScreen({super.key});
+  const ServiceDetailsScreen({super.key, required this.currentService});
+
+  final ServiceEntity currentService;
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +30,22 @@ class ServiceDetailsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _TitleInfoWidget(),
-                SizedBox(height: 15),
-                _TechnologyInfoWidget(),
-                SizedBox(height: 15),
-                _PaymentMethodWidget(),
-                SizedBox(height: 15),
-                _ConnectionPeriodWidget(),
-                SizedBox(height: 15),
-                _ServiceCostWidget(),
+                _TitleInfoWidget(
+                  title: currentService.name,
+                  description: currentService.description,
+                ),
+                const SizedBox(height: 15),
+                _TechnologyInfoWidget(technology: currentService.technology),
+                const SizedBox(height: 15),
+                _PaymentMethodWidget(paymentMethod: currentService.howToPay),
+                const SizedBox(height: 15),
+                _ConnectionPeriodWidget(
+                    connectionPeriod: currentService.connectionPeriod),
+                const SizedBox(height: 15),
+                _ServiceCostWidget(cost: currentService.cost),
               ],
             ),
             ElevatedButton(
@@ -52,76 +59,23 @@ class ServiceDetailsScreen extends StatelessWidget {
   }
 }
 
-class _ServiceCostWidget extends StatelessWidget {
-  const _ServiceCostWidget({
+class _TitleInfoWidget extends StatelessWidget {
+  const _TitleInfoWidget({
     super.key,
+    required this.title,
+    required this.description,
   });
+  final String title;
+  final String description;
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Стоимость',
-          style: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 12,
-            color: unselectedItemColor,
-          ),
-        ),
-        SizedBox(height: 15),
-        Text('15 000р'),
-      ],
-    );
-  }
-}
-
-class _ConnectionPeriodWidget extends StatelessWidget {
-  const _ConnectionPeriodWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Срок подключения',
-          style: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 12,
-            color: unselectedItemColor,
-          ),
-        ),
-        SizedBox(height: 15),
-        Text('5 часов в любой для вас день'),
-      ],
-    );
-  }
-}
-
-class _PaymentMethodWidget extends StatelessWidget {
-  const _PaymentMethodWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Как оплачивать',
-          style: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 12,
-            color: unselectedItemColor,
-          ),
-        ),
-        SizedBox(height: 15),
-        Text('Онлайн или на кассе любой картой'),
+        Text(title, style: Theme.of(context).textTheme.headlineMedium),
+        const SizedBox(height: 15),
+        Text(description),
       ],
     );
   }
@@ -130,14 +84,17 @@ class _PaymentMethodWidget extends StatelessWidget {
 class _TechnologyInfoWidget extends StatelessWidget {
   const _TechnologyInfoWidget({
     super.key,
+    required this.technology,
   });
+
+  final String technology;
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Технология',
           style: TextStyle(
             fontWeight: FontWeight.w400,
@@ -145,29 +102,92 @@ class _TechnologyInfoWidget extends StatelessWidget {
             color: unselectedItemColor,
           ),
         ),
-        SizedBox(height: 15),
-        Text(
-            'Очищаем воду от механических примесей, убираем железо и соли жесткости, получаем воду для технических нужд, Получаем чистую воду'),
+        const SizedBox(height: 15),
+        Text(technology),
       ],
     );
   }
 }
 
-class _TitleInfoWidget extends StatelessWidget {
-  const _TitleInfoWidget({
+class _PaymentMethodWidget extends StatelessWidget {
+  const _PaymentMethodWidget({
     super.key,
+    required this.paymentMethod,
   });
+
+  final String paymentMethod;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Питьевые системы',
-            style: Theme.of(context).textTheme.headlineMedium),
-        const SizedBox(height: 15),
         const Text(
-            'Установка наших питьевых систем в домах делает воду доступной для всех жильцов. Они могут получать чистую воду прямо у себя дома или в обществе...'),
+          'Как оплачивать',
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 12,
+            color: unselectedItemColor,
+          ),
+        ),
+        const SizedBox(height: 15),
+        Text(paymentMethod),
+      ],
+    );
+  }
+}
+
+class _ConnectionPeriodWidget extends StatelessWidget {
+  const _ConnectionPeriodWidget({
+    super.key,
+    required this.connectionPeriod,
+  });
+
+  final String connectionPeriod;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Срок подключения',
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 12,
+            color: unselectedItemColor,
+          ),
+        ),
+        const SizedBox(height: 15),
+        Text(connectionPeriod),
+      ],
+    );
+  }
+}
+
+class _ServiceCostWidget extends StatelessWidget {
+  const _ServiceCostWidget({
+    super.key,
+    required this.cost,
+  });
+
+  final double cost;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Стоимость',
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 12,
+            color: unselectedItemColor,
+          ),
+        ),
+        const SizedBox(height: 15),
+        Text('${cost.toString()}р'),
       ],
     );
   }

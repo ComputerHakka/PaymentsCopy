@@ -1,5 +1,7 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
 
 class TransactionsListScreen extends StatelessWidget {
@@ -8,7 +10,23 @@ class TransactionsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Операции'),
+        centerTitle: false,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: IconButton(
+              style: const ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(containersColor),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              onPressed: () {},
+              icon: const Icon(Icons.search),
+            ),
+          )
+        ],
+      ),
       body: const Column(
         children: [
           Periodwidget(),
@@ -26,24 +44,38 @@ class Periodwidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData().copyWith(dividerColor: Colors.transparent),
-      child: const ExpansionTile(
-        title: Text('Расходы за май'),
-        children: [
-          CircleAvatar(radius: 57.5),
-          Wrap(
-            spacing: 10,
-            children: [
-              CategoryChipWidget(label: 'Интернет 1000₽'),
-              CategoryChipWidget(label: 'ЖКХ 1000₽'),
-              CategoryChipWidget(label: 'Охрана 1000₽'),
-              CategoryChipWidget(label: 'Чистая вода 1000₽'),
-              CategoryChipWidget(label: 'Остальное 1000₽'),
-            ],
+    return ExpansionTile(
+      title: const Text('Расходы за май'),
+      children: [
+        //CircleAvatar(radius: 57.5),
+        SizedBox(
+          height: 115,
+          width: 115,
+          child: PieChart(
+            PieChartData(
+              centerSpaceRadius: 37.5,
+              sections: [
+                PieChartSectionData(value: 30, radius: 20, showTitle: false),
+                PieChartSectionData(value: 10, radius: 20, showTitle: false),
+                PieChartSectionData(value: 20, radius: 20, showTitle: false),
+                PieChartSectionData(value: 50, radius: 20, showTitle: false),
+                PieChartSectionData(value: 40, radius: 20, showTitle: false),
+              ],
+            ),
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 15),
+        const Wrap(
+          spacing: 10,
+          children: [
+            CategoryChipWidget(label: 'Интернет 1000р'),
+            CategoryChipWidget(label: 'ЖКХ 1000р'),
+            CategoryChipWidget(label: 'Охрана 1000р'),
+            CategoryChipWidget(label: 'Чистая вода 1000р'),
+            CategoryChipWidget(label: 'Остальное 1000р'),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -57,9 +89,7 @@ class CategoryChipWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Chip(
       label: Text(label),
-      side: const BorderSide(color: Colors.transparent),
-      shape: const StadiumBorder(),
-      color: const MaterialStatePropertyAll(Colors.green),
+      color: const WidgetStatePropertyAll(Colors.amberAccent),
     );
   }
 }
@@ -119,21 +149,24 @@ class TransationWidget extends StatelessWidget {
         },
         child: const ListTile(
           leading: CircleAvatar(
-            backgroundColor: Colors.cyan,
+            backgroundColor: unselectedItemColor,
           ),
           title: Text(
             'Коммунальные услуги для вашего дома',
             overflow: TextOverflow.fade,
             softWrap: false,
             maxLines: 1,
+            style: TextStyle(fontSize: 17),
           ),
-          subtitle: Text('Банковские платежи'),
+          subtitle: Text('Банковские платежи', style: TextStyle(fontSize: 11)),
           trailing: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text('+14500,2'),
-              Text('Платежынй счет'),
+              Text('+14500,2',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
+              Text('Платежынй счет',
+                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.w400)),
             ],
           ),
         ),

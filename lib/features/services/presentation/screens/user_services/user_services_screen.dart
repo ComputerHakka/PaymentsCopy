@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
+import 'package:personal_payment_app/features/services/domain/entities/service.dart';
 
 class UserServicesScreen extends StatelessWidget {
   const UserServicesScreen({super.key});
@@ -34,11 +35,10 @@ class UserServicesScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
               shrinkWrap: true,
-              itemCount: 4,
+              itemCount: ServiceMock.userServices.length,
               itemBuilder: (BuildContext context, int index) {
-                return const ServiceBoxWidget(
-                  company: 'ООО Название компании',
-                  service: 'Подача чистой воды',
+                return ServiceBoxWidget(
+                  service: ServiceMock.userServices[index],
                 );
               },
             ),
@@ -57,20 +57,21 @@ class UserServicesScreen extends StatelessWidget {
 class ServiceBoxWidget extends StatelessWidget {
   const ServiceBoxWidget({
     super.key,
-    required this.company,
     required this.service,
     this.isBoxInContainer = false,
   });
 
-  final String company;
-  final String service;
+  final ServiceEntity service;
   final bool isBoxInContainer;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).goNamed(RouteNames.serviceDetailsScreen);
+        GoRouter.of(context).goNamed(
+          RouteNames.serviceDetailsScreen,
+          extra: service,
+        );
       },
       child: Container(
         height: 107,
@@ -85,10 +86,13 @@ class ServiceBoxWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CircleAvatar(radius: 17.5),
+            const CircleAvatar(
+              radius: 17.5,
+              backgroundColor: unselectedItemColor,
+            ),
             const SizedBox(height: 6),
-            Text(company, style: const TextStyle(fontSize: 10)),
-            Text(service, style: const TextStyle(fontSize: 12)),
+            Text(service.companyId!, style: const TextStyle(fontSize: 10)),
+            Text(service.name, style: const TextStyle(fontSize: 12)),
           ],
         ),
       ),
@@ -123,9 +127,8 @@ class NewServicesWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
               itemCount: 4,
               itemBuilder: (BuildContext context, int index) {
-                return const ServiceBoxWidget(
-                  company: 'ООО Название компании',
-                  service: 'Подача чистой воды',
+                return ServiceBoxWidget(
+                  service: ServiceMock.anotherServices[index],
                   isBoxInContainer: true,
                 );
               },
@@ -137,7 +140,8 @@ class NewServicesWidget extends StatelessWidget {
               onPressed: () {
                 GoRouter.of(context).goNamed(RouteNames.servicesListScreen);
               },
-              child: const Text('Все 42 предложения'),
+              child:
+                  Text('Все ${ServiceMock.anotherServices.length} предложения'),
             ),
           ),
         ],

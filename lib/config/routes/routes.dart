@@ -14,6 +14,7 @@ import 'package:personal_payment_app/features/profile/screens/documents/document
 import 'package:personal_payment_app/features/profile/screens/profile/user_profile_screen.dart';
 import 'package:personal_payment_app/features/registration/presentation/screens/registration_screen.dart';
 import 'package:personal_payment_app/features/root/presentation/screens/root_screen.dart';
+import 'package:personal_payment_app/features/services/domain/entities/service.dart';
 import 'package:personal_payment_app/features/services/presentation/screens/service_details/service_details_screen.dart';
 import 'package:personal_payment_app/features/services/presentation/screens/services_list/services_list_screen.dart';
 import 'package:personal_payment_app/features/services/presentation/screens/user_services/user_services_screen.dart';
@@ -90,11 +91,15 @@ class AppRoutes {
                         builder: (context, state) => const ServicesListScreen(),
                         routes: [
                           GoRoute(
-                            path: 'service_details',
-                            name: RouteNames.serviceDetailsScreen,
-                            builder: (context, state) =>
-                                const ServiceDetailsScreen(),
-                          )
+                              path: 'service_details',
+                              name: RouteNames.serviceDetailsScreen,
+                              builder: (context, state) {
+                                ServiceEntity service =
+                                    state.extra as ServiceEntity;
+                                return ServiceDetailsScreen(
+                                  currentService: service,
+                                );
+                              })
                         ],
                       ),
                     ],

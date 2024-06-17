@@ -124,6 +124,8 @@ class InputBarWidget extends StatelessWidget {
   }
 }
 
+//TODO запихнуть все в отедльный виджет он находитяс на четырех или более экранах
+
 class AppBarTextField extends StatelessWidget {
   const AppBarTextField({super.key});
 

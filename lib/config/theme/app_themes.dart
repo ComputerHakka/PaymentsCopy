@@ -43,6 +43,7 @@ ThemeData appTheme(BuildContext context) {
     ),
     colorScheme: ColorScheme.fromSeed(seedColor: accentColor),
     useMaterial3: true,
+    dividerColor: Colors.transparent,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: getButtonStyle(context),
     ),
@@ -60,7 +61,8 @@ ChipThemeData getChipThemeData() {
   return const ChipThemeData(
     side: BorderSide(color: Colors.transparent),
     shape: StadiumBorder(),
-    color: WidgetStatePropertyAll(containersColor),
+    backgroundColor: containersColor,
+    selectedColor: accentColor,
   );
 }
 
