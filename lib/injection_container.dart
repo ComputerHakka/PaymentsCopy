@@ -5,6 +5,8 @@ import 'package:personal_payment_app/features/authorization/data/repository/user
 import 'package:personal_payment_app/features/authorization/domain/repository/user_repository.dart';
 import 'package:personal_payment_app/features/authorization/domain/usecases/login.dart';
 import 'package:personal_payment_app/features/authorization/presentation/bloc/auth/remote/remote_auth_bloc.dart';
+import 'package:personal_payment_app/features/history/presentation/bloc/filter/filter_transactions_bloc.dart';
+import 'package:personal_payment_app/features/support/presentation/bloc/bloc/messages_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final container = GetIt.instance;
@@ -23,4 +25,9 @@ Future<void> initializeDependencies() async {
       LoginUseCase(userRepository: container()));
 
   container.registerFactory<RemoteAuthBloc>(() => RemoteAuthBloc(container()));
+
+  container
+      .registerFactory<FilterTransactionsBloc>(() => FilterTransactionsBloc());
+
+  container.registerFactory<MessagesBloc>(() => MessagesBloc());
 }

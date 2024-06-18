@@ -4,6 +4,7 @@ import 'package:personal_payment_app/core/constants/constants.dart';
 import 'package:personal_payment_app/features/authorization/presentation/bloc/auth/remote/remote_auth_bloc.dart';
 import 'package:personal_payment_app/features/authorization/presentation/screens/authorization_screen.dart';
 import 'package:personal_payment_app/features/authorization/presentation/screens/start_screen.dart';
+import 'package:personal_payment_app/features/history/presentation/bloc/filter/filter_transactions_bloc.dart';
 import 'package:personal_payment_app/features/history/presentation/screens/history_screen.dart';
 import 'package:personal_payment_app/features/home_control/presentation/screens/home_control_screen.dart';
 import 'package:personal_payment_app/features/payment/presentation/screens/home/home_screen.dart';
@@ -18,6 +19,7 @@ import 'package:personal_payment_app/features/services/domain/entities/service.d
 import 'package:personal_payment_app/features/services/presentation/screens/service_details/service_details_screen.dart';
 import 'package:personal_payment_app/features/services/presentation/screens/services_list/services_list_screen.dart';
 import 'package:personal_payment_app/features/services/presentation/screens/user_services/user_services_screen.dart';
+import 'package:personal_payment_app/features/support/presentation/bloc/bloc/messages_bloc.dart';
 import 'package:personal_payment_app/features/support/presentation/screens/support_chat_screen.dart';
 import 'package:personal_payment_app/features/transactions/presentation/screens/transaction_details/transaction_details_screen.dart';
 import 'package:personal_payment_app/features/transactions/presentation/screens/transactions_list/transactions_list_screen.dart';
@@ -113,7 +115,12 @@ class AppRoutes {
               GoRoute(
                 path: '/history',
                 name: RouteNames.historyScreen,
-                builder: (context, state) => const HistoryScreen(),
+                builder: (context, state) =>
+                    BlocProvider<FilterTransactionsBloc>(
+                  create: (context) =>
+                      container()..add(const ChangeFilterEvent(index: 0)),
+                  child: const HistoryScreen(),
+                ),
               ),
             ],
           ),
@@ -131,7 +138,11 @@ class AppRoutes {
               GoRoute(
                 path: '/support_chat',
                 name: RouteNames.supportChatScreen,
-                builder: (context, state) => const SupportChatScreen(),
+                builder: (context, state) => BlocProvider<MessagesBloc>(
+                  create: (context) =>
+                      container()..add(const GetMessagesEvent()),
+                  child: const SupportChatScreen(),
+                ),
               ),
             ],
           ),

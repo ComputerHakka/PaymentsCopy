@@ -1,8 +1,11 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
+import 'package:personal_payment_app/features/transactions/domain/entities/transaction.dart';
 
 class TransactionsListScreen extends StatelessWidget {
   const TransactionsListScreen({super.key});
@@ -99,37 +102,59 @@ class TransationsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO этот кринж тоже фиксануть
+    //final transactions = TransactionEntity.arrayOfTransactions;
+    Set<DateTime> uniqueDays = TransactionEntity.arrayOfTransactions
+        .map((transaction) => DateTime(transaction.date.year,
+            transaction.date.month, transaction.date.day))
+        .toSet();
+    List<DateTime> uniqueDaysList = uniqueDays.toList()
+      ..sort((a, b) => b.compareTo(a));
+
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 15),
-      itemCount: 5,
+      itemCount: uniqueDaysList.length,
       itemBuilder: (BuildContext context, int index) {
-        return const DayTransationsWidget();
+        return DayTransationsWidget(date: uniqueDaysList[index]);
       },
     );
   }
 }
 
 class DayTransationsWidget extends StatelessWidget {
-  const DayTransationsWidget({super.key});
+  const DayTransationsWidget({super.key, required this.date});
+
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting(); //TODO Тоже хуйня переделываем
+    var transactionsByPeriod = TransactionEntity.arrayOfTransactions
+        .where((element) =>
+            element.date.day == date.day && date.month == element.date.month)
+        .toList();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            '19 Мая',
-            style: TextStyle(fontWeight: FontWeight.w500),
+            DateFormat.MMMMd('ru').format(date),
+            style: Theme.of(context)
+                .textTheme
+                .headlineMedium!
+                .copyWith(fontWeight: FontWeight.w500),
           ),
         ),
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: 5,
+          itemCount: transactionsByPeriod.length,
           itemBuilder: (BuildContext context, int index) {
-            return const TransationWidget();
+            return TransationWidget(
+              transaction: transactionsByPeriod[index],
+            );
           },
         ),
       ],
@@ -138,35 +163,50 @@ class DayTransationsWidget extends StatelessWidget {
 }
 
 class TransationWidget extends StatelessWidget {
-  const TransationWidget({super.key});
-
+  const TransationWidget({super.key, required this.transaction});
+  final TransactionEntity transaction;
   @override
   Widget build(BuildContext context) {
+    final Color textColor =
+        transaction.type == TransactionType.refil ? Colors.green : Colors.black;
+    final String prefix = transaction.type == TransactionType.refil
+        ? '+'
+        : '-'; //TODO Тоже хуйня переделываем
     return Ink(
       child: InkWell(
         onTap: () {
           GoRouter.of(context).pushNamed(RouteNames.transactionDetailsScreen);
         },
-        child: const ListTile(
-          leading: CircleAvatar(
+        child: ListTile(
+          leading: const CircleAvatar(
             backgroundColor: unselectedItemColor,
           ),
           title: Text(
-            'Коммунальные услуги для вашего дома',
+            transaction.name,
             overflow: TextOverflow.fade,
             softWrap: false,
             maxLines: 1,
-            style: TextStyle(fontSize: 17),
           ),
-          subtitle: Text('Банковские платежи', style: TextStyle(fontSize: 11)),
+          subtitle: const Text(
+            'Банковские платежи',
+            style: TextStyle(fontSize: 11),
+          ),
           trailing: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text('+14500,2',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
-              Text('Платежынй счет',
-                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.w400)),
+              Text(
+                '$prefix${transaction.sum.toString()}',
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              const Text(
+                'Платежынй счет',
+                style: TextStyle(fontSize: 11, fontWeight: FontWeight.w400),
+              ),
             ],
           ),
         ),

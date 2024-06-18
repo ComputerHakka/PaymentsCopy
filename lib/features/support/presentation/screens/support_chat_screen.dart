@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
+import 'package:personal_payment_app/features/support/domain/entities/message.dart';
+import 'package:personal_payment_app/features/support/presentation/bloc/bloc/messages_bloc.dart';
+import 'package:personal_payment_app/injection_container.dart';
 
 class SupportChatScreen extends StatelessWidget {
   const SupportChatScreen({super.key});
@@ -45,7 +51,78 @@ class MessageListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: Container());
+    return Expanded(
+      child: BlocBuilder<MessagesBloc, MessagesState>(
+        builder: (context, state) {
+          if (state is MessageSendDoneState) {
+            return ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              itemCount: state.sessionMessages!.length,
+              itemBuilder: (context, index) {
+                return MessageBox(message: state.sessionMessages![index]);
+              },
+            );
+          }
+          if (state is MessagesLoadingState) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return const SizedBox();
+        },
+      ),
+    );
+  }
+}
+
+class MessageBox extends StatelessWidget {
+  const MessageBox({super.key, required this.message});
+
+  final MessageEntity message;
+
+  @override
+  Widget build(BuildContext context) {
+    initializeDateFormatting();
+    final alignment =
+        message.userId == 1 ? MainAxisAlignment.end : MainAxisAlignment.start;
+    final color = message.userId == 1 ? accentColor : const Color(0xFFE1EAFF);
+    final textColor = message.userId == 1 ? Colors.white : Colors.black;
+    return Row(
+      mainAxisAlignment: alignment,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+          constraints:
+              BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: IntrinsicWidth(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  message.text,
+                  style: TextStyle(color: textColor),
+                  textAlign:
+                      message.userId == 1 ? TextAlign.right : TextAlign.left,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      DateFormat.jm('ru').format(message.date),
+                      style: TextStyle(color: textColor),
+                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -99,6 +176,17 @@ class InputBarWidget extends StatelessWidget {
         ),
         Expanded(
           child: TextField(
+            onSubmitted: (value) {
+              BlocProvider.of<MessagesBloc>(context).add(
+                SendMessageEvent(
+                  message: MessageEntity(
+                    text: value,
+                    userId: 1,
+                    date: DateTime.now(),
+                  ),
+                ),
+              );
+            },
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(horizontal: 12),
               hintText: 'Сообщение',
@@ -115,10 +203,10 @@ class InputBarWidget extends StatelessWidget {
             ),
           ),
         ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.arrow_upward),
-        ),
+        // IconButton(
+        //   onPressed: () {},
+        //   icon: const Icon(Icons.arrow_upward),
+        // ),
       ],
     );
   }
