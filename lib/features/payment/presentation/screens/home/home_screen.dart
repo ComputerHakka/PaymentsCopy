@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
@@ -156,16 +157,16 @@ class AccountBalanceWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7.5),
       child: AspectRatio(
-        aspectRatio: 5.12,
+        aspectRatio: 4.9,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: containersColor,
           ),
-          child: const Row(
+          child: Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -181,21 +182,20 @@ class AccountBalanceWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              AspectRatio(
-                aspectRatio: 3.1,
-                child: ElevatedButton(
-                  onPressed: null,
-                  style: ButtonStyle(
-                    padding: WidgetStatePropertyAll(
-                      EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 15,
-                      ),
+              ElevatedButton(
+                onPressed: null,
+                style: ButtonStyle(
+                  padding: const WidgetStatePropertyAll(
+                    EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 15,
                     ),
-                    visualDensity: VisualDensity.comfortable,
                   ),
-                  child: Text('Пополнить'),
+                  visualDensity: VisualDensity.comfortable,
+                  minimumSize: WidgetStatePropertyAll(
+                      Size.fromWidth(MediaQuery.of(context).size.width / 3)),
                 ),
+                child: const Text('Пополнить'),
               ),
             ],
           ),
