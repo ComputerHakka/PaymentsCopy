@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -5,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/features/support/domain/entities/message.dart';
 import 'package:personal_payment_app/features/support/presentation/bloc/bloc/messages_bloc.dart';
-import 'package:personal_payment_app/injection_container.dart';
 
 class SupportChatScreen extends StatelessWidget {
   const SupportChatScreen({super.key});
@@ -31,7 +31,7 @@ class SupportChatScreen extends StatelessWidget {
         ],
       ),
       body: const Padding(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(vertical: 16),
         child: Column(
           children: [
             HeadCallWidget(),
@@ -51,12 +51,21 @@ class MessageListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scrollController = ScrollController();
     return Expanded(
       child: BlocBuilder<MessagesBloc, MessagesState>(
         builder: (context, state) {
           if (state is MessageSendDoneState) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              scrollController.animateTo(
+                scrollController.position.maxScrollExtent,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOut,
+              );
+            });
             return ListView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 15),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
+              controller: scrollController,
               itemCount: state.sessionMessages!.length,
               itemBuilder: (context, index) {
                 return MessageBox(message: state.sessionMessages![index]);
@@ -80,6 +89,7 @@ class MessageBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO тоже полнейшая залупа
     initializeDateFormatting();
     final alignment =
         message.userId == 1 ? MainAxisAlignment.end : MainAxisAlignment.start;
@@ -104,8 +114,7 @@ class MessageBox extends StatelessWidget {
                 Text(
                   message.text,
                   style: TextStyle(color: textColor),
-                  textAlign:
-                      message.userId == 1 ? TextAlign.right : TextAlign.left,
+                  textAlign: TextAlign.left,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -133,81 +142,131 @@ class HeadCallWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          'Чат поддержки',
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        SizedBox(
-          width: 70,
-          height: 30,
-          child: ElevatedButton(
-            style: const ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.green),
-              iconColor: WidgetStatePropertyAll(Colors.white),
-              padding: WidgetStatePropertyAll(
-                EdgeInsets.symmetric(vertical: 0),
-              ),
-            ),
-            onPressed: () {},
-            child: const Icon(Icons.call),
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 4),
+            blurRadius: 4,
+            color: containersColor,
           ),
-        ),
-      ],
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Чат поддержки',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          SizedBox(
+            width: 70,
+            height: 30,
+            child: ElevatedButton(
+              style: const ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(Colors.green),
+                iconColor: WidgetStatePropertyAll(Colors.white),
+                padding: WidgetStatePropertyAll(
+                  EdgeInsets.symmetric(vertical: 0),
+                ),
+              ),
+              onPressed: () {},
+              child: const Icon(Icons.call),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class InputBarWidget extends StatelessWidget {
+class InputBarWidget extends StatefulWidget {
   const InputBarWidget({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.file_present),
+  State<InputBarWidget> createState() => _InputBarWidgetState();
+}
+
+class _InputBarWidgetState extends State<InputBarWidget> {
+  final TextEditingController _textController = TextEditingController();
+
+  void sendMessage(String text) {
+    BlocProvider.of<MessagesBloc>(context).add(
+      SendMessageEvent(
+        message: MessageEntity(
+          text: text,
+          userId: 1,
+          date: DateTime.now(),
         ),
-        Expanded(
-          child: TextField(
-            onSubmitted: (value) {
-              BlocProvider.of<MessagesBloc>(context).add(
-                SendMessageEvent(
-                  message: MessageEntity(
-                    text: value,
-                    userId: 1,
-                    date: DateTime.now(),
-                  ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15, left: 16, right: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            onPressed: () {},
+            style: const ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(containersColor),
+              iconColor: WidgetStatePropertyAll(unselectedItemColor),
+            ),
+            icon: const Icon(Icons.file_present),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: TextField(
+              controller: _textController,
+              // onSubmitted: (value) {
+              //   if (value.isNotEmpty) {
+              //     sendMessage(value);
+              //   }
+              //   setState(() {
+              //     _textController.clear();
+              //   });
+              // },
+              keyboardType: TextInputType.multiline,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                hintText: 'Сообщение',
+                hintStyle: const TextStyle(color: unselectedItemColor),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
                 ),
-              );
-            },
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-              hintText: 'Сообщение',
-              hintStyle: const TextStyle(color: unselectedItemColor),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-                borderSide: BorderSide.none,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: containersColor,
               ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              filled: true,
-              fillColor: containersColor,
             ),
           ),
-        ),
-        // IconButton(
-        //   onPressed: () {},
-        //   icon: const Icon(Icons.arrow_upward),
-        // ),
-      ],
+          const SizedBox(width: 10),
+          IconButton(
+            onPressed: () {
+              if (_textController.text.isNotEmpty) {
+                sendMessage(_textController.text);
+                _textController.clear();
+              }
+            },
+            style: const ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(accentColor),
+              iconColor: WidgetStatePropertyAll(Colors.white),
+            ),
+            icon: const Icon(Icons.arrow_upward),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -223,6 +282,7 @@ class AppBarTextField extends StatelessWidget {
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
         ),
         hintText: 'Поиск',
         hintStyle: const TextStyle(color: unselectedItemColor),

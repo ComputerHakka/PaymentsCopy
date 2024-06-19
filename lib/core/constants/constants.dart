@@ -19,7 +19,7 @@ class RouteNames {
 }
 
 class ApiConstants {
-  static const paymentAPIBasePort = '25564';
+  static const paymentAPIBasePort = '2222';
   static const paymentAPIBaseIP = '192.168.0.216';
   static const paymentAPIBaseURL =
       'http://$paymentAPIBaseIP:$paymentAPIBasePort';

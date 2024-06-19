@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:personal_payment_app/features/authorization/domain/entities/user.dart';
+import 'package:personal_payment_app/features/user_account/domain/entities/user.dart';
 
 part 'user.g.dart';
 
@@ -62,4 +62,17 @@ class AuthResponse {
 
   factory AuthResponse.fromJson(Map<String, dynamic> json) =>
       _$AuthResponseFromJson(json);
+}
+
+@JsonSerializable()
+class ChangeContactsRequest {
+  final String? phone;
+  final String? email;
+
+  ChangeContactsRequest({this.email, this.phone});
+
+  factory ChangeContactsRequest.fromJson(Map<String, dynamic> json) =>
+      _$ChangeContactsRequestFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ChangeContactsRequestToJson(this);
 }

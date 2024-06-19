@@ -12,12 +12,19 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
   }
 
   void onGetMessages(GetMessagesEvent event, Emitter<MessagesState> emit) {
-    emit(MessageSendDoneState(sessionMessages: MessageEntity.messagesMock));
+    final messages = MessageEntity.messagesMock.toList();
+    emit(MessageSendDoneState(sessionMessages: messages));
   }
 
   void onSendMessageEvent(SendMessageEvent event, Emitter<MessagesState> emit) {
-    MessageEntity.messagesMock.add(event.message!);
-    final messages = MessageEntity.messagesMock;
-    emit(MessageSendDoneState(sessionMessages: messages));
+    if (event.message!.text.isEmpty) {
+      return;
+    }
+    final state = this.state;
+    emit(
+      MessageSendDoneState(
+        sessionMessages: List.from(state.sessionMessages!)..add(event.message!),
+      ),
+    );
   }
 }

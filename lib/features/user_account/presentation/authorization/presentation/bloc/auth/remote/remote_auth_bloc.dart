@@ -2,9 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:personal_payment_app/core/resources/data_state.dart';
-import 'package:personal_payment_app/features/authorization/data/models/user.dart';
-import 'package:personal_payment_app/features/authorization/domain/entities/user.dart';
-import 'package:personal_payment_app/features/authorization/domain/usecases/login.dart';
+import 'package:personal_payment_app/features/user_account/data/models/user.dart';
+import 'package:personal_payment_app/features/user_account/domain/entities/user.dart';
+import 'package:personal_payment_app/features/user_account/domain/usecases/login.dart';
 
 part 'remote_auth_event.dart';
 part 'remote_auth_state.dart';

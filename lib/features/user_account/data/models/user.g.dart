@@ -45,3 +45,17 @@ Map<String, dynamic> _$AuthResponseToJson(AuthResponse instance) =>
       'access_token': instance.token,
       'user': instance.user,
     };
+
+ChangeContactsRequest _$ChangeContactsRequestFromJson(
+        Map<String, dynamic> json) =>
+    ChangeContactsRequest(
+      email: json['email'] as String?,
+      phone: json['phone'] as String?,
+    );
+
+Map<String, dynamic> _$ChangeContactsRequestToJson(
+        ChangeContactsRequest instance) =>
+    <String, dynamic>{
+      'phone': instance.phone,
+      'email': instance.email,
+    };

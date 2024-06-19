@@ -283,6 +283,7 @@ class AppBarTextField extends StatelessWidget {
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
         ),
         hintText: 'Поиск',
         hintStyle: const TextStyle(color: unselectedItemColor),

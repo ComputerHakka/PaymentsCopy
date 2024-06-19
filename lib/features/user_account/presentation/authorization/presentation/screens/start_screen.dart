@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
 
@@ -16,7 +17,7 @@ class StartScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset('lib/core/assets/images/logo.png'),
+              SvgPicture.asset('lib/core/assets/images/logo.svg'),
               const SizedBox(height: 80),
               Text(
                 'Добро пожаловать\nв оплату услуг!',

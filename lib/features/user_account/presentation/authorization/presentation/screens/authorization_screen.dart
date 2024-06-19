@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
-import 'package:personal_payment_app/features/authorization/presentation/bloc/auth/remote/remote_auth_bloc.dart';
+import 'package:personal_payment_app/features/user_account/presentation/authorization/presentation/bloc/auth/remote/remote_auth_bloc.dart';
 import 'package:personal_payment_app/injection_container.dart';
 
 class AuthorizationScreen extends StatefulWidget {
