@@ -34,14 +34,48 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<DataState<String>> changeContacts(ChangeContactsRequest request) {
-    // TODO: implement changeContacts
-    throw UnimplementedError();
+  Future<DataState<String>> changeContacts(
+      int userId, ChangeContactsRequest request) async {
+    try {
+      final httpResponse =
+          await _authApiService.changeContacts(userId, request);
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      print(e);
+      return DataFailed(e);
+    }
   }
 
   @override
-  Future<DataState<String>> createUser(UserModel request) {
-    // TODO: implement createUser
-    throw UnimplementedError();
+  Future<DataState<String>> createUser(UserModel request) async {
+    try {
+      final httpResponse = await _authApiService.createUser(request);
+      if (httpResponse.response.statusCode == HttpStatus.created) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      print(e);
+      return DataFailed(e);
+    }
   }
 }

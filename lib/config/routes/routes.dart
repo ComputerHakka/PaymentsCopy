@@ -13,6 +13,7 @@ import 'package:personal_payment_app/features/user_account/presentation/profile/
 import 'package:personal_payment_app/features/user_account/presentation/profile/screens/change_phone/change_phone_screen.dart';
 import 'package:personal_payment_app/features/user_account/presentation/profile/screens/documents/documents_screen.dart';
 import 'package:personal_payment_app/features/user_account/presentation/profile/screens/profile/user_profile_screen.dart';
+import 'package:personal_payment_app/features/user_account/presentation/registration/presentation/bloc/remote/remote_registration_bloc.dart';
 import 'package:personal_payment_app/features/user_account/presentation/registration/presentation/screens/registration_screen.dart';
 import 'package:personal_payment_app/features/root/presentation/screens/root_screen.dart';
 import 'package:personal_payment_app/features/services/domain/entities/service.dart';
@@ -164,7 +165,10 @@ class AppRoutes {
           GoRoute(
             path: 'registration',
             name: RouteNames.registrationScreen,
-            builder: (context, state) => const RegistrationScreen(),
+            builder: (context, state) => BlocProvider<RemoteRegistrationBloc>(
+              create: (context) => container(),
+              child: const RegistrationScreen(),
+            ),
           ),
         ],
       ),

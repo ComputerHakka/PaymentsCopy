@@ -7,5 +7,6 @@ abstract class UserRepository {
 
   Future<DataState<String>> createUser(UserModel request);
 
-  Future<DataState<String>> changeContacts(ChangeContactsRequest request);
+  Future<DataState<String>> changeContacts(
+      int userId, ChangeContactsRequest request);
 }

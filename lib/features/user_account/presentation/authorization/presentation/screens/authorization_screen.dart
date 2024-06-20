@@ -55,6 +55,7 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
                   suffixIcon: const Icon(Icons.remove_red_eye_outlined),
                   errorText: errorText,
                 ),
+                obscureText: true,
                 controller: passwordController,
                 onChanged: (value) {
                   setState(() {});

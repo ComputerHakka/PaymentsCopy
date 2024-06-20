@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
+import 'package:personal_payment_app/features/user_account/presentation/registration/presentation/bloc/remote/remote_registration_bloc.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -34,7 +37,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
-  void createUser() {}
+  void createUser() {
+    BlocProvider.of<RemoteRegistrationBloc>(context).add(
+      CreateUserEvent(
+        firstName: firstNameController.text,
+        lastName: lastNameController.text,
+        email: emailController.text,
+        password: passwordController.text,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +101,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     labelText: 'Пароль',
                     labelStyle: TextStyle(color: textFieldTextColor),
                   ),
+                  obscureText: true,
                   controller: passwordController,
                   onChanged: (value) => checkTextFields(),
                 ),
@@ -98,6 +111,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     labelText: 'Пароль ещё раз',
                     labelStyle: TextStyle(color: textFieldTextColor),
                   ),
+                  obscureText: true,
                   controller: passwordAgainController,
                   onChanged: (value) => checkTextFields(),
                 ),
@@ -156,7 +170,45 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: onPressed ? createUser : null,
-                  child: const Text('Войти в аккаунт'),
+                  child: BlocConsumer<RemoteRegistrationBloc,
+                      RemoteRegistrationState>(
+                    listener: (context, state) {
+                      if (state is RemoteRegistrationSuccessState) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            elevation: 5,
+                            duration: Duration(seconds: 2),
+                            behavior: SnackBarBehavior.floating,
+                            margin: EdgeInsets.fromLTRB(16, 0, 16, 30),
+                            content: Text('Регистрация прошла успешно'),
+                          ),
+                        );
+                        GoRouter.of(context).pop();
+                      }
+                      if (state is RemoteRegistrationFailedState) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            elevation: 5,
+                            duration: Duration(seconds: 2),
+                            behavior: SnackBarBehavior.floating,
+                            margin: EdgeInsets.fromLTRB(16, 0, 16, 30),
+                            content:
+                                Text('Что-то пошло не так.\nПопробуйте позже'),
+                          ),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is RemoteRegistrationInitialState ||
+                          state is RemoteRegistrationFailedState) {
+                        return const Text('Принять и продолжить');
+                      }
+                      if (state is RemoteRegistrationInProccesState) {
+                        return const CircularProgressIndicator();
+                      }
+                      return const SizedBox();
+                    },
+                  ),
                 ),
               ],
             ),
