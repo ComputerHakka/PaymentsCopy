@@ -15,9 +15,20 @@ class AuthorizationScreen extends StatefulWidget {
 class _AuthorizationScreenState extends State<AuthorizationScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  String? errorText;
 
   @override
   Widget build(BuildContext context) {
+    void login() {
+      BlocProvider.of<RemoteAuthBloc>(context)
+          .add(LoginEvent(emailController.text, passwordController.text));
+      if (BlocProvider.of<RemoteAuthBloc>(context).state.user == null) {
+        setState(() {
+          errorText = '* Неверный пароль';
+        });
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -31,49 +42,56 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
               TextField(
                 decoration: const InputDecoration(labelText: 'Почта'),
                 controller: emailController,
+                onChanged: (value) {
+                  setState(() {});
+                },
               ),
               const SizedBox(
                 height: 16,
               ),
               TextField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Пароль',
-                  suffixIcon: Icon(Icons.remove_red_eye_outlined),
-                  //errorText: '* Неверный пароль',
+                  suffixIcon: const Icon(Icons.remove_red_eye_outlined),
+                  errorText: errorText,
                 ),
                 controller: passwordController,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              TextButton(
-                onPressed: () {
-                  // BlocProvider.of<RemoteAuthBloc>(context).add(LoginEvent(
-                  //     emailController.text, passwordController.text));
+                onChanged: (value) {
+                  setState(() {});
                 },
+              ),
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: () {},
                 child: const Text('Забыли пароль?'),
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  GoRouter.of(context).goNamed(RouteNames.homeScreen);
+              const SizedBox(height: 16),
+              BlocConsumer<RemoteAuthBloc, RemoteAuthState>(
+                builder: (context, state) {
+                  bool onPressed = false;
+                  if (emailController.text.isNotEmpty &&
+                      passwordController.text.isNotEmpty) {
+                    onPressed = true;
+                  }
+
+                  if (state is RemoteAuthInitialState ||
+                      state is RemoteAuthFailedState) {
+                    return ElevatedButton(
+                      onPressed: onPressed ? login : null,
+                      child: const Text('Войти'),
+                    );
+                  }
+                  if (state is RemoteAuthInProccesState) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return const SizedBox();
                 },
-                child: const Text('Войти'),
+                listener: (BuildContext context, RemoteAuthState state) {
+                  if (state is RemoteAuthSuccessState) {
+                    GoRouter.of(context).goNamed(RouteNames.homeScreen);
+                  }
+                },
               ),
-              // BlocBuilder<RemoteAuthBloc, RemoteAuthState>(
-              //   builder: (context, state) {
-              //     if (state is RemoteAuthInProccesState) {
-              //       return const CircularProgressIndicator();
-              //     }
-              //     if (state is RemoteAuthSuccessState) {
-              //       return Text(state.user!.firstName);
-              //     } else {
-              //       return Text(state.exception!.response.toString());
-              //     }
-              //   },
-              // ),
             ],
           ),
         ),

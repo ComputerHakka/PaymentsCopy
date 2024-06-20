@@ -5,6 +5,7 @@ const Color textFieldPassiveColor = Color(0xFFE2E8F0);
 const Color containersColor = Color(0xFFF1F5F9);
 const Color unselectedItemColor = Color(0xFFADBECE);
 const Color borderColor = Color(0xFFE2E8F0);
+const Color textFieldTextColor = Color(0xFF64748B);
 
 ThemeData appTheme(BuildContext context) {
   return ThemeData(

@@ -11,11 +11,12 @@ part 'remote_auth_state.dart';
 
 class RemoteAuthBloc extends Bloc<RemoteAuthEvent, RemoteAuthState> {
   final LoginUseCase _loginUseCase;
-  RemoteAuthBloc(this._loginUseCase) : super(const RemoteAuthInProccesState()) {
+  RemoteAuthBloc(this._loginUseCase) : super(const RemoteAuthInitialState()) {
     on<LoginEvent>(onLogin);
   }
 
   void onLogin(LoginEvent event, Emitter<RemoteAuthState> emit) async {
+    emit(const RemoteAuthInProccesState());
     final dataState = await _loginUseCase(
         params: AuthRequest(
       email: event.email,

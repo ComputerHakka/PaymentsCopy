@@ -50,13 +50,13 @@ class _AuthApiService implements AuthApiService {
   }
 
   @override
-  Future<void> createUser(UserModel user) async {
+  Future<String> createUser(UserModel user) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(user.toJson());
-    await _dio.fetch<void>(_setStreamType<void>(Options(
+    final _result = await _dio.fetch<String>(_setStreamType<String>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -72,10 +72,12 @@ class _AuthApiService implements AuthApiService {
           _dio.options.baseUrl,
           baseUrl,
         ))));
+    final value = _result.data!;
+    return value;
   }
 
   @override
-  Future<void> changeContacts(
+  Future<String> changeContacts(
     int id,
     ChangeContactsRequest request,
   ) async {
@@ -84,7 +86,7 @@ class _AuthApiService implements AuthApiService {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    await _dio.fetch<void>(_setStreamType<void>(Options(
+    final _result = await _dio.fetch<String>(_setStreamType<String>(Options(
       method: 'PATCH',
       headers: _headers,
       extra: _extra,
@@ -100,6 +102,8 @@ class _AuthApiService implements AuthApiService {
           _dio.options.baseUrl,
           baseUrl,
         ))));
+    final value = _result.data!;
+    return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 
 class HomeControlScreen extends StatelessWidget {
@@ -19,7 +20,9 @@ class HomeControlScreen extends StatelessWidget {
             ),
             child: IconButton(
               onPressed: () {},
-              icon: const Icon(Icons.notifications),
+              icon: SvgPicture.asset(
+                'lib/core/assets/icons/notifications.svg',
+              ),
             ),
           ),
         ],
@@ -97,13 +100,16 @@ class CmerasControlWidget extends StatelessWidget {
                 width: 70,
                 height: 30,
                 child: ElevatedButton(
-                    style: const ButtonStyle(
-                      padding: WidgetStatePropertyAll(
-                        EdgeInsets.symmetric(vertical: 0),
-                      ),
+                  style: const ButtonStyle(
+                    padding: WidgetStatePropertyAll(
+                      EdgeInsets.symmetric(vertical: 0),
                     ),
-                    onPressed: () {},
-                    child: const Icon(Icons.play_arrow_rounded)),
+                  ),
+                  onPressed: () {},
+                  child: SvgPicture.asset(
+                    'lib/core/assets/icons/play.svg',
+                  ),
+                ),
               ),
             ],
           ),

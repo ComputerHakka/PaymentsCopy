@@ -34,12 +34,13 @@ class StartScreen extends StatelessWidget {
                   'Войти в аккаунт',
                 ),
               ),
+              const SizedBox(height: 10),
               TextButton(
                 onPressed: () {
                   GoRouter.of(context).goNamed(RouteNames.registrationScreen);
                 },
                 child: const Text('Создать аккаунт'),
-              )
+              ),
             ],
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
@@ -24,7 +25,9 @@ class HistoryScreen extends StatelessWidget {
             ),
             child: IconButton(
               onPressed: () {},
-              icon: const Icon(Icons.notifications),
+              icon: SvgPicture.asset(
+                'lib/core/assets/icons/notifications.svg',
+              ),
             ),
           ),
         ],

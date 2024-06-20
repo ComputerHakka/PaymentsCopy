@@ -5,7 +5,7 @@ import 'package:personal_payment_app/features/user_account/domain/entities/user.
 abstract class UserRepository {
   Future<DataState<UserEntity>> login(AuthRequest request);
 
-  Future<void> createUser(UserModel request);
+  Future<DataState<String>> createUser(UserModel request);
 
-  Future<void> changeContacts(ChangeContactsRequest request);
+  Future<DataState<String>> changeContacts(ChangeContactsRequest request);
 }

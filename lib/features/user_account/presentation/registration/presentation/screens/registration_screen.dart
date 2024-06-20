@@ -1,8 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 
-class RegistrationScreen extends StatelessWidget {
+class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
+
+  @override
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
+}
+
+class _RegistrationScreenState extends State<RegistrationScreen> {
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordAgainController = TextEditingController();
+  List<bool> checkTexFieldsForEmpty = [false, false, false, false, false];
+  bool onPressed = false;
+
+  void checkTextFields() {
+    if (firstNameController.text.isNotEmpty &&
+        lastNameController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty &&
+        passwordAgainController.text.isNotEmpty) {
+      setState(() {
+        onPressed = true;
+      });
+    } else {
+      setState(() {
+        onPressed = false;
+      });
+    }
+  }
+
+  void createUser() {}
 
   @override
   Widget build(BuildContext context) {
@@ -20,37 +52,79 @@ class RegistrationScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const TextField(
-                  decoration: InputDecoration(
+                TextField(
+                  decoration: const InputDecoration(
                     labelText: 'Имя',
+                    labelStyle: TextStyle(color: textFieldTextColor),
                   ),
+                  controller: firstNameController,
+                  onChanged: (value) => checkTextFields(),
                 ),
                 const SizedBox(height: 16),
-                const TextField(
-                  decoration: InputDecoration(
+                TextField(
+                  decoration: const InputDecoration(
                     labelText: 'Фамилия',
+                    labelStyle: TextStyle(color: textFieldTextColor),
                   ),
+                  controller: lastNameController,
+                  onChanged: (value) => checkTextFields(),
                 ),
                 const SizedBox(height: 16),
-                const TextField(
-                  decoration: InputDecoration(
+                TextField(
+                  decoration: const InputDecoration(
                     labelText: 'Почта',
+                    labelStyle: TextStyle(color: textFieldTextColor),
                   ),
+                  controller: emailController,
+                  onChanged: (value) => checkTextFields(),
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                    'На вашу почту поступит письмо\nс подтверждением аккаунта'),
-                const SizedBox(height: 16),
-                const TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Пароль',
-                  ),
+                  'На вашу почту поступит письмо\nс подтверждением аккаунта',
+                  style: TextStyle(color: textFieldTextColor),
                 ),
                 const SizedBox(height: 16),
-                const TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Пароль ещё раз',
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'Пароль',
+                    labelStyle: TextStyle(color: textFieldTextColor),
                   ),
+                  controller: passwordController,
+                  onChanged: (value) => checkTextFields(),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'Пароль ещё раз',
+                    labelStyle: TextStyle(color: textFieldTextColor),
+                  ),
+                  controller: passwordAgainController,
+                  onChanged: (value) => checkTextFields(),
+                ),
+                const SizedBox(height: 8),
+                const Column(
+                  children: [
+                    CorrectPasswordCheckotWidget(
+                        isCorrect: false,
+                        isMain: true,
+                        parameter: 'Надежность пароля: слабая'),
+                    CorrectPasswordCheckotWidget(
+                        isCorrect: false,
+                        isMain: false,
+                        parameter: 'Не менее 8 символов'),
+                    CorrectPasswordCheckotWidget(
+                        isCorrect: false,
+                        isMain: false,
+                        parameter: 'Как минимум 1 цифра'),
+                    CorrectPasswordCheckotWidget(
+                        isCorrect: false,
+                        isMain: false,
+                        parameter: 'Должен иметь хотя бы один символ'),
+                    CorrectPasswordCheckotWidget(
+                        isCorrect: false,
+                        isMain: false,
+                        parameter: 'Не должен содержать пробелов'),
+                  ],
                 ),
                 const SizedBox(height: 16),
                 RichText(
@@ -81,7 +155,7 @@ class RegistrationScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: onPressed ? createUser : null,
                   child: const Text('Войти в аккаунт'),
                 ),
               ],
@@ -106,9 +180,19 @@ class CorrectPasswordCheckotWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color color = isCorrect ? Colors.green : Colors.red;
+    final Icon icon = isMain
+        ? Icon(
+            Icons.info,
+            color: color,
+          )
+        : isCorrect
+            ? const Icon(Icons.check_rounded)
+            : const Icon(Icons.close_outlined);
     return Row(
       children: [
-        const Icon(Icons.close_outlined),
+        icon,
+        const SizedBox(width: 8),
         Text(parameter),
       ],
     );

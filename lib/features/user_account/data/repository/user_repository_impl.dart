@@ -34,13 +34,13 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<void> changeContacts(ChangeContactsRequest request) {
+  Future<DataState<String>> changeContacts(ChangeContactsRequest request) {
     // TODO: implement changeContacts
     throw UnimplementedError();
   }
 
   @override
-  Future<void> createUser(UserModel request) {
+  Future<DataState<String>> createUser(UserModel request) {
     // TODO: implement createUser
     throw UnimplementedError();
   }

@@ -6,7 +6,11 @@ sealed class RemoteAuthState extends Equatable {
   const RemoteAuthState({this.user, this.exception});
 
   @override
-  List<Object> get props => [user!];
+  List<Object?> get props => [user, exception];
+}
+
+final class RemoteAuthInitialState extends RemoteAuthState {
+  const RemoteAuthInitialState();
 }
 
 final class RemoteAuthInProccesState extends RemoteAuthState {

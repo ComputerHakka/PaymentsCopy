@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
@@ -23,7 +23,9 @@ class HomeScreen extends StatelessWidget {
               ),
               child: IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.notifications),
+                icon: SvgPicture.asset(
+                  'lib/core/assets/icons/notifications.svg',
+                ),
               ),
             ),
           ],

@@ -13,9 +13,9 @@ abstract class AuthApiService {
   Future<HttpResponse<AuthResponse>> login(@Body() AuthRequest request);
 
   @POST('/user')
-  Future<void> createUser(@Body() UserModel user);
+  Future<String> createUser(@Body() UserModel user);
 
   @PATCH('/user/{user_id}')
-  Future<void> changeContacts(
+  Future<String> changeContacts(
       @Path() int id, @Body() ChangeContactsRequest request);
 }
