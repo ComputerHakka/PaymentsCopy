@@ -9,4 +9,10 @@ abstract class UserRepository {
 
   Future<DataState<String>> changeContacts(
       int userId, ChangeContactsRequest request);
+
+  Future<void> saveUserLocal(UserEntity user);
+
+  Future<void> logout(UserEntity user);
+
+  Future<UserModel?> getUser();
 }

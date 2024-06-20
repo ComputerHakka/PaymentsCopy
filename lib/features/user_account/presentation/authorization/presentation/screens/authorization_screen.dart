@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
 import 'package:personal_payment_app/features/user_account/presentation/authorization/presentation/bloc/auth/remote/remote_auth_bloc.dart';
+import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
 import 'package:personal_payment_app/injection_container.dart';
 
 class AuthorizationScreen extends StatefulWidget {
@@ -89,6 +90,8 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
                 },
                 listener: (BuildContext context, RemoteAuthState state) {
                   if (state is RemoteAuthSuccessState) {
+                    BlocProvider.of<UserDatabaseBloc>(context)
+                        .add(SaveUserEvent(user: state.user));
                     GoRouter.of(context).goNamed(RouteNames.homeScreen);
                   }
                 },

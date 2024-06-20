@@ -17,11 +17,11 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'id': instance.id,
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
       'email': instance.email,
       'password': instance.password,
       'phone': instance.phone,
-      'first_name': instance.firstName,
-      'last_name': instance.lastName,
     };
 
 AuthRequest _$AuthRequestFromJson(Map<String, dynamic> json) => AuthRequest(

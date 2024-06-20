@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_payment_app/config/routes/routes.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
+import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
 import 'package:personal_payment_app/injection_container.dart';
 
 void main() async {
@@ -19,11 +21,14 @@ class PersonalPaymentApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: appTheme(context),
-      routerConfig: AppRoutes.router,
+    return BlocProvider<UserDatabaseBloc>(
+      create: (context) => container()..add(const GetUserEvent()),
+      child: MaterialApp.router(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: appTheme(context),
+        routerConfig: AppRoutes.router,
+      ),
     );
   }
 }

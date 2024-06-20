@@ -1,26 +1,20 @@
+import 'package:floor/floor.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:personal_payment_app/features/user_account/domain/entities/user.dart';
 
 part 'user.g.dart';
 
 @JsonSerializable()
+@Entity(tableName: 'user', primaryKeys: ['id'])
 class UserModel extends UserEntity {
-  @override
-  @JsonKey(name: 'first_name')
-  final String firstName;
-
-  @override
-  @JsonKey(name: 'last_name')
-  final String lastName;
-
   const UserModel({
     super.id,
-    required this.firstName,
-    required this.lastName,
+    required super.firstName,
+    required super.lastName,
     required super.email,
     required super.password,
     super.phone,
-  }) : super(firstName: firstName, lastName: lastName);
+  });
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
