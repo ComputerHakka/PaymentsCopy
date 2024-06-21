@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
 import 'package:personal_payment_app/features/user_account/presentation/authorization/presentation/bloc/auth/remote/remote_auth_bloc.dart';
 import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
-import 'package:personal_payment_app/injection_container.dart';
 
 class AuthorizationScreen extends StatefulWidget {
   const AuthorizationScreen({super.key});
@@ -17,6 +16,7 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String? errorText;
+  bool obscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +53,19 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
               TextField(
                 decoration: InputDecoration(
                   labelText: 'Пароль',
-                  suffixIcon: const Icon(Icons.remove_red_eye_outlined),
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        obscure = !obscure;
+                      });
+                    },
+                    child: obscure
+                        ? const Icon(Icons.visibility_off_outlined)
+                        : const Icon(Icons.visibility_outlined),
+                  ),
                   errorText: errorText,
                 ),
-                obscureText: true,
+                obscureText: obscure,
                 controller: passwordController,
                 onChanged: (value) {
                   setState(() {});

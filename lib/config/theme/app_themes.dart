@@ -190,6 +190,7 @@ ButtonStyle getTextButtonStyle(BuildContext context) {
     minimumSize: WidgetStatePropertyAll(
       Size(MediaQuery.of(context).size.width, 48),
     ),
+    foregroundColor: const WidgetStatePropertyAll(accentColor),
     textStyle: WidgetStateProperty.all<TextStyle>(
         Theme.of(context).textTheme.titleMedium!),
   );

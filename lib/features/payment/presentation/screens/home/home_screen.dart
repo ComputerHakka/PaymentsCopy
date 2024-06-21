@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                     OptionBoxWidget(title: 'Камеры'),
                     OptionBoxWidget(title: 'Двери'),
                     OptionBoxWidget(title: 'Парковка'),
-                    OptionBoxWidget(title: 'Пизда'),
+                    OptionBoxWidget(title: 'Гараж'),
                   ],
                 ),
               ),

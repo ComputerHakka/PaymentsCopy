@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/features/user_account/presentation/registration/presentation/bloc/remote/remote_registration_bloc.dart';
@@ -18,15 +17,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordAgainController = TextEditingController();
-  List<bool> checkTexFieldsForEmpty = [false, false, false, false, false];
+  List<bool> checkPasswordValid = [false, false, false, false, false];
   bool onPressed = false;
+  bool passwordEqual = true;
 
   void checkTextFields() {
+    final checkEqual = checkEqualPassword();
     if (firstNameController.text.isNotEmpty &&
         lastNameController.text.isNotEmpty &&
         emailController.text.isNotEmpty &&
         passwordController.text.isNotEmpty &&
-        passwordAgainController.text.isNotEmpty) {
+        passwordAgainController.text.isNotEmpty &&
+        !checkPasswordValid.any((e) => e == false) &&
+        checkEqual) {
       setState(() {
         onPressed = true;
       });
@@ -35,6 +38,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         onPressed = false;
       });
     }
+  }
+
+  bool checkEqualPassword() {
+    if (passwordController.text == passwordAgainController.text) {
+      setState(() {
+        passwordEqual = true;
+      });
+      return true;
+    } else {
+      setState(() {
+        passwordEqual = false;
+      });
+      return false;
+    }
+  }
+
+  bool validatePassword(String value) {
+    checkPasswordValid[1] = value.length < 8 ? false : true;
+    checkPasswordValid[2] = !RegExp(r'[0-9]').hasMatch(value) ? false : true;
+    checkPasswordValid[3] = !RegExp(r'[A-Za-z]').hasMatch(value) ? false : true;
+    checkPasswordValid[4] = RegExp(r'\s').hasMatch(value) ? false : true;
+    if (checkPasswordValid.skip(1).any((e) => e == false)) {
+      checkPasswordValid[0] = false;
+      setState(() {});
+      return false;
+    }
+    checkPasswordValid[0] = true;
+    setState(() {});
+    return true;
   }
 
   void createUser() {
@@ -103,39 +135,48 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   obscureText: true,
                   controller: passwordController,
-                  onChanged: (value) => checkTextFields(),
+                  onChanged: (value) {
+                    validatePassword(value);
+                    checkTextFields();
+                  },
                 ),
                 const SizedBox(height: 16),
                 TextField(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Пароль ещё раз',
-                    labelStyle: TextStyle(color: textFieldTextColor),
+                    labelStyle: const TextStyle(color: textFieldTextColor),
+                    errorText: passwordEqual ? null : '* Пароли не совпадают',
                   ),
                   obscureText: true,
                   controller: passwordAgainController,
-                  onChanged: (value) => checkTextFields(),
+                  onChanged: (value) {
+                    checkEqualPassword();
+                    checkTextFields();
+                  },
                 ),
                 const SizedBox(height: 8),
-                const Column(
+                Column(
                   children: [
                     CorrectPasswordCheckotWidget(
-                        isCorrect: false,
+                        isCorrect: checkPasswordValid[0],
                         isMain: true,
-                        parameter: 'Надежность пароля: слабая'),
+                        parameter: checkPasswordValid[0]
+                            ? 'Надежность пароля: надежный'
+                            : 'Надежность пароля: слабая'),
                     CorrectPasswordCheckotWidget(
-                        isCorrect: false,
+                        isCorrect: checkPasswordValid[1],
                         isMain: false,
                         parameter: 'Не менее 8 символов'),
                     CorrectPasswordCheckotWidget(
-                        isCorrect: false,
+                        isCorrect: checkPasswordValid[2],
                         isMain: false,
                         parameter: 'Как минимум 1 цифра'),
                     CorrectPasswordCheckotWidget(
-                        isCorrect: false,
+                        isCorrect: checkPasswordValid[3],
                         isMain: false,
                         parameter: 'Должен иметь хотя бы один символ'),
                     CorrectPasswordCheckotWidget(
-                        isCorrect: false,
+                        isCorrect: checkPasswordValid[4],
                         isMain: false,
                         parameter: 'Не должен содержать пробелов'),
                   ],
@@ -255,6 +296,7 @@ TextStyle getTextStyle(bool isLink) {
   return TextStyle(
     color: isLink ? accentColor : Colors.black,
     decoration: isLink ? TextDecoration.underline : TextDecoration.none,
+    fontFamily: 'Ubuntu',
     height: 1.4,
     fontSize: 14,
     fontWeight: FontWeight.w400,
