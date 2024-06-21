@@ -25,35 +25,40 @@ class ServiceDetailsScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _TitleInfoWidget(
-                  title: currentService.name,
-                  description: currentService.description,
-                ),
-                const SizedBox(height: 15),
-                _TechnologyInfoWidget(technology: currentService.technology),
-                const SizedBox(height: 15),
-                _PaymentMethodWidget(paymentMethod: currentService.howToPay),
-                const SizedBox(height: 15),
-                _ConnectionPeriodWidget(
-                    connectionPeriod: currentService.connectionPeriod),
-                const SizedBox(height: 15),
-                _ServiceCostWidget(cost: currentService.cost),
-              ],
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _TitleInfoWidget(
+                    title: currentService.name,
+                    description: currentService.description,
+                  ),
+                  const SizedBox(height: 15),
+                  _TechnologyInfoWidget(technology: currentService.technology),
+                  const SizedBox(height: 15),
+                  _PaymentMethodWidget(paymentMethod: currentService.howToPay),
+                  const SizedBox(height: 15),
+                  _ConnectionPeriodWidget(
+                      connectionPeriod: currentService.connectionPeriod),
+                  const SizedBox(height: 15),
+                  _ServiceCostWidget(cost: currentService.cost),
+                ],
+              ),
             ),
-            ElevatedButton(
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: ElevatedButton(
               onPressed: () {},
               child: const Text('Подключить'),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

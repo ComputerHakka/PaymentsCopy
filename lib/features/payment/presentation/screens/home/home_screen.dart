@@ -162,7 +162,7 @@ class AccountBalanceWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7.5),
       child: AspectRatio(
-        aspectRatio: 4.9,
+        aspectRatio: 4.4,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           decoration: BoxDecoration(
@@ -299,11 +299,20 @@ class ServicesInfoWidget extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      CircleAvatar(backgroundColor: unselectedItemColor),
+                      CircleAvatar(
+                        backgroundColor: unselectedItemColor,
+                        radius: 17,
+                      ),
                       SizedBox(width: 8),
-                      CircleAvatar(backgroundColor: unselectedItemColor),
+                      CircleAvatar(
+                        backgroundColor: unselectedItemColor,
+                        radius: 17,
+                      ),
                       SizedBox(width: 8),
-                      CircleAvatar(backgroundColor: unselectedItemColor),
+                      CircleAvatar(
+                        backgroundColor: unselectedItemColor,
+                        radius: 17,
+                      ),
                     ],
                   )
                 ],

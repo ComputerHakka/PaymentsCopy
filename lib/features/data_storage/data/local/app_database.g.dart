@@ -126,6 +126,18 @@ class _$UserDao extends UserDao {
                   'password': item.password,
                   'phone': item.phone
                 }),
+        _userModelUpdateAdapter = UpdateAdapter(
+            database,
+            'user',
+            ['id'],
+            (UserModel item) => <String, Object?>{
+                  'id': item.id,
+                  'firstName': item.firstName,
+                  'lastName': item.lastName,
+                  'email': item.email,
+                  'password': item.password,
+                  'phone': item.phone
+                }),
         _userModelDeletionAdapter = DeletionAdapter(
             database,
             'user',
@@ -147,6 +159,8 @@ class _$UserDao extends UserDao {
 
   final InsertionAdapter<UserModel> _userModelInsertionAdapter;
 
+  final UpdateAdapter<UserModel> _userModelUpdateAdapter;
+
   final DeletionAdapter<UserModel> _userModelDeletionAdapter;
 
   @override
@@ -164,6 +178,11 @@ class _$UserDao extends UserDao {
   @override
   Future<void> saveUser(UserModel user) async {
     await _userModelInsertionAdapter.insert(user, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> updateUser(UserModel user) async {
+    await _userModelUpdateAdapter.update(user, OnConflictStrategy.abort);
   }
 
   @override

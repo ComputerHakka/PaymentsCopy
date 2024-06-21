@@ -29,7 +29,7 @@ class ServicesListScreen extends StatelessWidget {
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 1.5,
+          childAspectRatio: 1.4,
         ),
         itemCount: ServiceMock.anotherServices.length,
         itemBuilder: (_, int index) {

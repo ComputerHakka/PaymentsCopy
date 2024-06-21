@@ -9,6 +9,9 @@ abstract class UserDao {
   @delete
   Future<void> deleteUser(UserModel user);
 
+  @update
+  Future<void> updateUser(UserModel user);
+
   @Query('SELECT * FROM user')
   Future<List<UserModel>> getUser();
 }

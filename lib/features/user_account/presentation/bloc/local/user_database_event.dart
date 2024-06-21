@@ -19,3 +19,7 @@ class SaveUserEvent extends UserDatabaseEvent {
 class DeleteUserEvent extends UserDatabaseEvent {
   const DeleteUserEvent({super.user});
 }
+
+class UpdateUserEvent extends UserDatabaseEvent {
+  const UpdateUserEvent({super.user});
+}
