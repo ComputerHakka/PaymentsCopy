@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
+import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -104,14 +106,15 @@ class UserNameWidget extends StatelessWidget {
             onTap: () {
               GoRouter.of(context).goNamed(RouteNames.profileScreen);
             },
-            child: const Row(
+            child: Row(
               children: [
                 Text(
-                  'Алексей',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                  context.read<UserDatabaseBloc>().state.user!.firstName,
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.w500),
                 ),
-                SizedBox(width: 10),
-                Icon(Icons.arrow_forward_ios_outlined),
+                const SizedBox(width: 10),
+                const Icon(Icons.arrow_forward_ios_outlined),
               ],
             ),
           ),
@@ -330,7 +333,7 @@ class AppBarTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide.none,
         ),
-        prefixIcon: const Icon(Icons.search),
+        prefixIcon: const Icon(Icons.search, color: unselectedItemColor),
         filled: true,
         fillColor: containersColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),

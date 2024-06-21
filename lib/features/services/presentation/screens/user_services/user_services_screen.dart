@@ -91,8 +91,20 @@ class ServiceBoxWidget extends StatelessWidget {
               backgroundColor: unselectedItemColor,
             ),
             const SizedBox(height: 6),
-            Text(service.companyId!, style: const TextStyle(fontSize: 10)),
-            Text(service.name, style: const TextStyle(fontSize: 12)),
+            Text(
+              service.companyId!,
+              style: const TextStyle(fontSize: 10),
+              maxLines: 1,
+              softWrap: false,
+              overflow: TextOverflow.fade,
+            ),
+            Text(
+              service.name,
+              style: const TextStyle(fontSize: 12),
+              maxLines: 1,
+              softWrap: false,
+              overflow: TextOverflow.fade,
+            ),
           ],
         ),
       ),
@@ -140,6 +152,10 @@ class NewServicesWidget extends StatelessWidget {
               onPressed: () {
                 GoRouter.of(context).goNamed(RouteNames.servicesListScreen);
               },
+              style: const ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(lightButton),
+                foregroundColor: WidgetStatePropertyAll(accentColor),
+              ),
               child:
                   Text('Все ${ServiceMock.anotherServices.length} предложения'),
             ),

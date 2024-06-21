@@ -6,6 +6,7 @@ const Color containersColor = Color(0xFFF1F5F9);
 const Color unselectedItemColor = Color(0xFFADBECE);
 const Color borderColor = Color(0xFFE2E8F0);
 const Color textFieldTextColor = Color(0xFF64748B);
+const Color lightButton = Color(0xFFD6E7F8);
 
 ThemeData appTheme(BuildContext context) {
   return ThemeData(
@@ -49,7 +50,7 @@ ThemeData appTheme(BuildContext context) {
       style: getButtonStyle(context),
     ),
     textButtonTheme: TextButtonThemeData(
-      style: getButtonStyle(context),
+      style: getTextButtonStyle(context),
     ),
     inputDecorationTheme: getInputDecorationTheme(),
     appBarTheme: getAppBarTheme(context),
@@ -112,8 +113,10 @@ InputDecoration getChangeInputDecoration() {
       ),
     ),
     fillColor: containersColor,
-    constraints: BoxConstraints(
-      maxHeight: 40,
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: borderColor,
+      ),
     ),
     contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
     suffixIcon: Icon(
@@ -125,6 +128,58 @@ InputDecoration getChangeInputDecoration() {
 }
 
 ButtonStyle getButtonStyle(BuildContext context) {
+  return ButtonStyle(
+    padding: const WidgetStatePropertyAll(
+      EdgeInsets.symmetric(
+        vertical: 12,
+        horizontal: 15,
+      ),
+    ),
+    shape: WidgetStateProperty.resolveWith<OutlinedBorder>(
+      (Set<WidgetState> states) {
+        if (states.contains(WidgetState.pressed)) {
+          return const StadiumBorder();
+        } else if (states.contains(WidgetState.disabled)) {
+          return const StadiumBorder(
+              side: BorderSide(
+            color: unselectedItemColor,
+            width: 2,
+          ));
+        }
+        return const StadiumBorder();
+      },
+    ),
+    backgroundColor: WidgetStateProperty.resolveWith<Color>(
+      (Set<WidgetState> states) {
+        if (states.contains(WidgetState.pressed)) {
+          return accentColor;
+        } else if (states.contains(WidgetState.disabled)) {
+          return Colors.transparent;
+        }
+        return accentColor;
+      },
+    ),
+    foregroundColor: WidgetStateProperty.resolveWith<Color>(
+      (Set<WidgetState> states) {
+        if (states.contains(WidgetState.pressed)) {
+          return Colors.white;
+        } else if (states.contains(WidgetState.disabled)) {
+          return unselectedItemColor;
+        }
+        return Colors.white; // Use the component's default.
+      },
+    ),
+    overlayColor:
+        const WidgetStatePropertyAll(Color.fromARGB(255, 58, 94, 255)),
+    minimumSize: WidgetStatePropertyAll(
+      Size(MediaQuery.of(context).size.width, 48),
+    ),
+    textStyle: WidgetStateProperty.all<TextStyle>(
+        Theme.of(context).textTheme.titleMedium!),
+  );
+}
+
+ButtonStyle getTextButtonStyle(BuildContext context) {
   return ButtonStyle(
     padding: const WidgetStatePropertyAll(
       EdgeInsets.symmetric(

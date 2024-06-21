@@ -294,7 +294,7 @@ class AppBarTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide.none,
         ),
-        prefixIcon: const Icon(Icons.search),
+        prefixIcon: const Icon(Icons.search, color: unselectedItemColor),
         filled: true,
         fillColor: containersColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
+import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
 
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final user = context.read<UserDatabaseBloc>().state.user!;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -18,12 +21,18 @@ class UserProfileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const UserMainWidget(),
-              const ParametersListWidget(),
+              UserMainWidget(firstName: user.firstName),
+              ParametersListWidget(email: user.email, phone: user.phone),
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: ElevatedButton(
-                    onPressed: () {}, child: const Text('Выйти из приложения')),
+                    onPressed: () {
+                      GoRouter.of(context).goNamed(RouteNames.loaderScreen);
+                      BlocProvider.of<UserDatabaseBloc>(context).add(
+                        DeleteUserEvent(user: user),
+                      );
+                    },
+                    child: const Text('Выйти из приложения')),
               )
             ],
           ),
@@ -34,20 +43,22 @@ class UserProfileScreen extends StatelessWidget {
 }
 
 class UserMainWidget extends StatelessWidget {
-  const UserMainWidget({super.key});
+  const UserMainWidget({super.key, required this.firstName});
+
+  final String firstName;
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        CircleAvatar(
+        const CircleAvatar(
           radius: 47.5,
           child: Icon(Icons.photo_camera),
         ),
-        SizedBox(height: 17),
-        Text('Алексей',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
-        SizedBox(height: 19),
+        const SizedBox(height: 17),
+        Text(firstName,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
+        const SizedBox(height: 19),
       ],
     );
   }
@@ -56,29 +67,34 @@ class UserMainWidget extends StatelessWidget {
 class ParametersListWidget extends StatelessWidget {
   const ParametersListWidget({
     super.key,
+    this.phone,
+    required this.email,
   });
+
+  final String? phone;
+  final String email;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView(
-        children: const [
+        children: [
           UserParameterWidget(
-            title: '+7 (918) 123-12-12',
-            icon: Icon(Icons.person),
+            title: phone ?? 'Укажите номер телефона',
+            icon: const Icon(Icons.person),
             route: RouteNames.changePhoneScreen,
           ),
           UserParameterWidget(
-            title: 'efuhufeufe@inbox.ru',
-            icon: Icon(Icons.person),
+            title: email,
+            icon: const Icon(Icons.person),
             route: RouteNames.changeEmailScreen,
           ),
-          UserParameterWidget(
+          const UserParameterWidget(
             title: 'Адреса',
             icon: Icon(Icons.person),
             route: RouteNames.addressesScreen,
           ),
-          UserParameterWidget(
+          const UserParameterWidget(
             title: 'Документы',
             icon: Icon(Icons.person),
             route: RouteNames.documentsScreen,

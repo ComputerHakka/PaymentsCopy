@@ -92,7 +92,7 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
                   if (state is RemoteAuthSuccessState) {
                     BlocProvider.of<UserDatabaseBloc>(context)
                         .add(SaveUserEvent(user: state.user));
-                    GoRouter.of(context).goNamed(RouteNames.homeScreen);
+                    GoRouter.of(context).goNamed(RouteNames.loaderScreen);
                   }
                 },
               ),

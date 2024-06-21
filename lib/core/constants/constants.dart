@@ -1,4 +1,5 @@
 class RouteNames {
+  static const loaderScreen = 'loader';
   static const startScreen = 'start_screen';
   static const authorizationScreen = 'auth_screen';
   static const registrationScreen = 'registration_screen';

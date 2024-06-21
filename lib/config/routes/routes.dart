@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
+import 'package:personal_payment_app/features/user_account/domain/usecases/get_user.dart';
 import 'package:personal_payment_app/features/user_account/presentation/authorization/presentation/bloc/auth/remote/remote_auth_bloc.dart';
 import 'package:personal_payment_app/features/user_account/presentation/authorization/presentation/screens/authorization_screen.dart';
 import 'package:personal_payment_app/features/user_account/presentation/authorization/presentation/screens/start_screen.dart';
@@ -9,6 +10,7 @@ import 'package:personal_payment_app/features/history/presentation/screens/histo
 import 'package:personal_payment_app/features/home_control/presentation/screens/home_control_screen.dart';
 import 'package:personal_payment_app/features/payment/presentation/screens/home/home_screen.dart';
 import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
+import 'package:personal_payment_app/features/user_account/presentation/loading/loading_screen.dart';
 import 'package:personal_payment_app/features/user_account/presentation/profile/screens/addresses/user_addresses_screen.dart';
 import 'package:personal_payment_app/features/user_account/presentation/profile/screens/change_email/change_email_screen.dart';
 import 'package:personal_payment_app/features/user_account/presentation/profile/screens/change_phone/change_phone_screen.dart';
@@ -29,21 +31,22 @@ import 'package:personal_payment_app/injection_container.dart';
 
 class AppRoutes {
   static final GoRouter router = GoRouter(
-    initialLocation: '/start',
-
     //TODO шо та нахуевертил
-    redirect: (context, state) {
-      final authState = context.watch<UserDatabaseBloc>().state;
-      if (authState is UserDatabaseLogin) {
-        return '/home';
-      }
-      if (authState is UserDatabaseNone) {
-        return '/start';
-      } else {
-        return null;
-      }
-    },
+    // redirect: (context, state) async {
+    //   print(state.matchedLocation);
+    //   final authUser = await container<GetUserUseCase>().call();
+    //   //final authState = context.read<UserDatabaseBloc>().state;
+    //   if (authUser != null && state.matchedLocation == '/') {
+    //     return '/home';
+    //   }
+    //   return null;
+    // },
     routes: [
+      GoRoute(
+        path: '/',
+        name: RouteNames.loaderScreen,
+        builder: (context, state) => const LoadingScreen(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
             RootScreen(navigationShell: navigationShell),

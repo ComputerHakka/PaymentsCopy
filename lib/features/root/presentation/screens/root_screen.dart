@@ -21,20 +21,26 @@ class RootScreen extends StatelessWidget {
             )
           ],
         ),
-        child: BottomNavigationBar(
-          selectedFontSize: 12,
-          backgroundColor: Colors.white,
+        child: Theme(
+          data: Theme.of(context).copyWith(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+          ),
+          child: BottomNavigationBar(
+            selectedFontSize: 12,
+            backgroundColor: Colors.white,
 
-          /// Лист элементов для нижнего навигационного бара.
-          items: _buildBottomNavBarItems,
+            /// Лист элементов для нижнего навигационного бара.
+            items: _buildBottomNavBarItems,
 
-          /// Текущий индекс нижнего навигационного бара.
-          currentIndex: navigationShell.currentIndex,
+            /// Текущий индекс нижнего навигационного бара.
+            currentIndex: navigationShell.currentIndex,
 
-          /// Обработчик нажатия на элемент нижнего навигационного бара.
-          onTap: (index) => navigationShell.goBranch(
-            index,
-            initialLocation: index == navigationShell.currentIndex,
+            /// Обработчик нажатия на элемент нижнего навигационного бара.
+            onTap: (index) => navigationShell.goBranch(
+              index,
+              initialLocation: index == navigationShell.currentIndex,
+            ),
           ),
         ),
       ),

@@ -88,7 +88,10 @@ class DocumentCellWidget extends StatelessWidget {
           SizedBox(height: 11),
           Text(
             'Алексей Иванов',
-            style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
+            style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w400,
+                color: unselectedItemColor),
           ),
           Text(
             'Купли-продажа',
