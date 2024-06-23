@@ -10,6 +10,7 @@ import 'package:personal_payment_app/features/user_account/domain/usecases/get_u
 import 'package:personal_payment_app/features/user_account/domain/usecases/login.dart';
 import 'package:personal_payment_app/features/user_account/domain/usecases/registration.dart';
 import 'package:personal_payment_app/features/user_account/domain/usecases/save_user.dart';
+import 'package:personal_payment_app/features/user_account/domain/usecases/update_user.dart';
 import 'package:personal_payment_app/features/user_account/presentation/authorization/presentation/bloc/auth/remote/remote_auth_bloc.dart';
 import 'package:personal_payment_app/features/history/presentation/bloc/filter/filter_transactions_bloc.dart';
 import 'package:personal_payment_app/features/support/presentation/bloc/bloc/messages_bloc.dart';
@@ -50,13 +51,16 @@ Future<void> initializeDependencies() async {
   container
       .registerSingleton<DeleteUserUseCase>(DeleteUserUseCase(container()));
 
+  container.registerSingleton<UpdateUserLocalUseCase>(
+      UpdateUserLocalUseCase(container()));
+
   container.registerFactory<RemoteAuthBloc>(() => RemoteAuthBloc(container()));
 
   container.registerFactory<RemoteRegistrationBloc>(
       () => RemoteRegistrationBloc(container()));
 
-  container.registerFactory<UserDatabaseBloc>(
-      () => UserDatabaseBloc(container(), container(), container()));
+  container.registerFactory<UserDatabaseBloc>(() =>
+      UserDatabaseBloc(container(), container(), container(), container()));
 
   container
       .registerFactory<FilterTransactionsBloc>(() => FilterTransactionsBloc());

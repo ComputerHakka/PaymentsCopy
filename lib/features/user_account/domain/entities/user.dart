@@ -24,18 +24,18 @@ class UserEntity extends Equatable {
   List<Object?> get props => [id, firstName, lastName, email, password, phone];
 
   UserEntity copyWith(
-      {ValueGetter<int?>? id,
+      {int? id,
       String? firstName,
       String? lastName,
       String? email,
       String? password,
-      ValueGetter<String?>? phone}) {
+      String? phone}) {
     return UserEntity(
-        id: id != null ? id() : this.id,
+        id: id ?? this.id,
         firstName: firstName ?? this.firstName,
         lastName: lastName ?? this.lastName,
         email: email ?? this.email,
         password: password ?? this.password,
-        phone: phone != null ? phone() : this.phone);
+        phone: phone ?? this.phone);
   }
 }

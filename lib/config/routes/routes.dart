@@ -43,7 +43,6 @@ class AppRoutes {
     //   }
     //   return null;
     // },
-    initialLocation: '/home/transactions',
     routes: [
       GoRoute(
         path: '/',

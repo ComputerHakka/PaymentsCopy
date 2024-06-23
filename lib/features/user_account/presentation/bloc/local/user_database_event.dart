@@ -21,5 +21,7 @@ class DeleteUserEvent extends UserDatabaseEvent {
 }
 
 class UpdateUserEvent extends UserDatabaseEvent {
-  const UpdateUserEvent({super.user});
+  final String? email;
+  final String? phone;
+  const UpdateUserEvent({this.email, this.phone});
 }
