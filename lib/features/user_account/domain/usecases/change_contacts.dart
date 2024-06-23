@@ -11,7 +11,9 @@ class ChangeContactsUseCase
       : _userRepository = userRepository;
 
   @override
-  Future<DataState<String>> call({ChangeContactsRequest? params}) {
-    return _userRepository.changeContacts(2, params!);
+  Future<DataState<String>> call({ChangeContactsRequest? params}) async {
+    //TODO тут юзера поменять и чекнуть все ли правильно написано!!!!
+    final user = await _userRepository.getUser();
+    return _userRepository.changeContacts(user!.id!, params!);
   }
 }

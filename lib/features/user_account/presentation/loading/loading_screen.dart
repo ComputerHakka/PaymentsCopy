@@ -18,10 +18,10 @@ class LoadingScreen extends StatelessWidget {
         );
       },
       listener: (context, state) {
-        if (state is UserDatabaseLogin) {
+        if (state is UserDatabaseLoginState) {
           GoRouter.of(context).goNamed(RouteNames.homeScreen);
         }
-        if (state is UserDatabaseNone) {
+        if (state is UserDatabaseNoneState) {
           GoRouter.of(context).goNamed(RouteNames.startScreen);
         }
       },

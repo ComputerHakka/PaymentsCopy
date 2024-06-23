@@ -14,5 +14,10 @@ abstract class UserRepository {
 
   Future<void> logout(UserEntity user);
 
+  Future<void> updateUserLocal(UserEntity user);
+
+  Future<DataState<String>> updateUserRemote(
+      int userId, ChangeContactsRequest request);
+
   Future<UserModel?> getUser();
 }

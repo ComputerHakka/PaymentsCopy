@@ -109,7 +109,8 @@ class UserNameWidget extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  context.read<UserDatabaseBloc>().state.user!.firstName,
+                  'name',
+                  //context.read<UserDatabaseBloc>().state.user!.firstName,
                   style: const TextStyle(
                       fontSize: 24, fontWeight: FontWeight.w500),
                 ),

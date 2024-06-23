@@ -58,7 +58,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     checkPasswordValid[1] = value.length < 8 ? false : true;
     checkPasswordValid[2] = !RegExp(r'[0-9]').hasMatch(value) ? false : true;
     checkPasswordValid[3] = !RegExp(r'[A-Za-z]').hasMatch(value) ? false : true;
-    checkPasswordValid[4] = RegExp(r'\s').hasMatch(value) ? false : true;
+    checkPasswordValid[4] =
+        RegExp(r'\s').hasMatch(value) && value.isEmpty ? false : true;
     if (checkPasswordValid.skip(1).any((e) => e == false)) {
       checkPasswordValid[0] = false;
       setState(() {});

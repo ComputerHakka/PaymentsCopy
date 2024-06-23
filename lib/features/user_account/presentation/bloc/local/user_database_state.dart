@@ -8,14 +8,14 @@ sealed class UserDatabaseState extends Equatable {
   List<Object?> get props => [user];
 }
 
-final class UserDatabaseLoading extends UserDatabaseState {
-  const UserDatabaseLoading();
+final class UserDatabaseLoadingState extends UserDatabaseState {
+  const UserDatabaseLoadingState();
 }
 
-final class UserDatabaseNone extends UserDatabaseState {
-  const UserDatabaseNone();
+final class UserDatabaseNoneState extends UserDatabaseState {
+  const UserDatabaseNoneState();
 }
 
-final class UserDatabaseLogin extends UserDatabaseState {
-  const UserDatabaseLogin({super.user});
+final class UserDatabaseLoginState extends UserDatabaseState {
+  const UserDatabaseLoginState({super.user});
 }

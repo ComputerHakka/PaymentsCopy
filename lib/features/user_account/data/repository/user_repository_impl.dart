@@ -79,6 +79,29 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
+  Future<DataState<String>> updateUserRemote(
+      int userId, ChangeContactsRequest request) async {
+    try {
+      final httpResponse =
+          await _authApiService.changeContacts(userId, request);
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
   Future<void> logout(UserEntity user) {
     return _appDatabase.userDAO.deleteUser(UserModel.fromEntity(user));
   }
@@ -92,5 +115,10 @@ class UserRepositoryImpl implements UserRepository {
   Future<UserModel?> getUser() async {
     final users = await _appDatabase.userDAO.getUser();
     return users.isNotEmpty ? users.first : null;
+  }
+
+  @override
+  Future<void> updateUserLocal(UserEntity user) {
+    return _appDatabase.userDAO.updateUser(UserModel.fromEntity(user));
   }
 }

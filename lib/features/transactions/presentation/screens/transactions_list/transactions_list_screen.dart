@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -7,8 +10,38 @@ import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
 import 'package:personal_payment_app/features/transactions/domain/entities/transaction.dart';
 
-class TransactionsListScreen extends StatelessWidget {
+class TransactionsListScreen extends StatefulWidget {
   const TransactionsListScreen({super.key});
+
+  @override
+  State<TransactionsListScreen> createState() => _TransactionsListScreenState();
+}
+
+class _TransactionsListScreenState extends State<TransactionsListScreen> {
+  bool isExpand = false;
+
+  final ScrollController _scrollController = ScrollController();
+
+  // void _onScrollEvent() {
+  //   if (_scrollController.position.userScrollDirection ==
+  //       ScrollDirection.reverse) {
+  //     setState(() {
+  //       isExpand = false;
+  //     });
+  //   }
+  // }
+
+  // @override
+  // void initState() {
+  //   _scrollController.addListener(_onScrollEvent);
+  //   super.initState();
+  // }
+
+  // @override
+  // void dispose() {
+  //   _scrollController.removeListener(_onScrollEvent);
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +63,11 @@ class TransactionsListScreen extends StatelessWidget {
           )
         ],
       ),
-      body: const Column(
+      body: Column(
         children: [
-          Periodwidget(),
+          Periodwidget(isExpanded: isExpand),
           Expanded(
-            child: TransationsListWidget(),
+            child: TransationsListWidget(scrollController: _scrollController),
           ),
         ],
       ),
@@ -43,12 +76,27 @@ class TransactionsListScreen extends StatelessWidget {
 }
 
 class Periodwidget extends StatelessWidget {
-  const Periodwidget({super.key});
-
+  const Periodwidget({super.key, required this.isExpanded});
+  final bool isExpanded;
   @override
   Widget build(BuildContext context) {
+    var categories = TransactionEntity.calculateByCategory();
+    List<PieChartSectionData> pies = [];
+    List<CategoryChipWidget> chips = [];
+    for (var c in categories.entries) {
+      final color =
+          Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
+      pies.add(PieChartSectionData(
+          value: c.value, radius: 20, showTitle: false, color: color));
+      chips.add(CategoryChipWidget(
+        label: '${c.key} ${c.value.toInt()}р',
+        color: color,
+      ));
+    }
+
     return ExpansionTile(
       title: const Text('Расходы за май'),
+      initiallyExpanded: isExpanded,
       children: [
         //CircleAvatar(radius: 57.5),
         SizedBox(
@@ -57,26 +105,14 @@ class Periodwidget extends StatelessWidget {
           child: PieChart(
             PieChartData(
               centerSpaceRadius: 37.5,
-              sections: [
-                PieChartSectionData(value: 30, radius: 20, showTitle: false),
-                PieChartSectionData(value: 10, radius: 20, showTitle: false),
-                PieChartSectionData(value: 20, radius: 20, showTitle: false),
-                PieChartSectionData(value: 50, radius: 20, showTitle: false),
-                PieChartSectionData(value: 40, radius: 20, showTitle: false),
-              ],
+              sections: pies,
             ),
           ),
         ),
         const SizedBox(height: 15),
-        const Wrap(
+        Wrap(
           spacing: 10,
-          children: [
-            CategoryChipWidget(label: 'Интернет 1000р'),
-            CategoryChipWidget(label: 'ЖКХ 1000р'),
-            CategoryChipWidget(label: 'Охрана 1000р'),
-            CategoryChipWidget(label: 'Чистая вода 1000р'),
-            CategoryChipWidget(label: 'Остальное 1000р'),
-          ],
+          children: chips,
         ),
       ],
     );
@@ -84,21 +120,29 @@ class Periodwidget extends StatelessWidget {
 }
 
 class CategoryChipWidget extends StatelessWidget {
-  const CategoryChipWidget({super.key, required this.label});
+  const CategoryChipWidget(
+      {super.key, required this.label, required this.color});
   final String label;
+  final Color color;
 
-  //TODO chip theme from app theme
   @override
   Widget build(BuildContext context) {
     return Chip(
-      label: Text(label),
-      color: const WidgetStatePropertyAll(Colors.amberAccent),
+      label: Text(
+        label,
+        style: TextStyle(
+          color: color.computeLuminance() > 0.5 ? Colors.black : Colors.white,
+        ),
+      ),
+      color: WidgetStatePropertyAll(color),
     );
   }
 }
 
 class TransationsListWidget extends StatelessWidget {
-  const TransationsListWidget({super.key});
+  const TransationsListWidget({super.key, required this.scrollController});
+
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -114,6 +158,7 @@ class TransationsListWidget extends StatelessWidget {
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 15),
       itemCount: uniqueDaysList.length,
+      controller: scrollController,
       itemBuilder: (BuildContext context, int index) {
         return DayTransationsWidget(date: uniqueDaysList[index]);
       },
@@ -175,7 +220,10 @@ class TransationWidget extends StatelessWidget {
     return Ink(
       child: InkWell(
         onTap: () {
-          GoRouter.of(context).pushNamed(RouteNames.transactionDetailsScreen);
+          GoRouter.of(context).pushNamed(
+            RouteNames.transactionDetailsScreen,
+            extra: transaction,
+          );
         },
         child: ListTile(
           leading: const CircleAvatar(
