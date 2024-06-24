@@ -4,6 +4,7 @@ import 'package:personal_payment_app/config/routes/routes.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
 import 'package:personal_payment_app/injection_container.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,15 @@ class PersonalPaymentApp extends StatelessWidget {
     return BlocProvider<UserDatabaseBloc>(
       create: (context) => container()..add(const GetUserEvent()),
       child: MaterialApp.router(
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('ru'),
+        ],
         title: 'Payment',
         debugShowCheckedModeBanner: false,
         theme: appTheme(context),

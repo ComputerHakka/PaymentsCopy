@@ -39,6 +39,7 @@ class HistoryScreen extends StatelessWidget {
           GestureDetector(
             onTap: () async {
               final DateTimeRange? dateTimeRange = await showDateRangePicker(
+                locale: const Locale('ru'),
                 context: context,
                 firstDate: DateTime(2000),
                 lastDate: DateTime(3000),
