@@ -9,7 +9,10 @@ class UserProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.read<UserDatabaseBloc>().state.user!;
+    final user = context.watch<UserDatabaseBloc>().state.user;
+    final firstname = user != null ? user.firstName : '';
+    final email = user != null ? user.email : '';
+    final phone = user != null ? user.phone : '';
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -21,18 +24,53 @@ class UserProfileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              UserMainWidget(firstName: user.firstName),
-              ParametersListWidget(email: user.email, phone: user.phone),
+              UserMainWidget(firstName: firstname),
+              ParametersListWidget(email: email, phone: phone),
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: ElevatedButton(
-                    onPressed: () {
-                      GoRouter.of(context).goNamed(RouteNames.loaderScreen);
-                      BlocProvider.of<UserDatabaseBloc>(context).add(
-                        DeleteUserEvent(user: user),
-                      );
-                    },
-                    child: const Text('Выйти из приложения')),
+                child: TextButton(
+                  style: const ButtonStyle(
+                      overlayColor: WidgetStatePropertyAll(
+                          Color.fromARGB(255, 252, 214, 211))),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text(
+                              'Вы уверены что хотите выйти из приложения?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                GoRouter.of(context)
+                                    .goNamed(RouteNames.loaderScreen);
+                                BlocProvider.of<UserDatabaseBloc>(context).add(
+                                  DeleteUserEvent(user: user),
+                                );
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Ok'),
+                            ),
+                            const SizedBox(height: 5),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text(
+                                'Отмена',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: const Text(
+                    'Выйти из приложения',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
               )
             ],
           ),
@@ -81,7 +119,7 @@ class ParametersListWidget extends StatelessWidget {
         children: [
           UserParameterWidget(
             title: phone ?? 'Укажите номер телефона',
-            icon: const Icon(Icons.person),
+            icon: const Icon(Icons.phone_rounded),
             route: RouteNames.changePhoneScreen,
           ),
           UserParameterWidget(
@@ -91,12 +129,12 @@ class ParametersListWidget extends StatelessWidget {
           ),
           const UserParameterWidget(
             title: 'Адреса',
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.home_rounded),
             route: RouteNames.addressesScreen,
           ),
           const UserParameterWidget(
             title: 'Документы',
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.library_books_outlined),
             route: RouteNames.documentsScreen,
           ),
         ],

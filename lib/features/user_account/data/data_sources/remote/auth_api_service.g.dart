@@ -96,7 +96,7 @@ class _AuthApiService implements AuthApiService {
     )
             .compose(
               _dio.options,
-              '/user/{user_id}',
+              '/user/${id}',
               queryParameters: queryParameters,
               data: _data,
             )

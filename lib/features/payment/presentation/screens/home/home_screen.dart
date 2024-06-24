@@ -93,13 +93,14 @@ class UserNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.read<UserDatabaseBloc>().state.user!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7.5),
       child: Row(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 19.5,
-            child: Text('A'),
+            child: Text(user.firstName.substring(0, 1).toUpperCase()),
           ),
           const SizedBox(width: 19),
           GestureDetector(
@@ -109,8 +110,7 @@ class UserNameWidget extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  'name',
-                  //context.read<UserDatabaseBloc>().state.user!.firstName,
+                  user.firstName,
                   style: const TextStyle(
                       fontSize: 24, fontWeight: FontWeight.w500),
                 ),
@@ -170,9 +170,9 @@ class AccountBalanceWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             color: containersColor,
           ),
-          child: Row(
+          child: const Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -191,7 +191,7 @@ class AccountBalanceWidget extends StatelessWidget {
               ElevatedButton(
                 onPressed: null,
                 style: ButtonStyle(
-                  padding: const WidgetStatePropertyAll(
+                  padding: WidgetStatePropertyAll(
                     EdgeInsets.symmetric(
                       vertical: 12,
                       horizontal: 15,
@@ -199,9 +199,10 @@ class AccountBalanceWidget extends StatelessWidget {
                   ),
                   visualDensity: VisualDensity.comfortable,
                   minimumSize: WidgetStatePropertyAll(
-                      Size.fromWidth(MediaQuery.of(context).size.width / 3)),
+                    Size(140, 50),
+                  ),
                 ),
-                child: const Text('Пополнить'),
+                child: Text('Пополнить'),
               ),
             ],
           ),

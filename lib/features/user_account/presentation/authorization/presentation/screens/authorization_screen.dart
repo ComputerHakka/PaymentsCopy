@@ -23,11 +23,6 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
     void login() {
       BlocProvider.of<RemoteAuthBloc>(context)
           .add(LoginEvent(emailController.text, passwordController.text));
-      if (BlocProvider.of<RemoteAuthBloc>(context).state.user == null) {
-        setState(() {
-          errorText = '* Неверный пароль';
-        });
-      }
     }
 
     return Scaffold(
@@ -102,6 +97,11 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
                     BlocProvider.of<UserDatabaseBloc>(context)
                         .add(SaveUserEvent(user: state.user));
                     GoRouter.of(context).goNamed(RouteNames.loaderScreen);
+                  }
+                  if (state is RemoteAuthFailedState) {
+                    setState(() {
+                      errorText = '* Неверный пароль';
+                    });
                   }
                 },
               ),

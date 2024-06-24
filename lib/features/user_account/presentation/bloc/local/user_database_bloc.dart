@@ -20,6 +20,7 @@ class UserDatabaseBloc extends Bloc<UserDatabaseEvent, UserDatabaseState> {
     on<GetUserEvent>(onGetUser);
     on<DeleteUserEvent>(onDeleteUser);
     on<SaveUserEvent>(onSaveUser);
+    on<UpdateUserEvent>(onUpdateUser);
   }
 
   void onGetUser(GetUserEvent event, Emitter<UserDatabaseState> emit) async {

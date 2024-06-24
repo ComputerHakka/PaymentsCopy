@@ -12,6 +12,7 @@ import 'package:personal_payment_app/features/home_control/presentation/screens/
 import 'package:personal_payment_app/features/payment/presentation/screens/home/home_screen.dart';
 import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
 import 'package:personal_payment_app/features/user_account/presentation/loading/loading_screen.dart';
+import 'package:personal_payment_app/features/user_account/presentation/profile/bloc/bloc/change_contacts_bloc.dart';
 import 'package:personal_payment_app/features/user_account/presentation/profile/screens/addresses/user_addresses_screen.dart';
 import 'package:personal_payment_app/features/user_account/presentation/profile/screens/change_email/change_email_screen.dart';
 import 'package:personal_payment_app/features/user_account/presentation/profile/screens/change_phone/change_phone_screen.dart';
@@ -68,12 +69,20 @@ class AppRoutes {
                       GoRoute(
                         path: 'change_phone',
                         name: RouteNames.changePhoneScreen,
-                        builder: (context, state) => const ChangePhoneScreen(),
+                        builder: (context, state) =>
+                            BlocProvider<ChangeContactsBloc>(
+                          create: (context) => container(),
+                          child: const ChangePhoneScreen(),
+                        ),
                       ),
                       GoRoute(
                         path: 'change_email',
                         name: RouteNames.changeEmailScreen,
-                        builder: (context, state) => const ChangeEmailScreen(),
+                        builder: (context, state) =>
+                            BlocProvider<ChangeContactsBloc>(
+                          create: (context) => container(),
+                          child: const ChangeEmailScreen(),
+                        ),
                       ),
                       GoRoute(
                         path: 'addresses',

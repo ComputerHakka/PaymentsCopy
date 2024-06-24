@@ -9,7 +9,7 @@ sealed class UserDatabaseState extends Equatable {
 }
 
 final class UserDatabaseLoadingState extends UserDatabaseState {
-  const UserDatabaseLoadingState();
+  const UserDatabaseLoadingState({super.user});
 }
 
 final class UserDatabaseNoneState extends UserDatabaseState {

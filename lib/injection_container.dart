@@ -15,6 +15,7 @@ import 'package:personal_payment_app/features/user_account/presentation/authoriz
 import 'package:personal_payment_app/features/history/presentation/bloc/filter/filter_transactions_bloc.dart';
 import 'package:personal_payment_app/features/support/presentation/bloc/bloc/messages_bloc.dart';
 import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
+import 'package:personal_payment_app/features/user_account/presentation/profile/bloc/bloc/change_contacts_bloc.dart';
 import 'package:personal_payment_app/features/user_account/presentation/registration/presentation/bloc/remote/remote_registration_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -61,6 +62,9 @@ Future<void> initializeDependencies() async {
 
   container.registerFactory<UserDatabaseBloc>(() =>
       UserDatabaseBloc(container(), container(), container(), container()));
+
+  container.registerFactory<ChangeContactsBloc>(
+      () => ChangeContactsBloc(container()));
 
   container
       .registerFactory<FilterTransactionsBloc>(() => FilterTransactionsBloc());

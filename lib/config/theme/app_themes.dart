@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-const Color accentColor = Color(0xFF0549F6);
+const Color accentColor = Color(0xFF1EB1E7);
 const Color textFieldPassiveColor = Color(0xFFE2E8F0);
 const Color containersColor = Color(0xFFF1F5F9);
 const Color unselectedItemColor = Color(0xFFADBECE);
 const Color borderColor = Color(0xFFE2E8F0);
 const Color textFieldTextColor = Color(0xFF64748B);
 const Color lightButton = Color(0xFFD6E7F8);
+const Color splashButtonColor = Color.fromARGB(255, 133, 216, 255);
 
 ThemeData appTheme(BuildContext context) {
   return ThemeData(
@@ -79,6 +80,7 @@ BottomNavigationBarThemeData getBottomNavBarThemeData() {
 AppBarTheme getAppBarTheme(BuildContext context) {
   return AppBarTheme(
     color: Colors.transparent,
+    iconTheme: const IconThemeData(color: accentColor),
     titleTextStyle: Theme.of(context).textTheme.titleMedium,
     scrolledUnderElevation: 0,
     centerTitle: true,
@@ -169,8 +171,7 @@ ButtonStyle getButtonStyle(BuildContext context) {
         return Colors.white; // Use the component's default.
       },
     ),
-    overlayColor:
-        const WidgetStatePropertyAll(Color.fromARGB(255, 58, 94, 255)),
+    overlayColor: const WidgetStatePropertyAll(splashButtonColor),
     minimumSize: WidgetStatePropertyAll(
       Size(MediaQuery.of(context).size.width, 48),
     ),

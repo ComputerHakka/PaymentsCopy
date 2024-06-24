@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
+import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
+import 'package:personal_payment_app/features/user_account/presentation/profile/bloc/bloc/change_contacts_bloc.dart';
 
 class ChangeEmailScreen extends StatefulWidget {
   const ChangeEmailScreen({super.key});
@@ -77,8 +81,43 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
               ),
               onSubmitted: (value) {
                 bool correct = validEmail();
-                if (correct) {}
+                if (correct) {
+                  BlocProvider.of<ChangeContactsBloc>(context)
+                      .add(SendEmailEvent(email: value));
+                  BlocProvider.of<UserDatabaseBloc>(context)
+                      .add(UpdateUserEvent(email: value));
+                }
               },
+            ),
+            BlocListener<ChangeContactsBloc, ChangeContactsState>(
+              listener: (context, state) {
+                if (state is ChangeContactsDoneState) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      elevation: 5,
+                      duration: Duration(seconds: 2),
+                      behavior: SnackBarBehavior.floating,
+                      margin: EdgeInsets.fromLTRB(16, 0, 16, 30),
+                      content: Text('Email успешно изменен'),
+                    ),
+                  );
+                  BlocProvider.of<ChangeContactsBloc>(context)
+                      .add(const ExitPageEvent());
+                  GoRouter.of(context).pop();
+                }
+                if (state is ChangeContactsFailedState) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      elevation: 5,
+                      duration: Duration(seconds: 2),
+                      behavior: SnackBarBehavior.floating,
+                      margin: EdgeInsets.fromLTRB(16, 0, 16, 30),
+                      content: Text('Что-то пошло не так'),
+                    ),
+                  );
+                }
+              },
+              child: const SizedBox(),
             ),
           ],
         ),

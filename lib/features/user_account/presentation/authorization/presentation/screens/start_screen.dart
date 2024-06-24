@@ -17,7 +17,8 @@ class StartScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SvgPicture.asset('lib/core/assets/images/logo.svg'),
+              SvgPicture.asset('lib/core/assets/images/logo_main.svg'),
+              //Image.asset('lib/core/assets/images/logo_main.png'),
               const SizedBox(height: 80),
               Text(
                 'Добро пожаловать\nв оплату услуг!',
