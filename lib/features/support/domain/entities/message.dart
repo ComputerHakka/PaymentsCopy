@@ -23,4 +23,43 @@ class MessageEntity extends Equatable {
       date: DateTime(2024, 5, 19, 10, 16),
     ),
   ];
+
+  static var notificationsMock = <MessageEntity>[
+    MessageEntity(
+      text:
+          'Внесите 1299р. 04.06.2024 приостановка услуг по договору 518128491easaSDa',
+      userId: 3,
+      date: DateTime(2024, 5, 19, 10, 15),
+    ),
+    MessageEntity(
+      text:
+          'Внесите 1299р. 04.06.2024 приостановка услуг по договору 518128491easaSDa',
+      userId: 3,
+      date: DateTime(2024, 5, 19, 10, 15),
+    ),
+    MessageEntity(
+      text:
+          'Внесите 1299р. 04.06.2024 приостановка услуг по договору 518128491easaSDa',
+      userId: 3,
+      date: DateTime(2024, 5, 20, 10, 15),
+    ),
+    MessageEntity(
+      text:
+          'Внесите 1299р. 04.06.2024 приостановка услуг по договору 518128491easaSDa',
+      userId: 3,
+      date: DateTime(2024, 5, 25, 10, 15),
+    ),
+    MessageEntity(
+      text:
+          'Внесите 1299р. 04.06.2024 приостановка услуг по договору 518128491easaSDa',
+      userId: 3,
+      date: DateTime(2024, 5, 25, 10, 15),
+    ),
+    MessageEntity(
+      text:
+          'Внесите 1299р. 04.06.2024 приостановка услуг по договору 518128491easaSDa',
+      userId: 3,
+      date: DateTime(2024, 5, 30, 10, 15),
+    ),
+  ];
 }

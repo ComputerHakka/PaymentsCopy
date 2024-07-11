@@ -8,6 +8,7 @@ import 'package:personal_payment_app/features/user_account/domain/usecases/regis
 part 'remote_registration_event.dart';
 part 'remote_registration_state.dart';
 
+//TODO надо сделать дополнительный евент на регистрацию так как при втором заходе на страницу стейт саксес
 class RemoteRegistrationBloc
     extends Bloc<RemoteRegistrationEvent, RemoteRegistrationState> {
   final RegistrationUseCase _registrationUseCase;

@@ -24,7 +24,10 @@ class HomeScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
               ),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  GoRouter.of(context)
+                      .pushNamed(RouteNames.notifiactionsScreen);
+                },
                 icon: SvgPicture.asset(
                   'lib/core/assets/icons/notifications.svg',
                 ),
@@ -170,11 +173,12 @@ class AccountBalanceWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             color: containersColor,
           ),
-          child: const Row(
+          child: Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Ваш баланс',
@@ -189,12 +193,25 @@ class AccountBalanceWidget extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: null,
-                style: ButtonStyle(
+                onPressed: () {},
+                style: const ButtonStyle(
                   padding: WidgetStatePropertyAll(
                     EdgeInsets.symmetric(
                       vertical: 12,
                       horizontal: 15,
+                    ),
+                  ),
+                  shadowColor: WidgetStateColor.transparent,
+                  foregroundColor: WidgetStatePropertyAll(accentColor),
+                  backgroundColor: WidgetStateColor.transparent,
+                  overlayColor: WidgetStatePropertyAll(
+                      Color.fromARGB(255, 215, 248, 255)),
+                  shape: WidgetStatePropertyAll(
+                    StadiumBorder(
+                      side: BorderSide(
+                        color: accentColor,
+                        width: 2,
+                      ),
                     ),
                   ),
                   visualDensity: VisualDensity.comfortable,
@@ -202,7 +219,7 @@ class AccountBalanceWidget extends StatelessWidget {
                     Size(140, 50),
                   ),
                 ),
-                child: Text('Пополнить'),
+                child: const Text('Пополнить'),
               ),
             ],
           ),

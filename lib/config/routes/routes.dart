@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
+import 'package:personal_payment_app/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:personal_payment_app/features/transactions/domain/entities/transaction.dart';
 import 'package:personal_payment_app/features/user_account/domain/usecases/get_user.dart';
 import 'package:personal_payment_app/features/user_account/presentation/authorization/presentation/bloc/auth/remote/remote_auth_bloc.dart';
@@ -103,16 +104,16 @@ class AppRoutes {
                     name: RouteNames.transactionsScreen,
                     builder: (context, state) => const TransactionsListScreen(),
                     routes: [
-                      GoRoute(
-                        path: 'transaction_details',
-                        name: RouteNames.transactionDetailsScreen,
-                        builder: (context, state) {
-                          TransactionEntity transaction =
-                              state.extra as TransactionEntity;
-                          return TransactionDetailsScreen(
-                              currentTransaction: transaction);
-                        },
-                      ),
+                      // GoRoute(
+                      //   path: 'transaction_details',
+                      //   name: RouteNames.transactionDetailsScreen,
+                      //   builder: (context, state) {
+                      //     TransactionEntity transaction =
+                      //         state.extra as TransactionEntity;
+                      //     return TransactionDetailsScreen(
+                      //         currentTransaction: transaction);
+                      //   },
+                      // ),
                     ],
                   ),
                   GoRoute(
@@ -125,17 +126,17 @@ class AppRoutes {
                         name: RouteNames.servicesListScreen,
                         builder: (context, state) => const ServicesListScreen(),
                         routes: [
-                          GoRoute(
-                            path: 'service_details',
-                            name: RouteNames.serviceDetailsScreen,
-                            builder: (context, state) {
-                              ServiceEntity service =
-                                  state.extra as ServiceEntity;
-                              return ServiceDetailsScreen(
-                                currentService: service,
-                              );
-                            },
-                          ),
+                          // GoRoute(
+                          //   path: 'service_details',
+                          //   name: RouteNames.serviceDetailsScreen,
+                          //   builder: (context, state) {
+                          //     ServiceEntity service =
+                          //         state.extra as ServiceEntity;
+                          //     return ServiceDetailsScreen(
+                          //       currentService: service,
+                          //     );
+                          //   },
+                          // ),
                         ],
                       ),
                     ],
@@ -205,21 +206,29 @@ class AppRoutes {
           ),
         ],
       ),
-      // GoRoute(
-      //   path: '/transaction_details',
-      //   name: RouteNames.transactionDetailsScreen,
-      //   builder: (context, state) => const TransactionDetailsScreen(),
-      // ),
-      // GoRoute(
-      //   path: '/service_details',
-      //   name: RouteNames.serviceDetailsScreen,
-      //   builder: (context, state) {
-      //     ServiceEntity service = state.extra as ServiceEntity;
-      //     return ServiceDetailsScreen(
-      //       currentService: service,
-      //     );
-      //   },
-      // ),
+      GoRoute(
+        path: '/notifications',
+        name: RouteNames.notifiactionsScreen,
+        builder: (context, state) => const NotificationsScreen(),
+      ),
+      GoRoute(
+        path: '/transaction_details',
+        name: RouteNames.transactionDetailsScreen,
+        builder: (context, state) {
+          TransactionEntity transaction = state.extra as TransactionEntity;
+          return TransactionDetailsScreen(currentTransaction: transaction);
+        },
+      ),
+      GoRoute(
+        path: '/service_details',
+        name: RouteNames.serviceDetailsScreen,
+        builder: (context, state) {
+          ServiceEntity service = state.extra as ServiceEntity;
+          return ServiceDetailsScreen(
+            currentService: service,
+          );
+        },
+      ),
     ],
   );
 }

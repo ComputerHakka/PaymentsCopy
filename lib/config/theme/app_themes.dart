@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 const Color accentColor = Color(0xFF1EB1E7);
 const Color textFieldPassiveColor = Color(0xFFE2E8F0);
@@ -79,6 +80,13 @@ BottomNavigationBarThemeData getBottomNavBarThemeData() {
 
 AppBarTheme getAppBarTheme(BuildContext context) {
   return AppBarTheme(
+    systemOverlayStyle: const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
     color: Colors.transparent,
     iconTheme: const IconThemeData(color: accentColor),
     titleTextStyle: Theme.of(context).textTheme.titleMedium,
@@ -143,10 +151,11 @@ ButtonStyle getButtonStyle(BuildContext context) {
           return const StadiumBorder();
         } else if (states.contains(WidgetState.disabled)) {
           return const StadiumBorder(
-              side: BorderSide(
-            color: unselectedItemColor,
-            width: 2,
-          ));
+            side: BorderSide(
+              color: unselectedItemColor,
+              width: 2,
+            ),
+          );
         }
         return const StadiumBorder();
       },

@@ -68,7 +68,7 @@ class ServiceBoxWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).goNamed(
+        GoRouter.of(context).pushNamed(
           RouteNames.serviceDetailsScreen,
           extra: service,
         );

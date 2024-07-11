@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_payment_app/config/routes/routes.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
@@ -13,6 +14,7 @@ void main() async {
   // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
   //   statusBarColor: Colors.white,
   // ));
+  // Задаем стиль для строки состояния
   runApp(const PersonalPaymentApp());
 }
 

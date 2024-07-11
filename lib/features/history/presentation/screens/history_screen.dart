@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
+import 'package:personal_payment_app/core/constants/constants.dart';
 import 'package:personal_payment_app/features/history/presentation/bloc/filter/filter_transactions_bloc.dart';
 import 'package:personal_payment_app/features/transactions/domain/entities/transaction.dart';
 
@@ -243,6 +245,12 @@ class TransationWidget extends StatelessWidget {
         ? '+'
         : '-'; //TODO Тоже хуйня переделываем
     return ListTile(
+      onTap: () {
+        GoRouter.of(context).pushNamed(
+          RouteNames.transactionDetailsScreen,
+          extra: transaction,
+        );
+      },
       leading: const CircleAvatar(
         backgroundColor: unselectedItemColor,
       ),
