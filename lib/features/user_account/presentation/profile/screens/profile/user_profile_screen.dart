@@ -44,10 +44,10 @@ class UserProfileScreen extends StatelessWidget {
                               onPressed: () {
                                 GoRouter.of(context)
                                     .goNamed(RouteNames.loaderScreen);
+                                Navigator.of(context).pop();
                                 BlocProvider.of<UserDatabaseBloc>(context).add(
                                   DeleteUserEvent(user: user),
                                 );
-                                Navigator.of(context).pop();
                               },
                               child: const Text('Ok'),
                             ),

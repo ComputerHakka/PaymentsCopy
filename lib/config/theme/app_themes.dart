@@ -9,6 +9,17 @@ const Color borderColor = Color(0xFFE2E8F0);
 const Color textFieldTextColor = Color(0xFF64748B);
 const Color lightButton = Color(0xFFD6E7F8);
 const Color splashButtonColor = Color.fromARGB(255, 133, 216, 255);
+const List<Color> diagramColors = [
+  Color(0xFFfd7f6f),
+  Color(0xFF7eb0d5),
+  Color(0xFFb2e061),
+  Color(0xFFbd7ebe),
+  Color(0xFFffb55a),
+  Color(0xFFffee65),
+  Color(0xFFbeb9db),
+  Color(0xFFfdcce5),
+  Color(0xFF8bd3c7),
+];
 
 ThemeData appTheme(BuildContext context) {
   return ThemeData(

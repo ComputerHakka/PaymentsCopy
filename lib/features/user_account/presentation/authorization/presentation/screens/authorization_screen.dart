@@ -94,9 +94,9 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
                 },
                 listener: (BuildContext context, RemoteAuthState state) {
                   if (state is RemoteAuthSuccessState) {
+                    GoRouter.of(context).goNamed(RouteNames.loaderScreen);
                     BlocProvider.of<UserDatabaseBloc>(context)
                         .add(SaveUserEvent(user: state.user));
-                    GoRouter.of(context).goNamed(RouteNames.loaderScreen);
                   }
                   if (state is RemoteAuthFailedState) {
                     setState(() {

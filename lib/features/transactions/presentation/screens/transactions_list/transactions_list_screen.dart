@@ -82,15 +82,20 @@ class Periodwidget extends StatelessWidget {
     var categories = TransactionEntity.calculateByCategory();
     List<PieChartSectionData> pies = [];
     List<CategoryChipWidget> chips = [];
+    int counter = 0;
     for (var c in categories.entries) {
-      final color =
-          Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
+      // final color =
+      //     Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
+      final color = counter < diagramColors.length
+          ? diagramColors[counter]
+          : Colors.black;
       pies.add(PieChartSectionData(
           value: c.value, radius: 20, showTitle: false, color: color));
       chips.add(CategoryChipWidget(
         label: '${c.key} ${c.value.toInt()}р',
         color: color,
       ));
+      counter++;
     }
 
     return ExpansionTile(
