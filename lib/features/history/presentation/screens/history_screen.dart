@@ -26,7 +26,9 @@ class HistoryScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
             ),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                GoRouter.of(context).pushNamed(RouteNames.notifiactionsScreen);
+              },
               icon: SvgPicture.asset(
                 'lib/core/assets/icons/notifications.svg',
               ),

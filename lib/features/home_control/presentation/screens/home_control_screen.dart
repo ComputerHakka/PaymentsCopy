@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
+import 'package:personal_payment_app/core/constants/constants.dart';
 
 class HomeControlScreen extends StatelessWidget {
   const HomeControlScreen({super.key});
@@ -19,7 +21,9 @@ class HomeControlScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
             ),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                GoRouter.of(context).pushNamed(RouteNames.notifiactionsScreen);
+              },
               icon: SvgPicture.asset(
                 'lib/core/assets/icons/notifications.svg',
               ),

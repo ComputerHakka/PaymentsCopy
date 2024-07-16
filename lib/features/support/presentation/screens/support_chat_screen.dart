@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
+import 'package:personal_payment_app/core/constants/constants.dart';
 import 'package:personal_payment_app/features/support/domain/entities/message.dart';
 import 'package:personal_payment_app/features/support/presentation/bloc/bloc/messages_bloc.dart';
 
@@ -24,7 +26,9 @@ class SupportChatScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
             ),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                GoRouter.of(context).pushNamed(RouteNames.notifiactionsScreen);
+              },
               icon: SvgPicture.asset(
                 'lib/core/assets/icons/notifications.svg',
               ),
