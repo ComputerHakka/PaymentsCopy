@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
 import 'package:personal_payment_app/features/notifications/presentation/screens/notifications_screen.dart';
+import 'package:personal_payment_app/features/payment/presentation/screens/payment_screen.dart';
 import 'package:personal_payment_app/features/transactions/domain/entities/transaction.dart';
 import 'package:personal_payment_app/features/user_account/presentation/authorization/presentation/bloc/auth/remote/remote_auth_bloc.dart';
 import 'package:personal_payment_app/features/user_account/presentation/authorization/presentation/screens/authorization_screen.dart';
@@ -9,7 +10,7 @@ import 'package:personal_payment_app/features/user_account/presentation/authoriz
 import 'package:personal_payment_app/features/history/presentation/bloc/filter/filter_transactions_bloc.dart';
 import 'package:personal_payment_app/features/history/presentation/screens/history_screen.dart';
 import 'package:personal_payment_app/features/home_control/presentation/screens/home_control_screen.dart';
-import 'package:personal_payment_app/features/payment/presentation/screens/home/home_screen.dart';
+import 'package:personal_payment_app/features/home/presentation/screens/home/home_screen.dart';
 import 'package:personal_payment_app/features/user_account/presentation/loading/loading_screen.dart';
 import 'package:personal_payment_app/features/user_account/presentation/profile/bloc/bloc/change_contacts_bloc.dart';
 import 'package:personal_payment_app/features/user_account/presentation/profile/screens/addresses/user_addresses_screen.dart';
@@ -163,6 +164,15 @@ class AppRoutes {
                 path: '/home_control',
                 name: RouteNames.homeControlScreen,
                 builder: (context, state) => const HomeControlScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/payment',
+                name: RouteNames.paymentScreen,
+                builder: (context, state) => const PaymentScreen(),
               ),
             ],
           ),

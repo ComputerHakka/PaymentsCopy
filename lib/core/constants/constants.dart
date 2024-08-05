@@ -18,6 +18,7 @@ class RouteNames {
   static const servicesListScreen = 'services_list_screen';
   static const serviceDetailsScreen = 'service_details_screen';
   static const notifiactionsScreen = 'notifications_screen';
+  static const paymentScreen = 'payment_screen';
 }
 
 class ApiConstants {

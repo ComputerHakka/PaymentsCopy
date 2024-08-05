@@ -110,7 +110,7 @@ class _AddressCellWidgetState extends State<AddressCellWidget> {
               horizontal: VisualDensity.minimumDensity,
               vertical: VisualDensity.minimumDensity,
             ),
-          )
+          ),
         ],
       ),
     );

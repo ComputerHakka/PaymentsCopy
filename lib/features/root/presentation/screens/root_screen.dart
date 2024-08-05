@@ -72,6 +72,13 @@ class RootScreen extends StatelessWidget {
         const BottomNavigationBarItem(
           icon: Padding(
             padding: EdgeInsets.only(bottom: 5),
+            child: Icon(Icons.payments_rounded),
+          ),
+          label: 'Оплата',
+        ),
+        const BottomNavigationBarItem(
+          icon: Padding(
+            padding: EdgeInsets.only(bottom: 5),
             child: Icon(Icons.chat_rounded),
           ),
           label: 'Поддержка',

@@ -39,7 +39,10 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               const UserNameWidget(),
-              const AccountBalanceWidget(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 7.5),
+                child: AccountBalanceWidget(),
+              ),
               SizedBox(
                 height: 118,
                 child: ListView(
@@ -163,66 +166,62 @@ class AccountBalanceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7.5),
-      child: AspectRatio(
-        aspectRatio: 4.4,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: containersColor,
-          ),
-          child: Row(
-            children: [
-              const Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Ваш баланс',
-                      style: TextStyle(fontSize: 12),
-                    ),
-                    Text(
-                      '12 729,22 р',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
+    return AspectRatio(
+      aspectRatio: 4.4,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: containersColor,
+        ),
+        child: Row(
+          children: [
+            const Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Ваш баланс',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  Text(
+                    '12 729,22 р',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                ],
               ),
-              ElevatedButton(
-                onPressed: () {},
-                style: const ButtonStyle(
-                  padding: WidgetStatePropertyAll(
-                    EdgeInsets.symmetric(
-                      vertical: 12,
-                      horizontal: 15,
-                    ),
-                  ),
-                  shadowColor: WidgetStateColor.transparent,
-                  foregroundColor: WidgetStatePropertyAll(accentColor),
-                  backgroundColor: WidgetStateColor.transparent,
-                  overlayColor: WidgetStatePropertyAll(
-                      Color.fromARGB(255, 215, 248, 255)),
-                  shape: WidgetStatePropertyAll(
-                    StadiumBorder(
-                      side: BorderSide(
-                        color: accentColor,
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                  visualDensity: VisualDensity.comfortable,
-                  minimumSize: WidgetStatePropertyAll(
-                    Size(140, 50),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              style: const ButtonStyle(
+                padding: WidgetStatePropertyAll(
+                  EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 15,
                   ),
                 ),
-                child: const Text('Пополнить'),
+                shadowColor: WidgetStateColor.transparent,
+                foregroundColor: WidgetStatePropertyAll(accentColor),
+                backgroundColor: WidgetStateColor.transparent,
+                overlayColor:
+                    WidgetStatePropertyAll(Color.fromARGB(255, 215, 248, 255)),
+                shape: WidgetStatePropertyAll(
+                  StadiumBorder(
+                    side: BorderSide(
+                      color: accentColor,
+                      width: 2,
+                    ),
+                  ),
+                ),
+                visualDensity: VisualDensity.comfortable,
+                minimumSize: WidgetStatePropertyAll(
+                  Size(140, 50),
+                ),
               ),
-            ],
-          ),
+              child: const Text('Пополнить'),
+            ),
+          ],
         ),
       ),
     );
