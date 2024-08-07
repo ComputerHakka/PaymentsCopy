@@ -5,8 +5,15 @@ import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
 import 'package:personal_payment_app/features/home/presentation/screens/home/home_screen.dart';
 
-class PaymentScreen extends StatelessWidget {
+class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
+
+  @override
+  State<PaymentScreen> createState() => _PaymentScreenState();
+}
+
+class _PaymentScreenState extends State<PaymentScreen> {
+  bool agree = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +44,13 @@ class PaymentScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              child: Text(
+                'Быстрая оплата',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 6),
               child: AccountBalanceWidget(),
@@ -55,7 +69,10 @@ class PaymentScreen extends StatelessWidget {
             ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 6),
-              child: Text('Рекомендованный платеж: 7600р'),
+              child: Text(
+                'Рекомендованный платеж: 7600р',
+                style: TextStyle(color: textFieldTextColor),
+              ),
             ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 6),
@@ -67,10 +84,18 @@ class PaymentScreen extends StatelessWidget {
             Row(
               children: [
                 Checkbox(
-                  value: false,
-                  onChanged: (value) {},
+                  activeColor: accentColor,
+                  value: agree,
+                  onChanged: (value) {
+                    setState(() {
+                      agree = !agree;
+                    });
+                  },
                 ),
-                const Text('Я подтверждаю, что все данные верны')
+                const Text(
+                  'Я подтверждаю, что все данные верны',
+                  style: TextStyle(color: textFieldTextColor),
+                )
               ],
             ),
             ElevatedButton(

@@ -50,10 +50,22 @@ class HomeScreen extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 2.5, horizontal: 11),
                   scrollDirection: Axis.horizontal,
                   children: const [
-                    OptionBoxWidget(title: 'Камеры'),
-                    OptionBoxWidget(title: 'Двери'),
-                    OptionBoxWidget(title: 'Парковка'),
-                    OptionBoxWidget(title: 'Гараж'),
+                    OptionBoxWidget(
+                      title: 'Камеры',
+                      icon: Icons.camera_indoor_rounded,
+                    ),
+                    OptionBoxWidget(
+                      title: 'Двери',
+                      icon: Icons.door_front_door_rounded,
+                    ),
+                    OptionBoxWidget(
+                      title: 'Парковка',
+                      icon: Icons.local_parking_rounded,
+                    ),
+                    OptionBoxWidget(
+                      title: 'Гараж',
+                      icon: Icons.garage,
+                    ),
                   ],
                 ),
               ),
@@ -132,9 +144,10 @@ class UserNameWidget extends StatelessWidget {
 }
 
 class OptionBoxWidget extends StatelessWidget {
-  const OptionBoxWidget({super.key, required this.title});
+  const OptionBoxWidget({super.key, required this.title, required this.icon});
 
   final String title;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -142,18 +155,29 @@ class OptionBoxWidget extends StatelessWidget {
       padding: const EdgeInsets.all(5.0),
       child: AspectRatio(
         aspectRatio: 1,
-        child: Container(
-          padding: const EdgeInsets.all(14),
+        child: Ink(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: containersColor,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(title),
-            ],
+          child: InkWell(
+            borderRadius: BorderRadius.circular(15),
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    icon,
+                    color: unselectedItemColor,
+                    size: 50,
+                  ),
+                  Text(title),
+                ],
+              ),
+            ),
           ),
         ),
       ),

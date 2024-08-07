@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
 import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
 
@@ -119,22 +120,34 @@ class ParametersListWidget extends StatelessWidget {
         children: [
           UserParameterWidget(
             title: phone ?? 'Укажите номер телефона',
-            icon: const Icon(Icons.phone_rounded),
+            icon: const Icon(
+              Icons.phone_rounded,
+              color: unselectedItemColor,
+            ),
             route: RouteNames.changePhoneScreen,
           ),
           UserParameterWidget(
             title: email,
-            icon: const Icon(Icons.person),
+            icon: const Icon(
+              Icons.person,
+              color: unselectedItemColor,
+            ),
             route: RouteNames.changeEmailScreen,
           ),
           const UserParameterWidget(
             title: 'Адреса',
-            icon: Icon(Icons.home_rounded),
+            icon: Icon(
+              Icons.home_rounded,
+              color: unselectedItemColor,
+            ),
             route: RouteNames.addressesScreen,
           ),
           const UserParameterWidget(
             title: 'Документы',
-            icon: Icon(Icons.library_books_outlined),
+            icon: Icon(
+              Icons.library_books_outlined,
+              color: unselectedItemColor,
+            ),
             route: RouteNames.documentsScreen,
           ),
         ],
@@ -171,7 +184,10 @@ class UserParameterWidget extends StatelessWidget {
               Expanded(
                   child: Text(title,
                       style: Theme.of(context).textTheme.displaySmall)),
-              const Icon(Icons.arrow_forward_ios_rounded),
+              const Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: unselectedItemColor,
+              ),
             ],
           ),
         ),

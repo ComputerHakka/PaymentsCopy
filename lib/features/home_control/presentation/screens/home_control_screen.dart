@@ -73,7 +73,10 @@ class ElectronicsControlWidget extends StatelessWidget {
             itemCount: 4,
             padding: const EdgeInsets.symmetric(horizontal: 8),
             itemBuilder: (BuildContext context, int index) {
-              return const ElectronicCellwidget(title: 'Чайник');
+              return ElectronicCellwidget(
+                title: 'Свет ${index + 1}',
+                icon: Icons.light_rounded,
+              );
             },
           ),
         ),
@@ -125,7 +128,9 @@ class CmerasControlWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: 6,
             itemBuilder: (BuildContext context, int index) {
-              return const CameraCellwidget();
+              return CameraCellwidget(
+                title: 'Камера ${index + 1}',
+              );
             },
           ),
         ),
@@ -135,7 +140,9 @@ class CmerasControlWidget extends StatelessWidget {
 }
 
 class CameraCellwidget extends StatelessWidget {
-  const CameraCellwidget({super.key});
+  const CameraCellwidget({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -143,18 +150,29 @@ class CameraCellwidget extends StatelessWidget {
       padding: const EdgeInsets.all(5),
       child: AspectRatio(
         aspectRatio: 1.8,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 14),
+        child: Ink(
           decoration: BoxDecoration(
+            image: const DecorationImage(
+                image: AssetImage('lib/core/assets/images/video_camera.jpg')),
             color: containersColor,
             borderRadius: BorderRadius.circular(15),
           ),
-          child: const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text('Камера 1'),
-            ],
+          child: InkWell(
+            borderRadius: BorderRadius.circular(15),
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -163,9 +181,11 @@ class CameraCellwidget extends StatelessWidget {
 }
 
 class ElectronicCellwidget extends StatelessWidget {
-  const ElectronicCellwidget({super.key, required this.title});
+  const ElectronicCellwidget(
+      {super.key, required this.title, required this.icon});
 
   final String title;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -173,18 +193,29 @@ class ElectronicCellwidget extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: AspectRatio(
         aspectRatio: 1,
-        child: Container(
-          padding: const EdgeInsets.all(14),
+        child: Ink(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: containersColor,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(title),
-            ],
+          child: InkWell(
+            borderRadius: BorderRadius.circular(15),
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    icon,
+                    color: unselectedItemColor,
+                    size: 60,
+                  ),
+                  Text(title),
+                ],
+              ),
+            ),
           ),
         ),
       ),

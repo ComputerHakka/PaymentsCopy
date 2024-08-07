@@ -85,8 +85,10 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                 if (correct) {
                   BlocProvider.of<ChangeContactsBloc>(context)
                       .add(SendPhoneEvent(phone: value));
-                  BlocProvider.of<UserDatabaseBloc>(context)
-                      .add(UpdateUserEvent(phone: value));
+                  BlocProvider.of<UserDatabaseBloc>(context).add(
+                      UpdateUserEvent(
+                          phone:
+                              value)); //Коллизия данных если серв не отвечает
                 }
               },
             ),
