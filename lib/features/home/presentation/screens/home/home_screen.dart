@@ -171,7 +171,7 @@ class OptionBoxWidget extends StatelessWidget {
                 children: [
                   Icon(
                     icon,
-                    color: unselectedItemColor,
+                    color: secondaryColor,
                     size: 50,
                   ),
                   Text(title),
@@ -294,6 +294,9 @@ class TransactionsInfoWidget extends StatelessWidget {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
+                      gradient: const LinearGradient(
+                        colors: [accentColor, secondaryColor],
+                      ),
                       color: unselectedItemColor,
                     ),
                   ),
@@ -342,17 +345,17 @@ class ServicesInfoWidget extends StatelessWidget {
                   Row(
                     children: [
                       CircleAvatar(
-                        backgroundColor: unselectedItemColor,
+                        backgroundColor: accentColor,
                         radius: 17,
                       ),
                       SizedBox(width: 8),
                       CircleAvatar(
-                        backgroundColor: unselectedItemColor,
+                        backgroundColor: Color(0xFF45bbd9),
                         radius: 17,
                       ),
                       SizedBox(width: 8),
                       CircleAvatar(
-                        backgroundColor: unselectedItemColor,
+                        backgroundColor: secondaryColor,
                         radius: 17,
                       ),
                     ],

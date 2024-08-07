@@ -209,7 +209,7 @@ class ElectronicCellwidget extends StatelessWidget {
                 children: [
                   Icon(
                     icon,
-                    color: unselectedItemColor,
+                    color: secondaryColor,
                     size: 60,
                   ),
                   Text(title),

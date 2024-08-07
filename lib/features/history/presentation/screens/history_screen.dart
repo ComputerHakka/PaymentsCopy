@@ -254,7 +254,7 @@ class TransationWidget extends StatelessWidget {
         );
       },
       leading: const CircleAvatar(
-        backgroundColor: unselectedItemColor,
+        backgroundColor: secondaryColor,
       ),
       title: Text(
         transaction.name,

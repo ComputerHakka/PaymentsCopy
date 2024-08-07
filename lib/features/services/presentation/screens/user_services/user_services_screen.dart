@@ -88,7 +88,7 @@ class ServiceBoxWidget extends StatelessWidget {
           children: [
             const CircleAvatar(
               radius: 17.5,
-              backgroundColor: unselectedItemColor,
+              backgroundColor: secondaryColor,
             ),
             const SizedBox(height: 6),
             Text(
