@@ -1,0 +1,4 @@
+flutter_native_splash:
+  background_image: lib\core\assets\images\splash_background.png
+  image: lib/core/assets/images/splash_white.png
+  android: true

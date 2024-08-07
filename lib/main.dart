@@ -8,6 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Future.delayed(const Duration(seconds: 2));
   await initializeDependencies();
   //SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
