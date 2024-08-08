@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -99,9 +100,38 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
                         .add(SaveUserEvent(user: state.user));
                   }
                   if (state is RemoteAuthFailedState) {
-                    setState(() {
-                      errorText = '* Неверный пароль';
-                    });
+                    if (state.exception!.type == DioExceptionType.badResponse) {
+                      setState(() {
+                        errorText = '* Неверный пароль';
+                      });
+                    }
+                    if (state.exception!.type ==
+                        DioExceptionType.connectionError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          elevation: 5,
+                          duration: Duration(seconds: 2),
+                          behavior: SnackBarBehavior.floating,
+                          margin: EdgeInsets.fromLTRB(16, 0, 16, 30),
+                          content: Text('Проблема с соединением'),
+                        ),
+                      );
+                    }
+                    if (state.exception!.type ==
+                        DioExceptionType.connectionTimeout) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          elevation: 5,
+                          duration: Duration(seconds: 4),
+                          behavior: SnackBarBehavior.floating,
+                          margin: EdgeInsets.fromLTRB(16, 0, 16, 30),
+                          content: Text(
+                            'Вышло время на ответ сервера, проверьте подключение к интернету',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    }
                   }
                 },
               ),

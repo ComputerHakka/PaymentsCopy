@@ -70,6 +70,8 @@ ThemeData appTheme(BuildContext context) {
     appBarTheme: getAppBarTheme(context),
     bottomNavigationBarTheme: getBottomNavBarThemeData(),
     chipTheme: getChipThemeData(),
+    progressIndicatorTheme:
+        const ProgressIndicatorThemeData(color: accentColor),
   );
 }
 

@@ -21,6 +21,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final container = GetIt.instance;
 
+final dioOptions = BaseOptions(
+  connectTimeout: const Duration(seconds: 50),
+  receiveTimeout: const Duration(minutes: 1),
+);
+
 Future<void> initializeDependencies() async {
   final dataBase =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
@@ -29,7 +34,7 @@ Future<void> initializeDependencies() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   container.registerSingleton<SharedPreferences>(prefs);
 
-  container.registerSingleton<Dio>(Dio());
+  container.registerSingleton<Dio>(Dio(dioOptions));
 
   container.registerSingleton<AuthApiService>(AuthApiService(container()));
 
