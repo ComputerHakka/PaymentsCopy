@@ -27,6 +27,10 @@ class HistoryScreen extends StatelessWidget {
             ),
             child: IconButton(
               onPressed: () {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.focusedChild?.unfocus();
+                }
                 GoRouter.of(context).pushNamed(RouteNames.notifiactionsScreen);
               },
               icon: SvgPicture.asset(
@@ -253,8 +257,11 @@ class TransationWidget extends StatelessWidget {
           extra: transaction,
         );
       },
-      leading: const CircleAvatar(
-        backgroundColor: secondaryColor,
+      leading: CircleAvatar(
+        backgroundColor: transaction.imagePath != null ? null : secondaryColor,
+        backgroundImage: transaction.imagePath != null
+            ? AssetImage(transaction.imagePath!)
+            : null,
       ),
       title: Text(
         transaction.name,

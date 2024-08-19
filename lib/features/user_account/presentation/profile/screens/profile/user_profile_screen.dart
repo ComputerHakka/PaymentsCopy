@@ -43,9 +43,9 @@ class UserProfileScreen extends StatelessWidget {
                           actions: [
                             TextButton(
                               onPressed: () {
+                                Navigator.of(context).pop();
                                 GoRouter.of(context)
                                     .goNamed(RouteNames.loaderScreen);
-                                Navigator.of(context).pop();
                                 BlocProvider.of<UserDatabaseBloc>(context).add(
                                   DeleteUserEvent(user: user),
                                 );

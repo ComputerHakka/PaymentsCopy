@@ -24,6 +24,17 @@ class LoadingScreen extends StatelessWidget {
         if (state is UserDatabaseNoneState) {
           GoRouter.of(context).goNamed(RouteNames.startScreen);
         }
+        if (state is UserDatabaseLoadingState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              elevation: 5,
+              duration: Duration(seconds: 2),
+              behavior: SnackBarBehavior.floating,
+              margin: EdgeInsets.fromLTRB(16, 0, 16, 30),
+              content: Text('Что-то пошло не так перезагрузите приложение'),
+            ),
+          );
+        }
       },
     );
   }

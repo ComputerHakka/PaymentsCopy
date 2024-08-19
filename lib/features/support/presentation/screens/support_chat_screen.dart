@@ -27,6 +27,10 @@ class SupportChatScreen extends StatelessWidget {
             ),
             child: IconButton(
               onPressed: () {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.focusedChild?.unfocus();
+                }
                 GoRouter.of(context).pushNamed(RouteNames.notifiactionsScreen);
               },
               icon: SvgPicture.asset(

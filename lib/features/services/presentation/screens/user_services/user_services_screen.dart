@@ -86,9 +86,16 @@ class ServiceBoxWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CircleAvatar(
-              radius: 17.5,
-              backgroundColor: secondaryColor,
+            Container(
+              width: 35,
+              height: 35,
+              decoration: BoxDecoration(
+                image: service.photoPath != null
+                    ? DecorationImage(image: AssetImage(service.photoPath!))
+                    : null,
+                color: service.photoPath == null ? secondaryColor : null,
+                borderRadius: BorderRadius.circular(15),
+              ),
             ),
             const SizedBox(height: 6),
             Text(

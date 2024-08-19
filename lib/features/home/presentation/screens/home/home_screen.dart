@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
+import 'package:personal_payment_app/features/services/domain/entities/service.dart';
 import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -25,6 +26,10 @@ class HomeScreen extends StatelessWidget {
               ),
               child: IconButton(
                 onPressed: () {
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus) {
+                    currentFocus.focusedChild?.unfocus();
+                  }
                   GoRouter.of(context)
                       .pushNamed(RouteNames.notifiactionsScreen);
                 },
@@ -44,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                 child: AccountBalanceWidget(),
               ),
               SizedBox(
-                height: 118,
+                height: 133,
                 child: ListView(
                   padding:
                       const EdgeInsets.symmetric(vertical: 2.5, horizontal: 11),
@@ -52,19 +57,19 @@ class HomeScreen extends StatelessWidget {
                   children: const [
                     OptionBoxWidget(
                       title: 'Камеры',
-                      icon: Icons.camera_indoor_rounded,
+                      icon: 'lib/core/assets/icons/camera.svg',
                     ),
                     OptionBoxWidget(
                       title: 'Двери',
-                      icon: Icons.door_front_door_rounded,
+                      icon: 'lib/core/assets/icons/door.svg',
                     ),
                     OptionBoxWidget(
                       title: 'Парковка',
-                      icon: Icons.local_parking_rounded,
+                      icon: 'lib/core/assets/icons/parking.svg',
                     ),
                     OptionBoxWidget(
                       title: 'Гараж',
-                      icon: Icons.garage,
+                      icon: 'lib/core/assets/icons/garage.svg',
                     ),
                   ],
                 ),
@@ -147,7 +152,7 @@ class OptionBoxWidget extends StatelessWidget {
   const OptionBoxWidget({super.key, required this.title, required this.icon});
 
   final String title;
-  final IconData icon;
+  final String icon;
 
   @override
   Widget build(BuildContext context) {
@@ -169,10 +174,21 @@ class OptionBoxWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(
-                    icon,
-                    color: secondaryColor,
-                    size: 50,
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                        color: mainIconsContainerColor,
+                        borderRadius: BorderRadius.circular(100)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: SvgPicture.asset(
+                        icon,
+                        colorFilter: const ColorFilter.mode(
+                            textFieldTextColor, BlendMode.srcIn),
+                        width: 5,
+                      ),
+                    ),
                   ),
                   Text(title),
                 ],
@@ -315,6 +331,7 @@ class ServicesInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const services = ServiceMock.userServices;
     return Expanded(
       child: AspectRatio(
         aspectRatio: 1.6,
@@ -329,37 +346,62 @@ class ServicesInfoWidget extends StatelessWidget {
             onTap: () {
               GoRouter.of(context).goNamed(RouteNames.userServicesScreen);
             },
-            child: const Padding(
-              padding: EdgeInsets.all(15),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Ваши услуги',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Ваши услуги',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                        ),
+                      ),
+                      (services.length - 3) > 0
+                          ? CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Colors.red,
+                              child: Text(
+                                (services.length - 3).toString(),
+                                style: const TextStyle(
+                                    fontSize: 12, color: Colors.white),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                    ],
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 42,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: 3,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          width: 34,
+                          height: 34,
+                          margin: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            image: services[index].photoPath != null
+                                ? DecorationImage(
+                                    image:
+                                        AssetImage(services[index].photoPath!))
+                                : null,
+                            color: services[index].photoPath == null
+                                ? secondaryColor
+                                : null,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: accentColor,
-                        radius: 17,
-                      ),
-                      SizedBox(width: 8),
-                      CircleAvatar(
-                        backgroundColor: Color(0xFF45bbd9),
-                        radius: 17,
-                      ),
-                      SizedBox(width: 8),
-                      CircleAvatar(
-                        backgroundColor: secondaryColor,
-                        radius: 17,
-                      ),
-                    ],
-                  )
                 ],
               ),
             ),

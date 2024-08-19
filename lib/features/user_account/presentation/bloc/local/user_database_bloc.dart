@@ -34,11 +34,13 @@ class UserDatabaseBloc extends Bloc<UserDatabaseEvent, UserDatabaseState> {
 
   void onDeleteUser(
       DeleteUserEvent event, Emitter<UserDatabaseState> emit) async {
+    emit(const UserDatabaseLoadingState());
     await _deleteUserUseCase(params: event.user);
     emit(const UserDatabaseNoneState());
   }
 
   void onSaveUser(SaveUserEvent event, Emitter<UserDatabaseState> emit) async {
+    emit(const UserDatabaseLoadingState());
     await _saveUserUseCase(params: event.user);
     final user = await _getUserUseCase();
     emit(UserDatabaseLoginState(user: user));

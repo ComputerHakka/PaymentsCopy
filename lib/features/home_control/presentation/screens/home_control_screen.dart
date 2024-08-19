@@ -22,6 +22,10 @@ class HomeControlScreen extends StatelessWidget {
             ),
             child: IconButton(
               onPressed: () {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.focusedChild?.unfocus();
+                }
                 GoRouter.of(context).pushNamed(RouteNames.notifiactionsScreen);
               },
               icon: SvgPicture.asset(
@@ -56,6 +60,13 @@ class ElectronicsControlWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> icons = [
+      'lib/core/assets/icons/light.svg',
+      'lib/core/assets/icons/intercom.svg',
+      'lib/core/assets/icons/garage.svg',
+      'lib/core/assets/icons/light.svg',
+    ];
+    List<String> labels = ['Свет 1', 'Домофон', 'Гараж', 'Свет 2'];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -74,8 +85,8 @@ class ElectronicsControlWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             itemBuilder: (BuildContext context, int index) {
               return ElectronicCellwidget(
-                title: 'Свет ${index + 1}',
-                icon: Icons.light_rounded,
+                title: labels[index],
+                icon: icons[index],
               );
             },
           ),
@@ -185,7 +196,7 @@ class ElectronicCellwidget extends StatelessWidget {
       {super.key, required this.title, required this.icon});
 
   final String title;
-  final IconData icon;
+  final String icon;
 
   @override
   Widget build(BuildContext context) {
@@ -207,10 +218,21 @@ class ElectronicCellwidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(
-                    icon,
-                    color: secondaryColor,
-                    size: 60,
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                        color: mainIconsContainerColor,
+                        borderRadius: BorderRadius.circular(100)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: SvgPicture.asset(
+                        icon,
+                        colorFilter: const ColorFilter.mode(
+                            textFieldTextColor, BlendMode.srcIn),
+                        width: 5,
+                      ),
+                    ),
                   ),
                   Text(title),
                 ],

@@ -51,6 +51,9 @@ dependencies:
   json_annotation: ^4.9.0
   fl_chart: ^0.68.0
   flutter_svg: ^2.0.10+1
+  open_file: ^3.3.2
+  path_provider: ^2.1.4
+  palette_generator: ^0.3.3+4
   flutter_localizations:
     sdk: flutter
 
@@ -86,6 +89,10 @@ flutter:
   assets:
     - lib/core/assets/images/
     - lib/core/assets/icons/
+    - lib/core/assets/pdf/
+    - lib/core/assets/images/brands/
+    - lib/core/assets/images/transactions/
+    - lib/core/assets/images/documents/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

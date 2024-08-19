@@ -27,19 +27,23 @@ class TransactionEntity extends Equatable {
   final TransactionCategory category;
   final int? userId;
   final int? checkId;
+  final String? imagePath;
 
-  const TransactionEntity(
-      {this.id,
-      required this.name,
-      required this.date,
-      required this.sum,
-      required this.type,
-      required this.category,
-      this.userId,
-      this.checkId});
+  const TransactionEntity({
+    this.id,
+    required this.name,
+    required this.date,
+    required this.sum,
+    required this.type,
+    required this.category,
+    this.userId,
+    this.checkId,
+    this.imagePath,
+  });
 
   @override
-  List<Object?> get props => [id, name, date, sum, type, userId, checkId];
+  List<Object?> get props =>
+      [id, name, date, sum, type, userId, checkId, imagePath];
 
   static final arrayOfTransactions = <TransactionEntity>[
     TransactionEntity(
@@ -48,6 +52,7 @@ class TransactionEntity extends Equatable {
       sum: 14500.2,
       type: TransactionType.debit,
       category: TransactionCategory.categories[1],
+      imagePath: 'lib/core/assets/images/transactions/balance.png',
     ),
     TransactionEntity(
       name: 'Оплата интернета',
@@ -55,6 +60,7 @@ class TransactionEntity extends Equatable {
       sum: 3000.0,
       type: TransactionType.debit,
       category: TransactionCategory.categories[0],
+      imagePath: 'lib/core/assets/images/transactions/balance.png',
     ),
     TransactionEntity(
       name: 'Пополнение счета',
@@ -62,6 +68,7 @@ class TransactionEntity extends Equatable {
       sum: 5000.0,
       type: TransactionType.refil,
       category: TransactionCategory.categories[6],
+      imagePath: 'lib/core/assets/images/transactions/alfa.png',
     ),
     TransactionEntity(
       name: 'Покупка продуктов',
@@ -69,6 +76,7 @@ class TransactionEntity extends Equatable {
       sum: 3000.5,
       type: TransactionType.debit,
       category: TransactionCategory.categories[2],
+      imagePath: 'lib/core/assets/images/transactions/balance.png',
     ),
     TransactionEntity(
       name: 'Оплата мобильной связи',
@@ -76,6 +84,7 @@ class TransactionEntity extends Equatable {
       sum: 5000.0,
       type: TransactionType.debit,
       category: TransactionCategory.categories[3],
+      imagePath: 'lib/core/assets/images/transactions/balance.png',
     ),
     TransactionEntity(
       name: 'Пополнение счета',
@@ -83,6 +92,7 @@ class TransactionEntity extends Equatable {
       sum: 7500.0,
       type: TransactionType.refil,
       category: TransactionCategory.categories[6],
+      imagePath: 'lib/core/assets/images/transactions/tbank.png',
     ),
     TransactionEntity(
       name: 'Покупка одежды',
@@ -90,6 +100,7 @@ class TransactionEntity extends Equatable {
       sum: 4500.75,
       type: TransactionType.debit,
       category: TransactionCategory.categories[2],
+      imagePath: 'lib/core/assets/images/transactions/balance.png',
     ),
     TransactionEntity(
       name: 'Пополнение счета',
@@ -97,6 +108,7 @@ class TransactionEntity extends Equatable {
       sum: 6500.0,
       type: TransactionType.refil,
       category: TransactionCategory.categories[6],
+      imagePath: 'lib/core/assets/images/transactions/alfa.png',
     ),
     TransactionEntity(
       name: 'Оплата за проезд',
@@ -104,6 +116,7 @@ class TransactionEntity extends Equatable {
       sum: 500.0,
       type: TransactionType.debit,
       category: TransactionCategory.categories[5],
+      imagePath: 'lib/core/assets/images/transactions/balance.png',
     ),
     TransactionEntity(
       name: 'Пополнение счета',
@@ -111,6 +124,7 @@ class TransactionEntity extends Equatable {
       sum: 7000.0,
       type: TransactionType.refil,
       category: TransactionCategory.categories[6],
+      imagePath: 'lib/core/assets/images/transactions/sber.png',
     ),
     TransactionEntity(
       name: 'Покупка электроники',
@@ -118,6 +132,7 @@ class TransactionEntity extends Equatable {
       sum: 10000.0,
       type: TransactionType.debit,
       category: TransactionCategory.categories[2],
+      imagePath: 'lib/core/assets/images/transactions/balance.png',
     ),
     TransactionEntity(
       name: 'Пополнение счета',
@@ -125,6 +140,7 @@ class TransactionEntity extends Equatable {
       sum: 8000.0,
       type: TransactionType.refil,
       category: TransactionCategory.categories[6],
+      imagePath: 'lib/core/assets/images/transactions/sber.png',
     ),
     TransactionEntity(
       name: 'Оплата за аренду жилья',
@@ -132,6 +148,7 @@ class TransactionEntity extends Equatable {
       sum: 25000.0,
       type: TransactionType.debit,
       category: TransactionCategory.categories[4],
+      imagePath: 'lib/core/assets/images/transactions/balance.png',
     ),
     TransactionEntity(
       name: 'Пополнение счета',
@@ -139,6 +156,7 @@ class TransactionEntity extends Equatable {
       sum: 5500.0,
       type: TransactionType.refil,
       category: TransactionCategory.categories[6],
+      imagePath: 'lib/core/assets/images/transactions/tbank.png',
     ),
     TransactionEntity(
       name: 'Оплата учебы',
@@ -146,6 +164,7 @@ class TransactionEntity extends Equatable {
       sum: 12000.0,
       type: TransactionType.debit,
       category: TransactionCategory.categories[4],
+      imagePath: 'lib/core/assets/images/transactions/balance.png',
     ),
     TransactionEntity(
       name: 'Пополнение счета',
@@ -153,6 +172,7 @@ class TransactionEntity extends Equatable {
       sum: 9000.0,
       type: TransactionType.refil,
       category: TransactionCategory.categories[6],
+      imagePath: 'lib/core/assets/images/transactions/tbank.png',
     ),
     TransactionEntity(
       name: 'Покупка подарков',
@@ -160,6 +180,7 @@ class TransactionEntity extends Equatable {
       sum: 3500.0,
       type: TransactionType.debit,
       category: TransactionCategory.categories[2],
+      imagePath: 'lib/core/assets/images/transactions/balance.png',
     ),
     TransactionEntity(
       name: 'Пополнение счета',
@@ -167,6 +188,7 @@ class TransactionEntity extends Equatable {
       sum: 7000.0,
       type: TransactionType.refil,
       category: TransactionCategory.categories[6],
+      imagePath: 'lib/core/assets/images/transactions/sber.png',
     ),
     TransactionEntity(
       name: 'Оплата коммунальных услуг',
@@ -174,6 +196,7 @@ class TransactionEntity extends Equatable {
       sum: 15000.0,
       type: TransactionType.debit,
       category: TransactionCategory.categories[1],
+      imagePath: 'lib/core/assets/images/transactions/balance.png',
     ),
     TransactionEntity(
       name: 'Пополнение счета',
@@ -181,6 +204,7 @@ class TransactionEntity extends Equatable {
       sum: 6000.0,
       type: TransactionType.refil,
       category: TransactionCategory.categories[6],
+      imagePath: 'lib/core/assets/images/transactions/alfa.png',
     ),
     TransactionEntity(
       name: 'Оплата за спортзал',
@@ -188,6 +212,7 @@ class TransactionEntity extends Equatable {
       sum: 2000.0,
       type: TransactionType.debit,
       category: TransactionCategory.categories[4],
+      imagePath: 'lib/core/assets/images/transactions/balance.png',
     ),
     TransactionEntity(
       name: 'Пополнение счета',
@@ -195,6 +220,7 @@ class TransactionEntity extends Equatable {
       sum: 6500.0,
       type: TransactionType.refil,
       category: TransactionCategory.categories[6],
+      imagePath: 'lib/core/assets/images/transactions/alfa.png',
     ),
     TransactionEntity(
       name: 'Оплата медицинских услуг',
@@ -202,6 +228,7 @@ class TransactionEntity extends Equatable {
       sum: 5000.0,
       type: TransactionType.debit,
       category: TransactionCategory.categories[4],
+      imagePath: 'lib/core/assets/images/transactions/balance.png',
     ),
     TransactionEntity(
       name: 'Пополнение счета',
@@ -209,6 +236,7 @@ class TransactionEntity extends Equatable {
       sum: 7500.0,
       type: TransactionType.refil,
       category: TransactionCategory.categories[6],
+      imagePath: 'lib/core/assets/images/transactions/sber.png',
     ),
   ];
 

@@ -228,8 +228,12 @@ class TransationWidget extends StatelessWidget {
           );
         },
         child: ListTile(
-          leading: const CircleAvatar(
-            backgroundColor: secondaryColor,
+          leading: CircleAvatar(
+            backgroundColor:
+                transaction.imagePath != null ? null : secondaryColor,
+            backgroundImage: transaction.imagePath != null
+                ? AssetImage(transaction.imagePath!)
+                : null,
           ),
           title: Text(
             transaction.name,

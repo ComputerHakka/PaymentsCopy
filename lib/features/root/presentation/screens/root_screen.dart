@@ -37,10 +37,16 @@ class RootScreen extends StatelessWidget {
             currentIndex: navigationShell.currentIndex,
 
             /// Обработчик нажатия на элемент нижнего навигационного бара.
-            onTap: (index) => navigationShell.goBranch(
-              index,
-              initialLocation: index == navigationShell.currentIndex,
-            ),
+            onTap: (index) {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.focusedChild?.unfocus();
+              }
+              navigationShell.goBranch(
+                index,
+                initialLocation: index == navigationShell.currentIndex,
+              );
+            },
           ),
         ),
       ),

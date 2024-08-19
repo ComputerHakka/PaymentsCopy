@@ -30,6 +30,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
             ),
             child: IconButton(
               onPressed: () {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.focusedChild?.unfocus();
+                }
                 GoRouter.of(context).pushNamed(RouteNames.notifiactionsScreen);
               },
               icon: SvgPicture.asset(
@@ -78,6 +82,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               padding: EdgeInsets.symmetric(vertical: 6),
               child: TextField(
                 decoration: InputDecoration(hintText: 'Сумма'),
+                keyboardType: TextInputType.number,
               ),
             ),
             const Expanded(child: SizedBox()),

@@ -8,8 +8,10 @@ const Color unselectedItemColor = Color(0xFFADBECE);
 const Color borderColor = Color(0xFFE2E8F0);
 const Color textFieldTextColor = Color(0xFF64748B);
 const Color lightButton = Color(0xFFD6E7F8);
+const Color mainIconsContainerColor = Color(0xFFCBD5E1);
 const Color splashButtonColor = Color.fromARGB(255, 133, 216, 255);
 const Color secondaryColor = Color(0xFF74C6C8);
+const Color documentIconColor = Color(0xFFB01C40);
 const List<Color> diagramColors = [
   Color(0xFFfd7f6f),
   Color(0xFF7eb0d5),
