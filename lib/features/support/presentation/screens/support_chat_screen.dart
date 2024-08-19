@@ -103,7 +103,17 @@ class MessageBox extends StatelessWidget {
     final textColor = message.userId == 1 ? Colors.white : Colors.black;
     return Row(
       mainAxisAlignment: alignment,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
+        message.userId != 1
+            ? const Padding(
+                padding: EdgeInsets.only(right: 10, bottom: 10),
+                child: CircleAvatar(
+                  backgroundImage:
+                      AssetImage('lib/core/assets/images/support.png'),
+                ),
+              )
+            : const SizedBox.shrink(),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
           padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
@@ -117,6 +127,12 @@ class MessageBox extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                message.userId != 1
+                    ? const Text(
+                        'Мария',
+                        style: TextStyle(color: accentColor),
+                      )
+                    : const SizedBox.shrink(),
                 Text(
                   message.text,
                   style: TextStyle(color: textColor),
