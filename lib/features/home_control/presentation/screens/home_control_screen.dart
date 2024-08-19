@@ -222,14 +222,14 @@ class ElectronicCellwidget extends StatelessWidget {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                        color: mainIconsContainerColor,
+                        color: optionBoxCircleColor,
                         borderRadius: BorderRadius.circular(100)),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: SvgPicture.asset(
                         icon,
                         colorFilter: const ColorFilter.mode(
-                            textFieldTextColor, BlendMode.srcIn),
+                            accentColor, BlendMode.srcIn),
                         width: 5,
                       ),
                     ),

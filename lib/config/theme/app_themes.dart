@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 const Color accentColor = Color(0xFF1EB1E7);
+const Color optionBoxCircleColor = Color(0xFFDEECF2);
 const Color textFieldPassiveColor = Color(0xFFE2E8F0);
 const Color containersColor = Color(0xFFF1F5F9);
 const Color unselectedItemColor = Color(0xFFADBECE);
