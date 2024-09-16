@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
+import 'package:personal_payment_app/core/util/theme/theme_cubit.dart';
 import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
 import 'package:personal_payment_app/features/user_account/presentation/profile/bloc/bloc/change_contacts_bloc.dart';
 
@@ -58,7 +59,9 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
             TextField(
               controller: _emailController,
               style: const TextStyle(fontSize: 16),
-              decoration: getChangeInputDecoration().copyWith(
+              decoration: getChangeInputDecoration(
+                      context.read<ThemeCubit>().state.isDarkMode)
+                  .copyWith(
                 hintText: 'Введите ваш e-mail',
                 hintStyle: const TextStyle(
                   color: unselectedItemColor,

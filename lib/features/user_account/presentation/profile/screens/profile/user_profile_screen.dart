@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
+import 'package:personal_payment_app/core/util/theme/theme_cubit.dart';
 import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
 
 class UserProfileScreen extends StatelessWidget {
@@ -14,6 +15,7 @@ class UserProfileScreen extends StatelessWidget {
     final firstname = user != null ? user.firstName : '';
     final email = user != null ? user.email : '';
     final phone = user != null ? user.phone : '';
+    final isDarkMode = context.read<ThemeCubit>().state.isDarkMode;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -30,9 +32,13 @@ class UserProfileScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: TextButton(
-                  style: const ButtonStyle(
-                      overlayColor: WidgetStatePropertyAll(
-                          Color.fromARGB(255, 252, 214, 211))),
+                  style: ButtonStyle(
+                    overlayColor: WidgetStatePropertyAll(
+                      isDarkMode
+                          ? const Color.fromARGB(255, 58, 27, 25)
+                          : const Color.fromARGB(255, 252, 214, 211),
+                    ),
+                  ),
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -150,6 +156,7 @@ class ParametersListWidget extends StatelessWidget {
             ),
             route: RouteNames.documentsScreen,
           ),
+          const SwitchThemeWidget(),
         ],
       ),
     );
@@ -190,6 +197,50 @@ class UserParameterWidget extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class SwitchThemeWidget extends StatelessWidget {
+  const SwitchThemeWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 3),
+        child: BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) {
+            return Row(
+              children: [
+                const Icon(Icons.brush_rounded, color: unselectedItemColor),
+                const SizedBox(width: 15),
+                if (state.isDarkMode)
+                  Expanded(
+                    child: Text(
+                      'Темная тема',
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                  ),
+                if (!state.isDarkMode)
+                  Expanded(
+                    child: Text(
+                      'Светлая тема',
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                  ),
+                Switch(
+                  value: state.isDarkMode,
+                  onChanged: (value) {
+                    context.read<ThemeCubit>().changeTheme(!state.isDarkMode);
+                  },
+                )
+              ],
+            );
+          },
         ),
       ),
     );

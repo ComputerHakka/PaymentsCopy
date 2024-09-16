@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
+import 'package:personal_payment_app/core/util/theme/theme_cubit.dart';
 import 'package:personal_payment_app/features/data_storage/data/local/app_database.dart';
 import 'package:personal_payment_app/features/user_account/data/data_sources/remote/auth_api_service.dart';
 import 'package:personal_payment_app/features/user_account/data/repository/user_repository_impl.dart';
@@ -75,4 +76,6 @@ Future<void> initializeDependencies() async {
       .registerFactory<FilterTransactionsBloc>(() => FilterTransactionsBloc());
 
   container.registerFactory<MessagesBloc>(() => MessagesBloc());
+
+  container.registerFactory<ThemeCubit>(() => ThemeCubit(container()));
 }

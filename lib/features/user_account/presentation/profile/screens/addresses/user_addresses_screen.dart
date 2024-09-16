@@ -69,7 +69,7 @@ class _AddressCellWidgetState extends State<AddressCellWidget> {
       margin: const EdgeInsets.symmetric(vertical: 7.5),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: containersColor,
+        color: Theme.of(context).colorScheme.tertiary,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(

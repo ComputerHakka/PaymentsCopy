@@ -6,6 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
+import 'package:personal_payment_app/core/util/theme/theme_cubit.dart';
 import 'package:personal_payment_app/features/history/presentation/bloc/filter/filter_transactions_bloc.dart';
 import 'package:personal_payment_app/features/transactions/domain/entities/transaction.dart';
 
@@ -22,7 +23,7 @@ class HistoryScreen extends StatelessWidget {
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.symmetric(horizontal: 6),
             decoration: BoxDecoration(
-              color: containersColor,
+              color: Theme.of(context).colorScheme.tertiary,
               borderRadius: BorderRadius.circular(30),
             ),
             child: IconButton(
@@ -144,7 +145,12 @@ class CategoryChip extends StatelessWidget {
         label: Text(
           label,
           style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                color: !isChecked ? Colors.black : Colors.white,
+                color: context.read<ThemeCubit>().state.isDarkMode
+                    ? Colors.white
+                    : !isChecked
+                        ? Colors.black
+                        : Colors
+                            .white, //TODO ебать кринжа навалил исправляй хули, хотя куда уже хуже
               ),
         ),
         selected: isChecked,
@@ -245,8 +251,8 @@ class TransationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color textColor =
-        transaction.type == TransactionType.refil ? Colors.green : Colors.black;
+    final Color? textColor =
+        transaction.type == TransactionType.refil ? Colors.green : null;
     final String prefix = transaction.type == TransactionType.refil
         ? '+'
         : '-'; //TODO Тоже хуйня переделываем
@@ -314,7 +320,7 @@ class AppBarTextField extends StatelessWidget {
         ),
         prefixIcon: const Icon(Icons.search, color: unselectedItemColor),
         filled: true,
-        fillColor: containersColor,
+        fillColor: Theme.of(context).colorScheme.tertiary,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
     );

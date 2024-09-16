@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:personal_payment_app/config/theme/app_themes.dart';
 
 class RootScreen extends StatelessWidget {
   const RootScreen({super.key, required this.navigationShell});
@@ -12,12 +11,12 @@ class RootScreen extends StatelessWidget {
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: containersColor,
+              color: Theme.of(context).colorScheme.tertiary,
               blurRadius: 4.0,
-              offset: Offset(0.0, -5),
+              offset: const Offset(0.0, -5),
             )
           ],
         ),
@@ -28,7 +27,6 @@ class RootScreen extends StatelessWidget {
           ),
           child: BottomNavigationBar(
             selectedFontSize: 12,
-            backgroundColor: Colors.white,
 
             /// Лист элементов для нижнего навигационного бара.
             items: _buildBottomNavBarItems,

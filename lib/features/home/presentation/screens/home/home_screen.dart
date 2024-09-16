@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
               margin: const EdgeInsets.only(right: 16),
               padding: const EdgeInsets.symmetric(horizontal: 6),
               decoration: BoxDecoration(
-                color: containersColor,
+                color: Theme.of(context).colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(30),
               ),
               child: IconButton(
@@ -163,7 +163,7 @@ class OptionBoxWidget extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: containersColor,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
           child: InkWell(
             borderRadius: BorderRadius.circular(15),
@@ -178,7 +178,7 @@ class OptionBoxWidget extends StatelessWidget {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                        color: optionBoxCircleColor,
+                        color: Theme.of(context).colorScheme.tertiaryFixed,
                         borderRadius: BorderRadius.circular(100)),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
@@ -206,13 +206,14 @@ class AccountBalanceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return AspectRatio(
       aspectRatio: 4.4,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: containersColor,
+          color: Theme.of(context).colorScheme.tertiary,
         ),
         child: Row(
           children: [
@@ -234,19 +235,20 @@ class AccountBalanceWidget extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {},
-              style: const ButtonStyle(
-                padding: WidgetStatePropertyAll(
+              style: ButtonStyle(
+                padding: const WidgetStatePropertyAll(
                   EdgeInsets.symmetric(
                     vertical: 12,
                     horizontal: 15,
                   ),
                 ),
                 shadowColor: WidgetStateColor.transparent,
-                foregroundColor: WidgetStatePropertyAll(accentColor),
+                foregroundColor: const WidgetStatePropertyAll(accentColor),
                 backgroundColor: WidgetStateColor.transparent,
-                overlayColor:
-                    WidgetStatePropertyAll(Color.fromARGB(255, 215, 248, 255)),
-                shape: WidgetStatePropertyAll(
+                overlayColor: WidgetStatePropertyAll(isDarkMode
+                    ? const Color.fromARGB(255, 30, 69, 78)
+                    : const Color.fromARGB(255, 215, 248, 255)),
+                shape: const WidgetStatePropertyAll(
                   StadiumBorder(
                     side: BorderSide(
                       color: accentColor,
@@ -255,7 +257,7 @@ class AccountBalanceWidget extends StatelessWidget {
                   ),
                 ),
                 visualDensity: VisualDensity.comfortable,
-                minimumSize: WidgetStatePropertyAll(
+                minimumSize: const WidgetStatePropertyAll(
                   Size(140, 50),
                 ),
               ),
@@ -280,7 +282,7 @@ class TransactionsInfoWidget extends StatelessWidget {
           height: 133,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: containersColor,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
           child: InkWell(
             borderRadius: BorderRadius.circular(15),
@@ -339,7 +341,7 @@ class ServicesInfoWidget extends StatelessWidget {
           height: 133,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: containersColor,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
           child: InkWell(
             borderRadius: BorderRadius.circular(15),
@@ -431,7 +433,7 @@ class AppBarTextField extends StatelessWidget {
         ),
         prefixIcon: const Icon(Icons.search, color: unselectedItemColor),
         filled: true,
-        fillColor: containersColor,
+        fillColor: Theme.of(context).colorScheme.tertiary,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
     );

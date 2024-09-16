@@ -73,7 +73,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
           centerTitle: false,
           flexibleSpace: Container(
             padding: const EdgeInsets.all(16.0),
-            color: dominantColor ?? containersColor,
+            color: dominantColor ?? Theme.of(context).colorScheme.tertiary,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

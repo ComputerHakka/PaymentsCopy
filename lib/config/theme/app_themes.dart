@@ -25,12 +25,31 @@ const List<Color> diagramColors = [
   Color(0xFF8bd3c7),
 ];
 
-ThemeData appTheme(BuildContext context) {
+// const Color secondaryColorDark = Color(0xFF60FFA9);
+// const Color containersColorDark = Color(0xFF14141A);
+// const Color containersSecondaryColor = Color(0xFF13252E);
+// const Color unselectedItemColor = Color(0xFFADBECE);
+// const Color borderColor = Color(0xFFE2E8F0);
+// const Color textFieldTextColor = Color(0xFF64748B);
+// const Color lightButton = Color.fromARGB(255, 54, 84, 114);
+// const Color splashButtonColor = Color.fromARGB(255, 53, 148, 192);
+// const Color someColor = Color.fromARGB(186, 96, 207, 255);
+// const Color textMainColor = Colors.white;
+
+ThemeData appTheme(BuildContext context, {bool isDarkMode = false}) {
   return ThemeData(
     fontFamily: 'Ubuntu',
-    scaffoldBackgroundColor: Colors.white,
-    textTheme: const TextTheme(
-      displayLarge: TextStyle(
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: <TargetPlatform, PageTransitionsBuilder>{
+        TargetPlatform.android: ZoomPageTransitionsBuilder(
+          allowEnterRouteSnapshotting: false,
+        ),
+      },
+    ),
+    brightness: isDarkMode ? Brightness.dark : Brightness.light,
+    scaffoldBackgroundColor: isDarkMode ? Colors.black : Colors.white,
+    textTheme: TextTheme(
+      displayLarge: const TextStyle(
         fontFamily: 'Ubuntu',
         fontSize: 35,
         fontWeight: FontWeight.w500,
@@ -40,86 +59,95 @@ ThemeData appTheme(BuildContext context) {
         fontFamily: 'Ubuntu',
         fontSize: 14,
         fontWeight: FontWeight.w400,
-        color: Colors.black,
+        color: isDarkMode ? Colors.white : Colors.black,
       ),
       headlineMedium: TextStyle(
         fontFamily: 'Ubuntu',
         fontSize: 18,
         fontWeight: FontWeight.w700,
-        color: Colors.black,
+        color: isDarkMode ? Colors.white : Colors.black,
       ),
       titleMedium: TextStyle(
         fontFamily: 'Ubuntu',
         fontSize: 16,
         fontWeight: FontWeight.w700,
-        color: Colors.black,
+        color: isDarkMode ? Colors.white : Colors.black,
       ),
-      titleLarge: TextStyle(
+      titleLarge: const TextStyle(
         fontFamily: 'Ubuntu',
         fontSize: 24,
         fontWeight: FontWeight.w500,
       ),
     ),
-    colorScheme: ColorScheme.fromSeed(seedColor: accentColor),
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: accentColor,
+      brightness: isDarkMode ? Brightness.dark : Brightness.light,
+      tertiary: isDarkMode ? const Color(0xFF14141A) : const Color(0xFFF1F5F9),
+      tertiaryFixed:
+          isDarkMode ? const Color(0xFF13252E) : const Color(0xFFDEECF2),
+    ),
     useMaterial3: true,
     dividerColor: Colors.transparent,
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: getButtonStyle(context),
+      style: getButtonStyle(context, isDarkMode),
     ),
     textButtonTheme: TextButtonThemeData(
-      style: getTextButtonStyle(context),
+      style: getTextButtonStyle(context, isDarkMode),
     ),
-    inputDecorationTheme: getInputDecorationTheme(),
-    appBarTheme: getAppBarTheme(context),
-    bottomNavigationBarTheme: getBottomNavBarThemeData(),
-    chipTheme: getChipThemeData(),
+    inputDecorationTheme: getInputDecorationTheme(isDarkMode),
+    appBarTheme: getAppBarTheme(isDarkMode),
+    bottomNavigationBarTheme: getBottomNavBarThemeData(isDarkMode),
+    chipTheme: getChipThemeData(isDarkMode),
     progressIndicatorTheme:
         const ProgressIndicatorThemeData(color: accentColor),
   );
 }
 
-ChipThemeData getChipThemeData() {
-  return const ChipThemeData(
-    side: BorderSide(color: Colors.transparent),
-    shape: StadiumBorder(),
-    backgroundColor: containersColor,
+ChipThemeData getChipThemeData(bool isDarkMode) {
+  return ChipThemeData(
+    side: const BorderSide(color: Colors.transparent),
+    shape: const StadiumBorder(),
+    backgroundColor:
+        isDarkMode ? const Color(0xFF14141A) : const Color(0xFFF1F5F9),
     selectedColor: accentColor,
   );
 }
 
-BottomNavigationBarThemeData getBottomNavBarThemeData() {
-  return const BottomNavigationBarThemeData(
+BottomNavigationBarThemeData getBottomNavBarThemeData(bool isDarkMode) {
+  return BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
+    backgroundColor: isDarkMode ? Colors.black : Colors.white,
     selectedItemColor: accentColor,
     unselectedItemColor: unselectedItemColor,
   );
 }
 
-AppBarTheme getAppBarTheme(BuildContext context) {
+AppBarTheme getAppBarTheme(bool isDarkMode) {
   return AppBarTheme(
-    systemOverlayStyle: const SystemUiOverlayStyle(
-      statusBarColor: Colors.white,
-      statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Brightness.light,
-      systemNavigationBarColor: Colors.white,
-      systemNavigationBarIconBrightness: Brightness.dark,
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: isDarkMode ? Colors.black : Colors.white,
+      statusBarIconBrightness: isDarkMode ? Brightness.light : Brightness.dark,
+      statusBarBrightness: isDarkMode ? Brightness.dark : Brightness.light,
+      systemNavigationBarColor: isDarkMode ? Colors.black : Colors.white,
+      systemNavigationBarIconBrightness:
+          isDarkMode ? Brightness.light : Brightness.dark,
     ),
     color: Colors.transparent,
     iconTheme: const IconThemeData(color: accentColor),
-    titleTextStyle: Theme.of(context).textTheme.titleMedium,
     scrolledUnderElevation: 0,
     centerTitle: true,
   );
 }
 
-InputDecorationTheme getInputDecorationTheme() {
+InputDecorationTheme getInputDecorationTheme(bool isDarkMode) {
   return InputDecorationTheme(
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
     ),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(color: textFieldPassiveColor),
+      borderSide: BorderSide(
+          color: isDarkMode ? textFieldTextColor : textFieldPassiveColor),
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
@@ -130,23 +158,23 @@ InputDecorationTheme getInputDecorationTheme() {
   );
 }
 
-InputDecoration getChangeInputDecoration() {
-  return const InputDecoration(
+InputDecoration getChangeInputDecoration(bool isDarkMode) {
+  return InputDecoration(
     hintText: '',
     filled: true,
-    border: OutlineInputBorder(
+    border: const OutlineInputBorder(
       borderSide: BorderSide(
         color: borderColor,
       ),
     ),
-    fillColor: containersColor,
-    focusedBorder: OutlineInputBorder(
+    fillColor: isDarkMode ? const Color(0xFF14141A) : const Color(0xFFF1F5F9),
+    focusedBorder: const OutlineInputBorder(
       borderSide: BorderSide(
         color: borderColor,
       ),
     ),
-    contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-    suffixIcon: Icon(
+    contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+    suffixIcon: const Icon(
       Icons.close_rounded,
       size: 17,
       color: unselectedItemColor,
@@ -154,7 +182,7 @@ InputDecoration getChangeInputDecoration() {
   );
 }
 
-ButtonStyle getButtonStyle(BuildContext context) {
+ButtonStyle getButtonStyle(BuildContext context, bool isDarkMode) {
   return ButtonStyle(
     padding: const WidgetStatePropertyAll(
       EdgeInsets.symmetric(
@@ -197,7 +225,9 @@ ButtonStyle getButtonStyle(BuildContext context) {
         return Colors.white; // Use the component's default.
       },
     ),
-    overlayColor: const WidgetStatePropertyAll(splashButtonColor),
+    overlayColor: WidgetStatePropertyAll(isDarkMode
+        ? const Color.fromARGB(255, 53, 148, 192)
+        : const Color.fromARGB(255, 133, 216, 255)),
     minimumSize: WidgetStatePropertyAll(
       Size(MediaQuery.of(context).size.width, 48),
     ),
@@ -206,7 +236,7 @@ ButtonStyle getButtonStyle(BuildContext context) {
   );
 }
 
-ButtonStyle getTextButtonStyle(BuildContext context) {
+ButtonStyle getTextButtonStyle(BuildContext context, bool isDarkMode) {
   return ButtonStyle(
     padding: const WidgetStatePropertyAll(
       EdgeInsets.symmetric(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/features/support/domain/entities/message.dart';
 
 class NotificationsScreen extends StatelessWidget {
@@ -33,6 +34,7 @@ class MessageListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting();
+
     final scrollController = ScrollController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       scrollController.animateTo(
@@ -119,6 +121,7 @@ class NotificationBox extends StatelessWidget {
   Widget build(BuildContext context) {
     //TODO тоже полнейшая залупа
     initializeDateFormatting();
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -127,9 +130,9 @@ class NotificationBox extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
           constraints:
               BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.8),
-          decoration: const BoxDecoration(
-            color: Color(0xFFE1EAFF),
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            color: isDarkMode ? secondaryColor : const Color(0xFFE1EAFF),
+            borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(8),
                 bottomLeft: Radius.circular(8),
                 bottomRight: Radius.circular(8)),
@@ -143,6 +146,7 @@ class NotificationBox extends StatelessWidget {
                   child: Text(
                     notification.text,
                     textAlign: TextAlign.left,
+                    style: TextStyle(color: isDarkMode ? Colors.black : null),
                   ),
                 ),
                 Row(
@@ -151,6 +155,7 @@ class NotificationBox extends StatelessWidget {
                     Text(
                       DateFormat.jm('ru').format(notification.date),
                       textAlign: TextAlign.left,
+                      style: TextStyle(color: isDarkMode ? Colors.black : null),
                     ),
                   ],
                 ),

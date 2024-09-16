@@ -6,6 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
+import 'package:personal_payment_app/core/util/theme/theme_cubit.dart';
 import 'package:personal_payment_app/features/support/domain/entities/message.dart';
 import 'package:personal_payment_app/features/support/presentation/bloc/bloc/messages_bloc.dart';
 
@@ -22,7 +23,7 @@ class SupportChatScreen extends StatelessWidget {
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.symmetric(horizontal: 6),
             decoration: BoxDecoration(
-              color: containersColor,
+              color: Theme.of(context).colorScheme.tertiary,
               borderRadius: BorderRadius.circular(30),
             ),
             child: IconButton(
@@ -101,10 +102,19 @@ class MessageBox extends StatelessWidget {
   Widget build(BuildContext context) {
     //TODO тоже полнейшая залупа
     initializeDateFormatting();
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final alignment =
         message.userId == 1 ? MainAxisAlignment.end : MainAxisAlignment.start;
-    final color = message.userId == 1 ? accentColor : const Color(0xFFE1EAFF);
-    final textColor = message.userId == 1 ? Colors.white : Colors.black;
+    final color = message.userId == 1
+        ? accentColor
+        : isDarkMode
+            ? const Color.fromARGB(255, 85, 85, 85)
+            : const Color(0xFFE1EAFF);
+    final textColor = message.userId == 1
+        ? Colors.white
+        : isDarkMode
+            ? Colors.white
+            : Colors.black;
     return Row(
       mainAxisAlignment: alignment,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -170,13 +180,15 @@ class HeadCallWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: context.read<ThemeCubit>().state.isDarkMode
+            ? Colors.black
+            : Colors.white,
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
             blurRadius: 4,
-            color: containersColor,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ],
       ),
@@ -245,9 +257,10 @@ class _InputBarWidgetState extends State<InputBarWidget> {
         children: [
           IconButton(
             onPressed: () {},
-            style: const ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(containersColor),
-              iconColor: WidgetStatePropertyAll(unselectedItemColor),
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(
+                  Theme.of(context).colorScheme.tertiary),
+              iconColor: const WidgetStatePropertyAll(unselectedItemColor),
             ),
             icon: SvgPicture.asset(
               'lib/core/assets/icons/add_file.svg',
@@ -279,7 +292,7 @@ class _InputBarWidgetState extends State<InputBarWidget> {
                   borderSide: BorderSide.none,
                 ),
                 filled: true,
-                fillColor: containersColor,
+                fillColor: Theme.of(context).colorScheme.tertiary,
               ),
             ),
           ),
@@ -324,7 +337,7 @@ class AppBarTextField extends StatelessWidget {
         ),
         prefixIcon: const Icon(Icons.search, color: unselectedItemColor),
         filled: true,
-        fillColor: containersColor,
+        fillColor: Theme.of(context).colorScheme.tertiary,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
     );

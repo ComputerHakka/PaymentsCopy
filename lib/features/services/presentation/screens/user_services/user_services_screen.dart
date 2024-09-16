@@ -17,8 +17,9 @@ class UserServicesScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: IconButton(
-              style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(containersColor),
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(
+                    Theme.of(context).colorScheme.tertiary),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               onPressed: () {},
@@ -66,6 +67,7 @@ class ServiceBoxWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         GoRouter.of(context).pushNamed(
@@ -80,8 +82,13 @@ class ServiceBoxWidget extends StatelessWidget {
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: isBoxInContainer ? Colors.white : containersColor,
-          border: Border.all(color: borderColor, width: 0.5),
+          color: isBoxInContainer
+              ? isDarkMode
+                  ? Colors.black
+                  : Colors.white
+              : Theme.of(context).colorScheme.tertiary,
+          border: Border.all(
+              color: isDarkMode ? Colors.black : borderColor, width: 0.5),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,11 +131,12 @@ class NewServicesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: containersColor,
+        color: Theme.of(context).colorScheme.tertiary,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,9 +167,11 @@ class NewServicesWidget extends StatelessWidget {
               onPressed: () {
                 GoRouter.of(context).goNamed(RouteNames.servicesListScreen);
               },
-              style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(lightButton),
-                foregroundColor: WidgetStatePropertyAll(accentColor),
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(isDarkMode
+                    ? const Color.fromARGB(255, 54, 84, 114)
+                    : lightButton),
+                foregroundColor: const WidgetStatePropertyAll(accentColor),
               ),
               child:
                   Text('Все ${ServiceMock.anotherServices.length} предложения'),

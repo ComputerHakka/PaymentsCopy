@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:personal_payment_app/config/theme/app_themes.dart';
 import 'package:personal_payment_app/features/services/domain/entities/service.dart';
 import 'package:personal_payment_app/features/services/presentation/screens/user_services/user_services_screen.dart';
 
@@ -16,8 +15,9 @@ class ServicesListScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: IconButton(
-              style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(containersColor),
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(
+                    Theme.of(context).colorScheme.tertiary),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               onPressed: () {},

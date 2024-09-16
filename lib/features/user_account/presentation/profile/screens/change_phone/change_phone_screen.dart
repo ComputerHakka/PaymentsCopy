@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:personal_payment_app/config/theme/app_themes.dart';
+import 'package:personal_payment_app/core/util/theme/theme_cubit.dart';
 import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
 import 'package:personal_payment_app/features/user_account/presentation/profile/bloc/bloc/change_contacts_bloc.dart';
 
@@ -58,10 +59,11 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                 ),
               ],
               style: const TextStyle(fontSize: 16),
-              decoration: getChangeInputDecoration().copyWith(
+              decoration: getChangeInputDecoration(
+                      context.read<ThemeCubit>().state.isDarkMode)
+                  .copyWith(
                 hintText: '+7',
                 hintStyle: const TextStyle(
-                  color: Colors.black,
                   fontWeight: FontWeight.w400,
                   fontSize: 16,
                 ),
@@ -80,6 +82,14 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                   },
                 ),
               ),
+              onTap: () {
+                if (_phoneController.text.isEmpty) {
+                  _phoneController.text = '+7 ';
+                  _phoneController.selection = TextSelection.fromPosition(
+                    TextPosition(offset: _phoneController.text.length),
+                  );
+                }
+              },
               onSubmitted: (value) {
                 bool correct = checkCorrectInput();
                 if (correct) {

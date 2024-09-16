@@ -93,7 +93,7 @@ class DocumentCellWidget extends StatelessWidget {
       padding: const EdgeInsets.all(5.0),
       child: Ink(
         decoration: BoxDecoration(
-          color: containersColor,
+          color: Theme.of(context).colorScheme.tertiary,
           borderRadius: BorderRadius.circular(15),
         ),
         //width: 118,

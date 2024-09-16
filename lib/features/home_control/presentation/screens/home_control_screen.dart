@@ -17,7 +17,7 @@ class HomeControlScreen extends StatelessWidget {
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.symmetric(horizontal: 6),
             decoration: BoxDecoration(
-              color: containersColor,
+              color: Theme.of(context).colorScheme.tertiary,
               borderRadius: BorderRadius.circular(30),
             ),
             child: IconButton(
@@ -165,7 +165,7 @@ class CameraCellwidget extends StatelessWidget {
           decoration: BoxDecoration(
             image: const DecorationImage(
                 image: AssetImage('lib/core/assets/images/video_camera.jpg')),
-            color: containersColor,
+            color: Theme.of(context).colorScheme.tertiary,
             borderRadius: BorderRadius.circular(15),
           ),
           child: InkWell(
@@ -207,7 +207,7 @@ class ElectronicCellwidget extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: containersColor,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
           child: InkWell(
             borderRadius: BorderRadius.circular(15),
@@ -222,7 +222,7 @@ class ElectronicCellwidget extends StatelessWidget {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                        color: optionBoxCircleColor,
+                        color: Theme.of(context).colorScheme.tertiaryFixed,
                         borderRadius: BorderRadius.circular(100)),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
@@ -264,7 +264,7 @@ class AppBarTextField extends StatelessWidget {
         ),
         prefixIcon: const Icon(Icons.search, color: unselectedItemColor),
         filled: true,
-        fillColor: containersColor,
+        fillColor: Theme.of(context).colorScheme.tertiary,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
     );

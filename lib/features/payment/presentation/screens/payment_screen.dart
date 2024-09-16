@@ -17,6 +17,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         title: const AppBarTextField(),
@@ -25,7 +26,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.symmetric(horizontal: 6),
             decoration: BoxDecoration(
-              color: containersColor,
+              color: Theme.of(context).colorScheme.tertiary,
               borderRadius: BorderRadius.circular(30),
             ),
             child: IconButton(
@@ -59,16 +60,24 @@ class _PaymentScreenState extends State<PaymentScreen> {
               padding: EdgeInsets.symmetric(vertical: 6),
               child: AccountBalanceWidget(),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 6),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
               child: TextField(
-                decoration: InputDecoration(hintText: 'Номер договора'),
+                decoration: InputDecoration(
+                    hintText: 'Номер договора',
+                    hintStyle: isDarkMode
+                        ? const TextStyle(color: textFieldTextColor)
+                        : null),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 6),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
               child: TextField(
-                decoration: InputDecoration(hintText: 'Фио абонента'),
+                decoration: InputDecoration(
+                    hintText: 'Фио абонента',
+                    hintStyle: isDarkMode
+                        ? const TextStyle(color: textFieldTextColor)
+                        : null),
               ),
             ),
             const Padding(
@@ -78,10 +87,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 style: TextStyle(color: textFieldTextColor),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 6),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
               child: TextField(
-                decoration: InputDecoration(hintText: 'Сумма'),
+                decoration: InputDecoration(
+                    hintText: 'Сумма',
+                    hintStyle: isDarkMode
+                        ? const TextStyle(color: textFieldTextColor)
+                        : null),
                 keyboardType: TextInputType.number,
               ),
             ),
@@ -140,7 +153,7 @@ class AppBarTextField extends StatelessWidget {
         ),
         prefixIcon: const Icon(Icons.search, color: unselectedItemColor),
         filled: true,
-        fillColor: containersColor,
+        fillColor: Theme.of(context).colorScheme.tertiary,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
     );

@@ -50,8 +50,9 @@ class _TransactionsListScreenState extends State<TransactionsListScreen> {
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: IconButton(
-              style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(containersColor),
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(
+                    Theme.of(context).colorScheme.tertiary),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               onPressed: () {},

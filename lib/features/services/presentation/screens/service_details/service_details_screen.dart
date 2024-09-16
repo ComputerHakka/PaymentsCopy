@@ -9,15 +9,18 @@ class ServiceDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(MediaQuery.of(context).size.height / 4),
         child: AppBar(
           flexibleSpace: Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                  'lib/core/assets/images/service_empty_photo.png',
+                  isDarkMode
+                      ? 'lib/core/assets/images/service_empty_photo_dark.png'
+                      : 'lib/core/assets/images/service_empty_photo.png',
                 ),
                 fit: BoxFit.fitWidth,
               ),
