@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:personal_payment_app/core/constants/constants.dart';
+import 'package:personal_payment_app/features/user_account/domain/entities/user.dart';
 import 'package:personal_payment_app/features/user_account/presentation/authorization/presentation/bloc/auth/remote/remote_auth_bloc.dart';
 import 'package:personal_payment_app/features/user_account/presentation/bloc/local/user_database_bloc.dart';
 
@@ -24,6 +25,10 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
     void login() {
       BlocProvider.of<RemoteAuthBloc>(context)
           .add(LoginEvent(emailController.text, passwordController.text));
+    }
+
+    Future<void> saveUser(UserEntity user) async {
+      BlocProvider.of<UserDatabaseBloc>(context).add(SaveUserEvent(user: user));
     }
 
     return Scaffold(
@@ -96,8 +101,9 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
                 listener: (BuildContext context, RemoteAuthState state) {
                   if (state is RemoteAuthSuccessState) {
                     GoRouter.of(context).goNamed(RouteNames.loaderScreen);
-                    BlocProvider.of<UserDatabaseBloc>(context)
-                        .add(SaveUserEvent(user: state.user));
+                    saveUser(state.user!);
+                    // BlocProvider.of<UserDatabaseBloc>(context)
+                    //     .add(SaveUserEvent(user: state.user));
                   }
                   if (state is RemoteAuthFailedState) {
                     if (state.exception!.type == DioExceptionType.badResponse) {
